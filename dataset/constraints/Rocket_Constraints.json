@@ -1,9 +1,0 @@
-{
-    "CPU_Name": "RocketChip",
-    "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-    "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-    "dcache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-    "dcache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-    "nTLBSets": [1, 2, 4, 8],
-    "nTLBWays": [1, 2, 4, 8]
-}
