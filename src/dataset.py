@@ -1,32 +1,22 @@
 import sqlite3
-import json
-import os.path as osp
+from utils import read_from_json
 
-def create_table_from_json(json_file, dataset_name, dataset_direct):
+def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
-    if not osp.exists(json_file):
-        raise FileNotFoundError(f"File {json_file} not found")
-    with open(json_file, 'r') as file:
-        data = json.load(file)
+
     # Start building the CREATE TABLE command
+    dataset_name = f"{cpu_info.cpu_name}_PPA"
     sql_command = f"CREATE TABLE IF NOT EXISTS {dataset_name} (\n"
     sql_command += "    config_id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-
-    for key, value in data.items():
-        if key == "CPU_Name":
-            sql_command += f"    {key} TEXT,\n"
-        # Add Configurable Parameters to the table
-        elif key == "Configurable_Params":
-            for param, _ in value.items():
-                sql_command += f"    {param} INTEGER,\n"
-        # Add Output Performance to the table
-        elif key == "PPA":
-            for metric, results in value.items():
-                    for result in results.keys():
-                        sql_command += f"    {metric}_{result} INTEGER,\n"
+    sql_command += f"    {cpu_info.cpu_name} TEXT,\n"
+    # Add Configurable Parameters to the table
+    for param in cpu_info.config_params:
+        sql_command += f"    {param.name} INTEGER,\n"
+    for classification in cpu_info.output_params.keys():
+        for metric in cpu_info.output_params[classification].metrics:
+            sql_command += f"    {cpu_info.output_params[classification].class_name}_{metric} INTEGER,\n"
     # Remove the last comma and add closing parenthesis
     sql_command = sql_command.rstrip(',\n') + '\n)'
-    print("sql_command1: ", sql_command)
     # Connect to the SQLite database and execute the command
     try:
         conn = sqlite3.connect(dataset_direct)
@@ -59,20 +49,20 @@ def insert_data(conn, dataset_name, data_names, data):
         if cursor:
             cursor.close()
 
-def fetch_data_as_dict(conn, cpu_name, icache_sets, icache_ways, dcache_sets, dcache_ways, tlb_sets, tlb_ways):
+
+def fetch_data_as_dict(conn, cpu_info, data_input):
     """Fetch data based on certain input values and return it as a list of dictionaries."""
     data_dicts = []
     try:
         # Prepare the SQL statement with placeholders for parameters
-        sql = """
-        SELECT * FROM RocketChip_PPA 
-        WHERE CPU_Name = ? AND icache_nSets = ? AND icache_nWays = ? AND 
-              dcache_nSets = ? AND dcache_nWays = ? AND nTLBSets = ? AND nTLBWays = ?
-        """
+        sql_command = f"SELECT * FROM {cpu_info['name']} WHERE "
+        sql_command += f"{cpu_info.cpu_name} = ? "
+        for param in cpu_info.config_params:
+            sql_command += f"AND {param.name} = ? "
 
         # Create a cursor object and execute the SQL command
         cursor = conn.cursor()
-        cursor.execute(sql, (cpu_name, icache_sets, icache_ways, dcache_sets, dcache_ways, tlb_sets, tlb_ways))
+        cursor.execute(sql_command, data_input)
 
         # Fetch all results from the cursor
         columns = [column[0] for column in cursor.description]
@@ -92,9 +82,11 @@ def fetch_data_as_dict(conn, cpu_name, icache_sets, icache_ways, dcache_sets, dc
 
 if __name__ == '__main__':
     # create_database('processors.db')
-    create_table_from_json('../dataset/constraints/RocketChip_Config.json', 'RocketChip_PPA', '../dataset/PPA/RocketChip_PPA.db')
-    conn = sqlite3.connect('../dataset/PPA/RocketChip_PPA.db')
-    data_values = ['RocketChip', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    columns = 'CPU_Name, icache_nSets, icache_nWays, dcache_nSets, dcache_nWays, nTLBSets, nTLBWays, Power_Dynamic, Power_Static, Resource_Utilisation_LUTs, Resource_Utilisation_FFs, Resource_Utilisation_BRAM, Resource_Utilisation_DSP, Benchmark_Dhrystone, Benchmark_CoreMark, Benchmark_Whetstone'
-    # Call the function to insert data
-    insert_data(conn, 'RocketChip_PPA', columns, data_values)
+    # create_table_from_json('../dataset/constraints/RocketChip_Config.json', 'RocketChip_PPA', '../dataset/PPA/RocketChip_PPA.db')
+    # conn = sqlite3.connect('../dataset/PPA/RocketChip_PPA.db')
+    # data_values = ['RocketChip', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    # columns = 'CPU_Name, icache_nSets, icache_nWays, dcache_nSets, dcache_nWays, nTLBSets, nTLBWays, Power_Dynamic, Power_Static, Resource_Utilisation_LUTs, Resource_Utilisation_FFs, Resource_Utilisation_BRAM, Resource_Utilisation_DSP, Benchmark_Dhrystone, Benchmark_CoreMark, Benchmark_Whetstone'
+    # # Call the function to insert data
+    # insert_data(conn, 'RocketChip_PPA', columns, data_values)
+    cpu_info = read_from_json('../dataset/constraints/RocketChip_Config.json')
+    create_table_from_json(cpu_info, '../dataset/PPA/RocketChip_PPA.db')
