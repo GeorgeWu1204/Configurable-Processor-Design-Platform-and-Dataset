@@ -1,5 +1,4 @@
 import json
-from definition import object_cpu_info, config_param
 
 def input_cpu_info():
     name = input("Enter the name of the CPU: ")

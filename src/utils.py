@@ -7,6 +7,12 @@ class config_param:
         self.name = name
         self.default_value = default_value
         self.self_range = self_range
+    
+    def check_validity(self, new_value):
+        if new_value in self.self_range:
+            return True
+        else:
+            return False
 
 class classification_metrics:
     def __init__(self, class_name, metrics):
