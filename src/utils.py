@@ -3,10 +3,11 @@ import os.path as osp
 
 
 class config_param:
-    def __init__(self, name, default_value, self_range):
+    def __init__(self, name, default_value, self_range, index):
         self.name = name
         self.default_value = default_value
         self.self_range = self_range
+        self.index = index
     
     def check_validity(self, new_value):
         if new_value in self.self_range:
@@ -32,9 +33,16 @@ class object_cpu_info:
         self.config_params = config_params
         self.output_params = output_params
         self.target_fpga = None
+        self.tunable_params = []
 
     def add_target_fpga(self, target_fpga):
         self.target_fpga = target_fpga
+
+    def update_tunable_params(self, target_tunable_params):
+        for target_tunable_param in target_tunable_params:
+            for param in self.config_params:
+                if param.name == target_tunable_param:
+                    self.tunable_params.append(param.index) 
 
 
 def read_from_json(json_file):
@@ -45,9 +53,11 @@ def read_from_json(json_file):
     
     # Build config_params
     config_params = []
+    param_index = 0
     for param, settings in data["Configurable_Params"].items():
-        tmp_param = config_param(param, settings["default"], settings["self_range"])
+        tmp_param = config_param(param, settings["default"], settings["self_range"], param_index)
         config_params.append(tmp_param)
+        param_index += 1
 
     # Build output library
     output_lib = {}
@@ -57,7 +67,7 @@ def read_from_json(json_file):
             metrics.append(m)
         tmp_class = classification_metrics(classification, metrics)
         output_lib[classification] = tmp_class
-    
+        print(metrics)
     # Build CPU object
     cpu_info = object_cpu_info(data["CPU_Name"], config_params, output_lib)
     return cpu_info

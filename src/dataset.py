@@ -32,53 +32,74 @@ def create_table_from_json(cpu_info, dataset_direct):
     return sql_command
 
 
-def insert_data(conn, dataset_name, data_names, data):
-    """Insert data into the database."""
-    cursor = conn.cursor()
-    sql_command = f"INSERT INTO {dataset_name} ({data_names}) VALUES ("
-    for i in range(len(data)):
-        sql_command += f"?, "
-    sql_command = sql_command.rstrip(', ') + ')'    
-    try:
-        cursor.execute(sql_command, data)
-        conn.commit()
-        conn.close() 
-    except sqlite3.Error as e:
-        print(f"An error occurred: {e}")
-    finally:
-        if cursor:
-            cursor.close()
+class Processor_Dataset:
+    def __init__(self, cpu_info):
+        self.cpu_info = cpu_info
+        self.dataset_name = f"{self.cpu_info.cpu_name}_PPA"
+        self.dataset_directory = f'../dataset/PPA/{self.dataset_name}.db'
 
+        # Prepare Insertion Command
+        self.insert_command = f"INSERT INTO {self.dataset_name} ( "
+        for param in self.cpu_info.config_params:
+            self.insert_command += f"{param.name}, "
+        for classification in cpu_info.output_params.keys():
+            for metric in self.cpu_info.output_params[classification].metrics:
+                self.insert_command += f"{self.cpu_info.output_params[classification].class_name}_{metric}, "
+        self.insert_command = self.insert_command.rstrip(', ') + ') VALUES ('
+        for i in range(len(cpu_info.config_params)):
+            self.insert_command += '?, '
+        self.insert_command = self.insert_command.rstrip(', ') + ')'
+        print(self.insert_command)
 
-def fetch_data_as_dict(conn, cpu_info, data_input):
-    """Fetch data based on certain input values and return it as a list of dictionaries."""
-    data_dicts = []
-    try:
-        # Prepare the SQL statement with placeholders for parameters
-        sql_command = f"SELECT * FROM {cpu_info['name']} WHERE "
-        sql_command += f"{cpu_info.cpu_name} = ? "
+        # Prepare Fetch Command
+        self.fetch_command = f"SELECT * FROM {self.dataset_name} WHERE "
+        self.fetch_command += f"{cpu_info.cpu_name} = ? "
         for param in cpu_info.config_params:
-            sql_command += f"AND {param.name} = ? "
+            self.fetch_command += f"AND {param.name} = ? "
+        
+        # Prepare Default Parameter Setting List
+        self.default_params = []
+        for param in self.cpu_info.config_params:
+            self.default_params.append(param.default_value)
+        
+    def insert_single_data(self, data):
+        """Insert data into the database."""
+        try:
+            conn = sqlite3.connect(self.dataset_directory)
+            cursor = conn.cursor()
+            cursor.execute(self.insert_command, data)
+            conn.commit()
+            conn.close() 
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
+        finally:
+            if cursor:
+                cursor.close()
 
-        # Create a cursor object and execute the SQL command
-        cursor = conn.cursor()
-        cursor.execute(sql_command, data_input)
+    def fetch_single_data_as_dict(self, data_input):
+        """Fetch data based on certain input values and return it as a list of dictionaries."""
+        data_dicts = self.default_params
+        for i in len(data_input):
+            data_dicts[self.cpu_info.tunable_params[i]] = data_input[i]
+        try:
+            conn = sqlite3.connect(self.dataset_directory)
+            # Create a cursor object and execute the SQL command
+            cursor = conn.cursor()
+            cursor.execute(self.fetch_command, data_input)
+            # Fetch all results from the cursor
+            columns = [column[0] for column in cursor.description]
+            rows = cursor.fetchall()
+            # Convert each row into a dictionary
+            for row in rows:
+                data_dicts.append(dict(zip(columns, row)))
 
-        # Fetch all results from the cursor
-        columns = [column[0] for column in cursor.description]
-        rows = cursor.fetchall()
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
+        finally:
+            if cursor:
+                cursor.close()
 
-        # Convert each row into a dictionary
-        for row in rows:
-            data_dicts.append(dict(zip(columns, row)))
-
-    except sqlite3.Error as e:
-        print(f"An error occurred: {e}")
-    finally:
-        if cursor:
-            cursor.close()
-
-    return data_dicts
+        return data_dicts
 
 if __name__ == '__main__':
     # create_database('processors.db')
