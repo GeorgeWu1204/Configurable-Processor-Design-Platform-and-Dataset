@@ -16,36 +16,47 @@ class config_param:
             return False
 
 class classification_metrics:
-    def __init__(self, class_name, metrics):
-        self.class_name = class_name
+    def __init__(self, metrics):
         self.metrics = metrics
         self.value = None
         self.constraints = None
 
 class output_params:
-    def __init__(self, ):
-        self.output_library = {}
+    def __init__(self, Power, Resource, Benchmark):
+        self.power = Power
+        self.resource = Resource
+        self.benchmark = Benchmark
 
 
 class object_cpu_info:
-    def __init__(self, name, config_params, output_params):
+    def __init__(self, name, config_params, output_objs):
         self.cpu_name = name
         self.config_params = config_params
-        self.output_params = output_params
+        self.supported_output_objs = output_objs
         self.target_fpga = None
         self.tunable_params = []
+        self.target_objs = []
 
     def add_target_fpga(self, target_fpga):
         self.target_fpga = target_fpga
-
+    
+    def update_tunable_param(self, target_tunable_param):
+        for param in self.config_params:
+            if param.name == target_tunable_param:
+                self.tunable_params.append(param.index)
+                return True
+        return False        
+    
     def update_tunable_params(self, target_tunable_params):
         for target_tunable_param in target_tunable_params:
             for param in self.config_params:
                 if param.name == target_tunable_param:
                     self.tunable_params.append(param.index) 
 
+    def update_target_objs(self, target_objs):
+        self.target_objs.append(target_objs)
 
-def read_from_json(json_file):
+def read_cpu_info_from_json(json_file):
     if not osp.exists(json_file):
         raise FileNotFoundError(f"File {json_file} not found")
     with open(json_file, 'r') as file:
@@ -60,17 +71,32 @@ def read_from_json(json_file):
         param_index += 1
 
     # Build output library
-    output_lib = {}
+    
     for classification, settings in data["PPA"].items():
         metrics = []
         for m in settings.keys():
             metrics.append(m)
-        tmp_class = classification_metrics(classification, metrics)
-        output_lib[classification] = tmp_class
-        print(metrics)
+        if classification == "Power":
+            tmp_power = classification_metrics(metrics)
+        elif classification == "Resource":
+            tmp_resource = classification_metrics(metrics)
+        elif classification == "Benchmark":
+            tmp_benchmark = classification_metrics(metrics)        
+    output_lib = output_params(tmp_power, tmp_resource, tmp_benchmark)
     # Build CPU object
     cpu_info = object_cpu_info(data["CPU_Name"], config_params, output_lib)
     return cpu_info
 
+def read_fpga_info_from_json(device_series_number):
+    json_file = '../dataset/fpga/fpga_rc.json'
+    if not osp.exists(json_file):
+        raise FileNotFoundError(f"File {json_file} not found")
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+    for device in data:
+        if device["Part"] == device_series_number:
+            return device
+    return None 
+
 if __name__ == '__main__':
-    read_from_json('../dataset/constraints/RocketChip_Config.json')
+    read_cpu_info_from_json('../dataset/constraints/RocketChip_Config.json')

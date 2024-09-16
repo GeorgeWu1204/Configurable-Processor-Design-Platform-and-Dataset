@@ -1,25 +1,44 @@
 import json
+import os.path as osp
+from utils import read_cpu_info_from_json, read_fpga_info_from_json
 
 def input_cpu_info():
-    name = input("Enter the name of the CPU: ")
-    target_fpga = input("Enter the target FPGA: ")
-    config_params = []
-    output_params = []
+    while True:
+        name = input("Enter the name of the CPU: ")
+        if osp.exists(f'../dataset/constraints/{name}_Config.json'):
+            break
+        else:
+            print("The CPU does not exist in the database. Please try again.")
+
+    cpu_info = read_cpu_info_from_json(f'../dataset/constraints/{name}_Config.json')
+    while True:
+        fpga_device = input("Enter the target FPGA: ")
+        targetfpga = read_fpga_info_from_json(fpga_device)
+        if targetfpga is not None:
+            break
+    cpu_info.add_target_fpga(targetfpga)
+    # Tunable Params
     while True:
         print("Enter the configuration parameters: ")
         config_name = input("Enter the name of the parameter: ")
-        config_type = input("Enter the type of the parameter: ")
-        config_value = input("Enter the value of the parameter: ")
-        config_params.append(config_param(config_name, config_type, config_value))
+        if not cpu_info.update_tunable_param(config_name):
+            print("The parameter does not exist in the database. Please try again.")
+            continue
         choice = input("Do you want to add more configuration parameters? (y/n): ")
         if choice == 'n':
             break
+    # Output Params
+    print(f"The existing benchmarks for {cpu_info.cpu_name} are:")
+    supported_benchmarks = cpu_info.supported_output_objs.benchmark.metrics
+    print(supported_benchmarks)
     while True:
-        print("Enter the output parameters: ")
-        output_name = input("Enter the name of the parameter: ")
-        output_type = input("Enter the type of the parameter: ")
-        output_params.append(config_param(output_name, output_type, None))
+        output_name = input("Enter the name of the RISC-V benchmark: ")
+        if output_name in supported_benchmarks:
+            cpu_info.update_target_objs(output_name)
+        else:
+            print("The benchmark does not exist in the database. Please try again.")
+            continue
         choice = input("Do you want to add more output parameters? (y/n): ")
         if choice == 'n':
             break
-    return object_cpu_info(name, config_params, output_params, target_fpga)
+    return cpu_info
