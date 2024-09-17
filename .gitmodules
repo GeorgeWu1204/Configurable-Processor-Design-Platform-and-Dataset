@@ -1,0 +1,7 @@
+[submodule "processors/Cores-VeeR-EL2"]
+	path = processors/Cores-VeeR-EL2
+	url = https://github.com/chipsalliance/Cores-VeeR-EL2.git
+
+[submodule "processors/rocket-chip"]
+	path = processors/rocket-chip
+	url = https://github.com/chipsalliance/rocket-chip.git

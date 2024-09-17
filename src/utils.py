@@ -9,11 +9,20 @@ class config_param:
         self.self_range = self_range
         self.index = index
     
-    def check_validity(self, new_value):
+    def check_self_validity(self, new_value):
         if new_value in self.self_range:
             return True
         else:
             return False
+
+class config_params:
+    def __init__(self, params, conditional_constraints):
+        self.params = params
+        self.params_map = {}
+        self.conditional_constraints = conditional_constraints
+        for param in self.params:
+            self.params_map[param.name] = param
+            
 
 class classification_metrics:
     def __init__(self, metrics):
@@ -29,9 +38,9 @@ class output_params:
 
 
 class object_cpu_info:
-    def __init__(self, name, config_params, output_objs):
+    def __init__(self, name, params, output_objs):
         self.cpu_name = name
-        self.config_params = config_params
+        self.config_params = params
         self.supported_output_objs = output_objs
         self.target_fpga = None
         self.tunable_params = []
@@ -56,13 +65,21 @@ class object_cpu_info:
     def update_target_objs(self, target_objs):
         self.target_objs.append(target_objs)
 
+    def check_validity(self, new_design):
+        if len(new_design) != len(self.config_params):
+            raise ValueError("The number of parameters does not match the number of configurable parameters")
+        for param in self.config_params:
+            if not param.check_self_validity(new_design[param.index]):
+                return False
+        return True
+
 def read_cpu_info_from_json(json_file):
     if not osp.exists(json_file):
         raise FileNotFoundError(f"File {json_file} not found")
     with open(json_file, 'r') as file:
         data = json.load(file)
     
-    # Build config_params
+    ## Build config_params
     config_params = []
     param_index = 0
     for param, settings in data["Configurable_Params"].items():
@@ -70,8 +87,12 @@ def read_cpu_info_from_json(json_file):
         config_params.append(tmp_param)
         param_index += 1
 
-    # Build output library
-    
+    # Identify conditional constraints
+    if data["Conditional_Constraints"] is not None:
+        #TODO
+        pass
+
+    ## Build output objective library    
     for classification, settings in data["PPA"].items():
         metrics = []
         for m in settings.keys():

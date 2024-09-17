@@ -1,0 +1,35 @@
+{
+    "CPU_Name": "EL2_VeeR",
+
+    "Configurable_Params": {
+        "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
+        "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
+        "dcache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
+        "dcache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
+        "nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4},
+        "nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4}
+    },
+
+    "Coupled_Constraints" : {
+
+    },
+
+    "PPA":{
+        "Power" : {
+            "Dynamic": 0,
+            "Static": 0
+        },
+        "Resource_Utilisation" : {
+            "LUTs": 0,
+            "FFs": 0,
+            "BRAM": 0,
+            "DSP": 0
+        },
+        "Benchmark" : {
+            "Dhrystone": 0,
+            "CoreMark": 0,
+            "Whetstone": 0
+        }
+    }
+
+}
