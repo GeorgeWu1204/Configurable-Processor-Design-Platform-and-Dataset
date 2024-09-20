@@ -1,5 +1,6 @@
 import json
 import os.path as osp
+from contraints import conditional_constraints
 
 
 class config_param:
@@ -8,7 +9,7 @@ class config_param:
         self.default_value = default_value
         self.self_range = self_range
         self.index = index
-    
+
     def check_self_validity(self, new_value):
         if new_value in self.self_range:
             return True
@@ -22,7 +23,7 @@ class config_params:
         self.conditional_constraints = conditional_constraints
         for param in self.params:
             self.params_map[param.name] = param
-            
+
 
 class classification_metrics:
     def __init__(self, metrics):
@@ -48,14 +49,14 @@ class object_cpu_info:
 
     def add_target_fpga(self, target_fpga):
         self.target_fpga = target_fpga
-    
+
     def update_tunable_param(self, target_tunable_param):
         for param in self.config_params:
             if param.name == target_tunable_param:
                 self.tunable_params.append(param.index)
                 return True
         return False        
-    
+
     def update_tunable_params(self, target_tunable_params):
         for target_tunable_param in target_tunable_params:
             for param in self.config_params:
@@ -65,20 +66,28 @@ class object_cpu_info:
     def update_target_objs(self, target_objs):
         self.target_objs.append(target_objs)
 
-    def check_validity(self, new_design):
+    def check_parameter_validity(self, new_design):
         if len(new_design) != len(self.config_params):
             raise ValueError("The number of parameters does not match the number of configurable parameters")
+        # Self constraints
         for param in self.config_params:
             if not param.check_self_validity(new_design[param.index]):
                 return False
+        # Cofnitional constraints
         return True
+    def check_fpga_deployability(self, synthesis_results):
+        if self.target_fpga is None:
+            return False
+        return True
+
+
 
 def read_cpu_info_from_json(json_file):
     if not osp.exists(json_file):
         raise FileNotFoundError(f"File {json_file} not found")
     with open(json_file, 'r') as file:
         data = json.load(file)
-    
+
     ## Build config_params
     config_params = []
     param_index = 0
@@ -107,17 +116,6 @@ def read_cpu_info_from_json(json_file):
     # Build CPU object
     cpu_info = object_cpu_info(data["CPU_Name"], config_params, output_lib)
     return cpu_info
-
-def read_fpga_info_from_json(device_series_number):
-    json_file = '../dataset/fpga/fpga_rc.json'
-    if not osp.exists(json_file):
-        raise FileNotFoundError(f"File {json_file} not found")
-    with open(json_file, 'r') as file:
-        data = json.load(file)
-    for device in data:
-        if device["Part"] == device_series_number:
-            return device
-    return None 
 
 if __name__ == '__main__':
     read_cpu_info_from_json('../dataset/constraints/RocketChip_Config.json')
