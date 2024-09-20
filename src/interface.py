@@ -1,8 +1,8 @@
-import json
 import os.path as osp
 from utils import read_cpu_info_from_json, read_fpga_info_from_json
 
 def define_cpu_settings():
+    # CPU Info
     while True:
         name = input("Enter the name of the CPU: ")
         if osp.exists(f'../dataset/constraints/{name}_Config.json'):
