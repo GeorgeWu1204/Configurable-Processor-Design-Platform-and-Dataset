@@ -10,7 +10,7 @@
         "nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4}
     },
 
-    "Coupled_Constraints" : {
+    "Conditional_Constraints" : {
 
     },
 

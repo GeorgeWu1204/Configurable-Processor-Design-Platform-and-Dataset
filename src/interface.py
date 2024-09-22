@@ -4,19 +4,25 @@ from utils import read_cpu_info_from_json, read_fpga_info_from_json
 def define_cpu_settings():
     # CPU Info
     while True:
-        name = input("Enter the name of the CPU: ")
-        if osp.exists(f'../dataset/constraints/{name}_Config.json'):
+        name = input("Enter the name of the CPU or type 'exit' to quit: ")
+        if name.lower() == 'exit':
+            exit("Exiting the program.")
+        if osp.exists(f'../dataset/processor_configs/{name.lower()}_Config.json'):
             break
         else:
             print("The CPU does not exist in the database. Please try again.")
-
-    cpu_info = read_cpu_info_from_json(f'../dataset/constraints/{name}_Config.json')
+    cpu_info = read_cpu_info_from_json(f'../dataset/processor_configs/{name.lower()}_Config.json')
+    
+    # FPGA Info
     while True:
-        fpga_device = input("Enter the target FPGA: ")
+        fpga_device = input("Enter the target FPGA series number or type 'exit' to quit:  ")
+        if fpga_device.lower() == 'exit':
+            exit("Exiting the program.")
         targetfpga = read_fpga_info_from_json(fpga_device)
         if targetfpga is not None:
             break
     cpu_info.add_target_fpga(targetfpga)
+
     # Tunable Params
     while True:
         print("Enter the configuration parameters: ")
@@ -27,8 +33,9 @@ def define_cpu_settings():
         choice = input("Do you want to add more configuration parameters? (y/n): ")
         if choice == 'n':
             break
+    
     # Output Params
-    print(f"The existing benchmarks for {cpu_info.cpu_name} are:")
+    print(f"The existing supported RISC-V benchmarks for {cpu_info.cpu_name} are:")
     supported_benchmarks = cpu_info.supported_output_objs.benchmark.metrics
     print(supported_benchmarks)
     while True:

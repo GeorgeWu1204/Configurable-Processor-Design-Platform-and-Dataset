@@ -44,24 +44,18 @@ class object_cpu_info:
         self.config_params = params
         self.supported_output_objs = output_objs
         self.target_fpga = None
-        self.tunable_params = []
+        self.tunable_params = []  
         self.target_objs = []
 
     def add_target_fpga(self, target_fpga):
         self.target_fpga = target_fpga
 
     def update_tunable_param(self, target_tunable_param):
-        for param in self.config_params:
+        for param in self.config_params.params:
             if param.name == target_tunable_param:
                 self.tunable_params.append(param.index)
                 return True
         return False        
-
-    def update_tunable_params(self, target_tunable_params):
-        for target_tunable_param in target_tunable_params:
-            for param in self.config_params:
-                if param.name == target_tunable_param:
-                    self.tunable_params.append(param.index) 
 
     def update_target_objs(self, target_objs):
         self.target_objs.append(target_objs)
@@ -79,7 +73,12 @@ class object_cpu_info:
         if self.target_fpga is None:
             return False
         return True
-
+    
+    def debug_mode(self):
+        print(f"All Supported Parameters are {self.config_params.params_map.keys()}")
+        print(f"Tunable Parameters are {self.tunable_params}")
+        print(f"Target Objs are {self.target_objs}")
+        print(f"Target FPGA is {self.target_fpga}")
 
 
 def read_cpu_info_from_json(json_file):
@@ -89,17 +88,19 @@ def read_cpu_info_from_json(json_file):
         data = json.load(file)
 
     ## Build config_params
-    config_params = []
+    tmp_config_params = []
     param_index = 0
     for param, settings in data["Configurable_Params"].items():
         tmp_param = config_param(param, settings["default"], settings["self_range"], param_index)
-        config_params.append(tmp_param)
+        tmp_config_params.append(tmp_param)
         param_index += 1
 
     # Identify conditional constraints
+    extracted_conditional_constraints = None
     if data["Conditional_Constraints"] is not None:
         #TODO
         pass
+    extracted_config_params = config_params(tmp_config_params, extracted_conditional_constraints)
 
     ## Build output objective library    
     for classification, settings in data["PPA"].items():
@@ -108,14 +109,23 @@ def read_cpu_info_from_json(json_file):
             metrics.append(m)
         if classification == "Power":
             tmp_power = classification_metrics(metrics)
-        elif classification == "Resource":
+        elif classification == "Resource_Utilisation":
             tmp_resource = classification_metrics(metrics)
         elif classification == "Benchmark":
             tmp_benchmark = classification_metrics(metrics)        
     output_lib = output_params(tmp_power, tmp_resource, tmp_benchmark)
     # Build CPU object
-    cpu_info = object_cpu_info(data["CPU_Name"], config_params, output_lib)
+    cpu_info = object_cpu_info(data["CPU_Name"], extracted_config_params, output_lib)
     return cpu_info
+
+def read_fpga_info_from_json(fpga_series_number):
+    with open('../dataset/fpga/fpga_rc.json', 'r') as file:
+        data = json.load(file)
+    for device in data:
+        if device["Part"] == fpga_series_number:
+            return device
+    return None  # Return None if the part number is not found
+
 
 if __name__ == '__main__':
     read_cpu_info_from_json('../dataset/constraints/RocketChip_Config.json')

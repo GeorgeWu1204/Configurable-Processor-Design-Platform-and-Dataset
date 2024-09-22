@@ -1,5 +1,4 @@
 import sqlite3
-from utils import read_from_json
 
 def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
@@ -37,7 +36,7 @@ class Processor_Dataset:
         self.cpu_info = cpu_info
         self.dataset_name = f"{self.cpu_info.cpu_name}_PPA"
         self.dataset_directory = f'../dataset/PPA/{self.dataset_name}.db'
-
+        
         # Prepare Insertion Command
         self.insert_command = f"INSERT INTO {self.dataset_name} ( "
         for param in self.cpu_info.config_params:
@@ -63,7 +62,7 @@ class Processor_Dataset:
             self.default_params.append(param.default_value)
         
     def insert_single_data(self, data):
-        """Insert data into the database."""
+        """Insert data into the database, only used during the sampling stage"""
         try:
             conn = sqlite3.connect(self.dataset_directory)
             cursor = conn.cursor()
@@ -102,6 +101,7 @@ class Processor_Dataset:
         return data_dicts
 
 if __name__ == '__main__':
+    pass
     # create_database('processors.db')
     # create_table_from_json('../dataset/constraints/RocketChip_Config.json', 'RocketChip_PPA', '../dataset/PPA/RocketChip_PPA.db')
     # conn = sqlite3.connect('../dataset/PPA/RocketChip_PPA.db')
@@ -109,5 +109,5 @@ if __name__ == '__main__':
     # columns = 'CPU_Name, icache_nSets, icache_nWays, dcache_nSets, dcache_nWays, nTLBSets, nTLBWays, Power_Dynamic, Power_Static, Resource_Utilisation_LUTs, Resource_Utilisation_FFs, Resource_Utilisation_BRAM, Resource_Utilisation_DSP, Benchmark_Dhrystone, Benchmark_CoreMark, Benchmark_Whetstone'
     # # Call the function to insert data
     # insert_data(conn, 'RocketChip_PPA', columns, data_values)
-    cpu_info = read_from_json('../dataset/constraints/RocketChip_Config.json')
-    create_table_from_json(cpu_info, '../dataset/PPA/RocketChip_PPA.db')
+    # cpu_info = read_from_json('../dataset/constraints/RocketChip_Config.json')
+    # create_table_from_json(cpu_info, '../dataset/PPA/RocketChip_PPA.db')
