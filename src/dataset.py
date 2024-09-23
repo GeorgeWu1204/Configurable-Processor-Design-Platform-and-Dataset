@@ -7,13 +7,19 @@ def create_table_from_json(cpu_info, dataset_direct):
     dataset_name = f"{cpu_info.cpu_name}_PPA"
     sql_command = f"CREATE TABLE IF NOT EXISTS {dataset_name} (\n"
     sql_command += "    config_id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-    sql_command += f"    {cpu_info.cpu_name} TEXT,\n"
     # Add Configurable Parameters to the table
-    for param in cpu_info.config_params:
+    for param in cpu_info.config_params.params:
         sql_command += f"    {param.name} INTEGER,\n"
-    for classification in cpu_info.output_params.keys():
-        for metric in cpu_info.output_params[classification].metrics:
-            sql_command += f"    {cpu_info.output_params[classification].class_name}_{metric} INTEGER,\n"
+    # Output Params
+    ## 1. Power
+    for metric in cpu_info.supported_output_objs.power.metrics:
+        sql_command += f"    Power_{metric} INTEGER,\n"
+    ## 2. Resource_Utilisation
+    for metric in cpu_info.supported_output_objs.resource.metrics:
+        sql_command += f"    Resource_Utilisation_{metric} INTEGER,\n"
+    ## 3. Benchmark Performance
+    for metric in cpu_info.supported_output_objs.benchmark.metrics:
+        sql_command += f"    Benchmark_{metric} INTEGER,\n"
     # Remove the last comma and add closing parenthesis
     sql_command = sql_command.rstrip(',\n') + '\n)'
     # Connect to the SQLite database and execute the command
@@ -25,9 +31,6 @@ def create_table_from_json(cpu_info, dataset_direct):
         conn.close()
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
-    finally:
-        if cursor:
-            cursor.close()
     return sql_command
 
 
@@ -39,26 +42,34 @@ class Processor_Dataset:
         
         # Prepare Insertion Command
         self.insert_command = f"INSERT INTO {self.dataset_name} ( "
-        for param in self.cpu_info.config_params:
-            self.insert_command += f"{param.name}, "
-        for classification in cpu_info.output_params.keys():
-            for metric in self.cpu_info.output_params[classification].metrics:
-                self.insert_command += f"{self.cpu_info.output_params[classification].class_name}_{metric}, "
-        self.insert_command = self.insert_command.rstrip(', ') + ') VALUES ('
-        for i in range(len(cpu_info.config_params)):
+        for param in self.cpu_info.config_params.params:
+            self.insert_command += f"{param.name},\n"
+        # Output Params
+        ## 1. Power
+        for metric in self.cpu_info.supported_output_objs.power.metrics:
+            self.insert_command += f"Power_{metric},\n"
+        ## 2. Resource_Utilisation
+        for metric in self.cpu_info.supported_output_objs.resource.metrics:
+            self.insert_command += f"Resource_Utilisation_{metric},\n"
+        ## 3. Benchmark Performance
+        for metric in self.cpu_info.supported_output_objs.benchmark.metrics:
+            self.insert_command += f"Benchmark_{metric},\n"
+        self.insert_command = self.insert_command.rstrip(',\n') + ') VALUES ('
+        for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts):
             self.insert_command += '?, '
         self.insert_command = self.insert_command.rstrip(', ') + ')'
-        print(self.insert_command)
-
+ 
         # Prepare Fetch Command
         self.fetch_command = f"SELECT * FROM {self.dataset_name} WHERE "
-        self.fetch_command += f"{cpu_info.cpu_name} = ? "
-        for param in cpu_info.config_params:
-            self.fetch_command += f"AND {param.name} = ? "
-        
+        for i, param in enumerate(self.cpu_info.config_params.params):
+            if i == 0:
+                self.fetch_command += f"{param.name} = ? "
+            else:
+                self.fetch_command += f"AND {param.name} = ? "
+
         # Prepare Default Parameter Setting List
         self.default_params = []
-        for param in self.cpu_info.config_params:
+        for param in self.cpu_info.config_params.params:
             self.default_params.append(param.default_value)
         
     def insert_single_data(self, data):
@@ -71,34 +82,37 @@ class Processor_Dataset:
             conn.close() 
         except sqlite3.Error as e:
             print(f"An error occurred: {e}")
-        finally:
-            if cursor:
-                cursor.close()
 
     def fetch_single_data_as_dict(self, data_input):
         """Fetch data based on certain input values and return it as a list of dictionaries."""
-        data_dicts = self.default_params
-        for i in len(data_input):
-            data_dicts[self.cpu_info.tunable_params[i]] = data_input[i]
+        data_to_fetch = self.default_params
+        results = []
+        for i in range(len(data_input)):
+            data_to_fetch[self.cpu_info.tunable_params[i]] = data_input[i]
         try:
             conn = sqlite3.connect(self.dataset_directory)
             # Create a cursor object and execute the SQL command
             cursor = conn.cursor()
-            cursor.execute(self.fetch_command, data_input)
+            cursor.execute(self.fetch_command, data_to_fetch)
             # Fetch all results from the cursor
             columns = [column[0] for column in cursor.description]
             rows = cursor.fetchall()
             # Convert each row into a dictionary
             for row in rows:
-                data_dicts.append(dict(zip(columns, row)))
+                results.append(dict(zip(columns, row)))
 
         except sqlite3.Error as e:
             print(f"An error occurred: {e}")
-        finally:
-            if cursor:
-                cursor.close()
 
-        return data_dicts
+        return results
+    
+    def debug_print(self):
+        print("Insert Command is ")
+        print(self.insert_command)
+        print("Fetch Command is ")
+        print(self.fetch_command)
+        print("Default Params")
+        print(self.default_params)
 
 if __name__ == '__main__':
     pass

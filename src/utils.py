@@ -19,6 +19,7 @@ class config_param:
 class config_params:
     def __init__(self, params, conditional_constraints):
         self.params = params
+        self.amount = len(self.params)
         self.params_map = {}
         self.conditional_constraints = conditional_constraints
         for param in self.params:
@@ -32,10 +33,11 @@ class classification_metrics:
         self.constraints = None
 
 class output_params:
-    def __init__(self, Power, Resource, Benchmark):
+    def __init__(self, Power, Resource_Utilisation, Benchmark):
         self.power = Power
-        self.resource = Resource
+        self.resource = Resource_Utilisation
         self.benchmark = Benchmark
+        self.metric_amounts = len(self.power.metrics) + len(self.resource.metrics) + len(self.benchmark.metrics) 
 
 
 class object_cpu_info:
@@ -74,11 +76,11 @@ class object_cpu_info:
             return False
         return True
     
-    def debug_mode(self):
+    def debug_print(self):
         print(f"All Supported Parameters are {self.config_params.params_map.keys()}")
         print(f"Tunable Parameters are {self.tunable_params}")
         print(f"Target Objs are {self.target_objs}")
-        print(f"Target FPGA is {self.target_fpga}")
+        print(f"Target FPGA is {self.target_fpga['Part']}")
 
 
 def read_cpu_info_from_json(json_file):
