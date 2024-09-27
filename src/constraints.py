@@ -26,10 +26,12 @@ class conditional_constraints:
         return True
 
 
-class fpga_spec:
+class target_fpga_info:
     def __init__(self, device_series_number):
         """This is the class storing the resource utilisation constraints specified by FPGA"""
         # Note the current dataset only focusing on the LUTs and FFs and the time analysis results.
+        # Also, assume the resrouce_utilisation metrics arranged in the following sequence.
+        # 0: LUTs, 1: FFs, 2: BRAM, 3: DSP
         json_file = '../dataset/fpga/fpga_rc.json'
         if not osp.exists(json_file):
             raise FileNotFoundError(f"File {json_file} not found")
@@ -43,9 +45,13 @@ class fpga_spec:
                 # self.IOBs = device["Available IOBs"]
                 self.LUTs = device["LUT Elements"]
                 self.FFs = device["FlipFlops"]
+        self.rc_data_indexes_in_dataset = None
+    
+    def update_rc_data_indexes(self, indexes):
+        self.rc_data_indexes_in_dataset = indexes
 
-
-
-
-def check_target_fpga_constraints():
-    pass
+    def check_fpga_deployability(self, rc_data_in_dataset):
+        if rc_data_in_dataset[0] < self.LUTs and rc_data_in_dataset[1] < self.FFs:
+            return True
+        else:
+            return False

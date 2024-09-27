@@ -20,8 +20,14 @@ def create_table_from_json(cpu_info, dataset_direct):
     ## 3. Benchmark Performance
     for metric in cpu_info.supported_output_objs.benchmark.metrics:
         sql_command += f"    Benchmark_{metric} INTEGER,\n"
+    
+    ## Define the Primary Key
+    sql_command += "    PRIMARY KEY ("
+    for param in cpu_info.config_params.params:
+        sql_command += f" {param.name},"
+
     # Remove the last comma and add closing parenthesis
-    sql_command = sql_command.rstrip(',\n') + '\n)'
+    sql_command = sql_command.rstrip(',') + '  ) \n)'
     print(sql_command)
     # Connect to the SQLite database and execute the command
     try:
@@ -36,8 +42,10 @@ def create_table_from_json(cpu_info, dataset_direct):
 
 
 class Processor_Dataset:
-    def __init__(self, cpu_info):
+    def __init__(self, cpu_info, fpga_info):
         self.cpu_info = cpu_info
+        self.fpga_considered = (fpga_info != None)
+        self.fpga_info = fpga_info
         self.dataset_name = f"{self.cpu_info.cpu_name}_PPA"
         self.dataset_directory = f'../dataset/PPA/{self.dataset_name}.db'
         temp_data_index = 0
@@ -83,6 +91,9 @@ class Processor_Dataset:
         self.default_params = []
         for param in self.cpu_info.config_params.params:
             self.default_params.append(param.default_value)
+
+        if self.fpga_considered:
+            self.fpga_info.update_rc_data_indexes(self.resource_utilisation_indexes)
         
     def insert_single_data(self, data):
         """Insert data into the database, only used during the sampling stage"""
@@ -119,7 +130,7 @@ class Processor_Dataset:
         return results
     
     def fetch_single_data_acc_to_def(self, data_input):
-        """Fetch data based on certain input values and return it as {"FPGA_Deployability": True, "Objectives": }"""
+        """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
         data_to_fetch = self.default_params
         results = []
         for i in range(len(data_input)):
@@ -130,17 +141,15 @@ class Processor_Dataset:
             cursor = conn.cursor()
             cursor.execute(self.fetch_command, data_to_fetch)
             # Fetch all results from the cursor
-            columns = [column[0] for column in cursor.description]
             rows = cursor.fetchall()
-            # print("Colums are:")
-            # print(columns)
-
-            # print("Rows are:")
-            # print(rows)
-            # Convert each row into a dictionary
-            for row in rows:
-                results.append(dict(zip(columns, row)))
-
+            print(self.resource_utilisation_indexes)
+            print(rows)
+            rc_results = [rows[0][i] for i in self.resource_utilisation_indexes]
+            target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
+            
+            if  self.fpga_considered:
+                return self.fpga_info.check_fpga_deployability(rc_results), target_obj_results            
+            
         except sqlite3.Error as e:
             print(f"An error occurred: {e}")
 

@@ -1,7 +1,5 @@
 import json
 import os.path as osp
-from contraints import conditional_constraints
-
 
 class config_param:
     def __init__(self, name, default_value, self_range, index):
@@ -45,12 +43,8 @@ class object_cpu_info:
         self.cpu_name = name
         self.config_params = params
         self.supported_output_objs = output_objs
-        self.target_fpga = None
         self.tunable_params = []  
         self.target_objs = []
-
-    def add_target_fpga(self, target_fpga):
-        self.target_fpga = target_fpga
 
     def update_tunable_param(self, target_tunable_param):
         for param in self.config_params.params:
@@ -83,7 +77,6 @@ class object_cpu_info:
         print(f"All Supported Parameters are {self.config_params.params_map.keys()}")
         print(f"Tunable Parameters are {self.tunable_params}")
         print(f"Target Objs are {self.target_objs}")
-        print(f"Target FPGA is {self.target_fpga['Part']}")
 
 
 def read_cpu_info_from_json(json_file):
@@ -122,15 +115,6 @@ def read_cpu_info_from_json(json_file):
     # Build CPU object
     cpu_info = object_cpu_info(data["CPU_Name"], extracted_config_params, output_lib)
     return cpu_info
-
-def read_fpga_info_from_json(fpga_series_number):
-    with open('../dataset/fpga/fpga_rc.json', 'r') as file:
-        data = json.load(file)
-    for device in data:
-        if device["Part"] == fpga_series_number:
-            return device
-    return None  # Return None if the part number is not found
-
 
 if __name__ == '__main__':
     read_cpu_info_from_json('../dataset/constraints/RocketChip_Config.json')

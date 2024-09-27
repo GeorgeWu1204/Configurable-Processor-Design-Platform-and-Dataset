@@ -1,5 +1,6 @@
 import os.path as osp
-from utils import read_cpu_info_from_json, read_fpga_info_from_json
+from utils import read_cpu_info_from_json
+from constraints import target_fpga_info
 
 def define_cpu_settings():
     # CPU Info
@@ -15,13 +16,13 @@ def define_cpu_settings():
     
     # FPGA Info
     while True:
-        fpga_device = input("Enter the target FPGA series number or type 'exit' to quit:  ")
-        if fpga_device.lower() == 'exit':
-            exit("Exiting the program.")
-        targetfpga = read_fpga_info_from_json(fpga_device)
-        if targetfpga is not None:
+        fpga_device = input(" If consider the deployability on target FPGA, enter target FPGA series number \n Otherwise, type SIM to ignore this ")
+        if fpga_device.lower() == 'sim':
+            fpga_info = None
             break
-    cpu_info.add_target_fpga(targetfpga)
+        fpga_info = target_fpga_info(fpga_device)
+        if fpga_info is not None:
+            break
 
     # Tunable Params
     while True:
@@ -48,4 +49,4 @@ def define_cpu_settings():
         choice = input("Do you want to add more output parameters? (y/n): ")
         if choice == 'n':
             break
-    return cpu_info
+    return cpu_info, fpga_info

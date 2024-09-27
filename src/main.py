@@ -5,14 +5,14 @@ from dataset import Processor_Dataset, create_table_from_json
 
 def main():
     # Define the settings of the CPU
-    defined_cpu_info = define_cpu_settings()
-    defined_cpu_info.debug_print()
+    cpu_info, fpga_info = define_cpu_settings()
+    cpu_info.debug_print()
 
     # create_table_from_json(defined_cpu_info, '../dataset/PPA/RocketChip_PPA.db')
 
     # Link the corresponding dataset
-    processor_dataset = Processor_Dataset(defined_cpu_info)
-    processor_dataset.debug_print()
+    processor_dataset = Processor_Dataset(cpu_info)
+    # processor_dataset.debug_print()
 
     # Sampling Mode: Automatically exploring the design space
     if len(sys.argv) == 1 and sys.argv == "Sampling":
