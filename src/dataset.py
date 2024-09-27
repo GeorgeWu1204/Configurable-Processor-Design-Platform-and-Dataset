@@ -2,11 +2,11 @@ import sqlite3
 
 def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
-
     # Start building the CREATE TABLE command
     dataset_name = f"{cpu_info.cpu_name}_PPA"
     sql_command = f"CREATE TABLE IF NOT EXISTS {dataset_name} (\n"
-    sql_command += "    config_id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+    # sql_command += "    config_id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+
     # Add Configurable Parameters to the table
     for param in cpu_info.config_params.params:
         sql_command += f"    {param.name} INTEGER,\n"
@@ -22,6 +22,7 @@ def create_table_from_json(cpu_info, dataset_direct):
         sql_command += f"    Benchmark_{metric} INTEGER,\n"
     # Remove the last comma and add closing parenthesis
     sql_command = sql_command.rstrip(',\n') + '\n)'
+    print(sql_command)
     # Connect to the SQLite database and execute the command
     try:
         conn = sqlite3.connect(dataset_direct)
@@ -39,21 +40,32 @@ class Processor_Dataset:
         self.cpu_info = cpu_info
         self.dataset_name = f"{self.cpu_info.cpu_name}_PPA"
         self.dataset_directory = f'../dataset/PPA/{self.dataset_name}.db'
-        
+        temp_data_index = 0
+        self.resource_utilisation_indexes = []
+        self.target_obj_indexes = []
+
         # Prepare Insertion Command
         self.insert_command = f"INSERT INTO {self.dataset_name} ( "
         for param in self.cpu_info.config_params.params:
             self.insert_command += f"{param.name},\n"
+            temp_data_index += 1
         # Output Params
         ## 1. Power
         for metric in self.cpu_info.supported_output_objs.power.metrics:
             self.insert_command += f"Power_{metric},\n"
+            temp_data_index += 1
         ## 2. Resource_Utilisation
         for metric in self.cpu_info.supported_output_objs.resource.metrics:
             self.insert_command += f"Resource_Utilisation_{metric},\n"
+            self.resource_utilisation_indexes.append(temp_data_index)
+            temp_data_index += 1
         ## 3. Benchmark Performance
         for metric in self.cpu_info.supported_output_objs.benchmark.metrics:
             self.insert_command += f"Benchmark_{metric},\n"
+            if metric in self.cpu_info.target_objs:
+                self.target_obj_indexes.append(temp_data_index)
+            temp_data_index += 1
+
         self.insert_command = self.insert_command.rstrip(',\n') + ') VALUES ('
         for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts):
             self.insert_command += '?, '
@@ -106,6 +118,35 @@ class Processor_Dataset:
 
         return results
     
+    def fetch_single_data_acc_to_def(self, data_input):
+        """Fetch data based on certain input values and return it as {"FPGA_Deployability": True, "Objectives": }"""
+        data_to_fetch = self.default_params
+        results = []
+        for i in range(len(data_input)):
+            data_to_fetch[self.cpu_info.tunable_params[i]] = data_input[i]
+        try:
+            conn = sqlite3.connect(self.dataset_directory)
+            # Create a cursor object and execute the SQL command
+            cursor = conn.cursor()
+            cursor.execute(self.fetch_command, data_to_fetch)
+            # Fetch all results from the cursor
+            columns = [column[0] for column in cursor.description]
+            rows = cursor.fetchall()
+            # print("Colums are:")
+            # print(columns)
+
+            # print("Rows are:")
+            # print(rows)
+            # Convert each row into a dictionary
+            for row in rows:
+                results.append(dict(zip(columns, row)))
+
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
+
+        return results
+
+    
     def debug_print(self):
         print("Insert Command is ")
         print(self.insert_command)
@@ -113,6 +154,10 @@ class Processor_Dataset:
         print(self.fetch_command)
         print("Default Params")
         print(self.default_params)
+        print("Resource Indexes")
+        print(self.resource_utilisation_indexes)
+        print("Objective Indexes")
+        print(self.target_obj_indexes)
 
 if __name__ == '__main__':
     pass

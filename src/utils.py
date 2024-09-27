@@ -70,13 +70,16 @@ class object_cpu_info:
             if not param.check_self_validity(new_design[param.index]):
                 return False
         # Cofnitional constraints
-        return True
-    def check_fpga_deployability(self, synthesis_results):
-        if self.target_fpga is None:
-            return False
+            #TODO
         return True
     
+    # def check_fpga_deployability(self, synthesis_results):
+    #     if self.target_fpga is None:
+    #         return False
+    #     return True
+    
     def debug_print(self):
+        print(f"CPU Name is {self.cpu_name}")
         print(f"All Supported Parameters are {self.config_params.params_map.keys()}")
         print(f"Tunable Parameters are {self.tunable_params}")
         print(f"Target Objs are {self.target_objs}")

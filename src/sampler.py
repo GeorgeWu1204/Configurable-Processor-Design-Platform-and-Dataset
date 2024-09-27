@@ -1,28 +1,25 @@
-from scipy.stats import qmc
-import torch
+import numpy as np
 
-class initial_sampler:
-    def __init__(self, input_dim, constraint_set=None, data_set=None, gen_type=torch.float, gen_device=torch.device('cpu')):    
-        # self.dim_ranges = constraint_set.get_self_bounds()
-        self.input_dim = input_dim
-        # The reason to use this sampler is that it could guarantee to only generate unique points.
-        self.sampler = qmc.Sobol(d=self.input_dim, scramble=True)
-        self.constraint_set = constraint_set
-        self.data_set = data_set
-        self.type = gen_type
-        self.device = gen_device
+def generate_samples(sample_num, data_dimension, ranges):
+    if len(ranges) != data_dimension:
+        raise ValueError("Length of ranges must match the data dimension.")
+    # Calculate number of points per dimension by rounding to the nearest integer
+    points_per_dimension = int(sample_num ** (1 / data_dimension))
+    # Create grid for each dimension based on its range
+    grids = [np.linspace(r[0], r[1], points_per_dimension) for r in ranges]
+    # Create meshgrid to get all combinations of the grid points
+    mesh = np.meshgrid(*grids)
+    # Stack the meshgrid into a sample matrix
+    sample_matrix = np.stack(mesh, axis=-1).reshape(-1, data_dimension)
+    # If the number of samples is larger than required, truncate the samples
+    if sample_matrix.shape[0] > sample_num:
+        sample_matrix = sample_matrix[:sample_num]
+    return sample_matrix
 
-    def generate_samples(self, num_samples):
-        # Generate samples
-        samples = torch.tensor(self.sampler.random(n=num_samples), device=self.device, dtype=self.type)
-        return samples
-    
-    def generate_valid_initial_data(self, num_samples,output_dim, data_set, obj_normalized_factors):
-        """This function is used to generate valid initial data that meet the input constraints and also the output constraints"""
-        train_x = torch.empty((num_samples, self.input_dim), device=self.device, dtype=self.type)
-        exact_objs = torch.empty((num_samples, output_dim), device=self.device, dtype=self.type)
-        con_objs = torch.empty((num_samples, 1), device=self.device, dtype=self.type)
-        normalised_objs = torch.empty((num_samples, output_dim), device=self.device, dtype=self.type)
-        valid_sample_index = 0
-        possible_initial_tensor = self.generate_samples(num_samples)
+# Example usage
+sample_num = 100
+data_dimension = 2
+ranges = [(0, 10), (5, 15)]
 
+samples = generate_samples(sample_num, data_dimension, ranges)
+print(samples)
