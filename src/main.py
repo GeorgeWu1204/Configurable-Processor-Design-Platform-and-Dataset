@@ -11,7 +11,7 @@ def main():
     # create_table_from_json(defined_cpu_info, '../dataset/PPA/RocketChip_PPA.db')
 
     # Link the corresponding dataset
-    processor_dataset = Processor_Dataset(cpu_info)
+    processor_dataset = Processor_Dataset(cpu_info, fpga_info)
     # processor_dataset.debug_print()
 
     # Sampling Mode: Automatically exploring the design space

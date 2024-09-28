@@ -5,3 +5,7 @@
 [submodule "processors/rocket-chip"]
 	path = processors/rocket-chip
 	url = https://github.com/chipsalliance/rocket-chip.git
+	
+[submodule "processors/chipyard"]
+	path = processors/chipyard
+	url = https://github.com/ucb-bar/chipyard.git
