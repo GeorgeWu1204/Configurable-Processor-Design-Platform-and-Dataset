@@ -142,8 +142,11 @@ class Processor_Dataset:
             cursor.execute(self.fetch_command, data_to_fetch)
             # Fetch all results from the cursor
             rows = cursor.fetchall()
-            print(self.resource_utilisation_indexes)
-            print(rows)
+            if len(rows) == 0:
+                # TODO
+                pass
+                quit()
+                
             rc_results = [rows[0][i] for i in self.resource_utilisation_indexes]
             target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
             
@@ -154,6 +157,8 @@ class Processor_Dataset:
             print(f"An error occurred: {e}")
 
         return results
+    
+
 
     
     def debug_print(self):
@@ -167,6 +172,10 @@ class Processor_Dataset:
         print(self.resource_utilisation_indexes)
         print("Objective Indexes")
         print(self.target_obj_indexes)
+
+
+
+
 
 if __name__ == '__main__':
     pass
