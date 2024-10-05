@@ -1,4 +1,6 @@
 import sqlite3
+from processor_tuning import Rocket_Chip_Tuner, BOOM_Chip_Tuner
+
 
 def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
@@ -19,7 +21,8 @@ def create_table_from_json(cpu_info, dataset_direct):
         sql_command += f"    Resource_Utilisation_{metric} INTEGER,\n"
     ## 3. Benchmark Performance
     for metric in cpu_info.supported_output_objs.benchmark.metrics:
-        sql_command += f"    Benchmark_{metric} INTEGER,\n"
+        tmp_benchmark_metric = metric.replace("-", "_")
+        sql_command += f"    Benchmark_{tmp_benchmark_metric} INTEGER,\n"
     
     ## Define the Primary Key
     sql_command += "    PRIMARY KEY ("
@@ -51,6 +54,8 @@ class Processor_Dataset:
         temp_data_index = 0
         self.resource_utilisation_indexes = []
         self.target_obj_indexes = []
+        tuner_list = {"RocketChip" : Rocket_Chip_Tuner, "BOOM" : BOOM_Chip_Tuner}
+        self.tuner = tuner_list[self.cpu_info.cpu_name] (cpu_info)
 
         # Prepare Insertion Command
         self.insert_command = f"INSERT INTO {self.dataset_name} ( "
@@ -111,7 +116,7 @@ class Processor_Dataset:
         data_to_fetch = self.default_params
         results = []
         for i in range(len(data_input)):
-            data_to_fetch[self.cpu_info.tunable_params[i]] = data_input[i]
+            data_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
         try:
             conn = sqlite3.connect(self.dataset_directory)
             # Create a cursor object and execute the SQL command
@@ -134,7 +139,7 @@ class Processor_Dataset:
         data_to_fetch = self.default_params
         results = []
         for i in range(len(data_input)):
-            data_to_fetch[self.cpu_info.tunable_params[i]] = data_input[i]
+            data_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
         try:
             conn = sqlite3.connect(self.dataset_directory)
             # Create a cursor object and execute the SQL command

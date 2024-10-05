@@ -89,3 +89,7 @@ Then need to modify according to the issue proposed [GitHub Issue](https://githu
 ```git checkout 1.12.3```
 ```cd chipyard```
 ```./build-setup.sh riscv-tools```
+```source env.sh```
+Benchmark Execution
+```cd sims/verilator``
+```make run-binary CONFIG=MediumBoomV3Config BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/dhrystone.riscv```

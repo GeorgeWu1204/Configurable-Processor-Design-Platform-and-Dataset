@@ -43,13 +43,13 @@ class object_cpu_info:
         self.cpu_name = name
         self.config_params = params
         self.supported_output_objs = output_objs
-        self.tunable_params = []  
+        self.tunable_params_index = []  
         self.target_objs = []
 
     def update_tunable_param(self, target_tunable_param):
         for param in self.config_params.params:
             if param.name == target_tunable_param:
-                self.tunable_params.append(param.index)
+                self.tunable_params_index.append(param.index)
                 return True
         return False        
 
@@ -75,7 +75,7 @@ class object_cpu_info:
     def debug_print(self):
         print(f"CPU Name is {self.cpu_name}")
         print(f"All Supported Parameters are {self.config_params.params_map.keys()}")
-        print(f"Tunable Parameters are {self.tunable_params}")
+        print(f"Tunable Parameters are {self.tunable_params_index}")
         print(f"Target Objs are {self.target_objs}")
 
 

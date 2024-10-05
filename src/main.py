@@ -7,11 +7,13 @@ def main():
     # Define the settings of the CPU
     cpu_info, fpga_info = define_cpu_settings()
     # cpu_info.debug_print()
+    # quit()
     print()
-    # create_table_from_json(defined_cpu_info, '../dataset/PPA/RocketChip_PPA.db')
-
+    create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
+    quit()
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
+    quit()
     # processor_dataset.debug_print()
 
     # Sampling Mode: Automatically exploring the design space
