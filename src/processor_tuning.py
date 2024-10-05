@@ -236,47 +236,62 @@ class BOOM_Chip_Tuner:
         self.generated_logfile = '../processors/Logs/'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/BoomConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/boom/src/main/scala/v3/common/config-mixins.scala'
+        self.cpu_info = cpu_info
+    
+    def modify_custom_cpu(self, n):
+        with open(self.cpu_level_config_file, 'r') as file:
+            lines = file.readlines()
+        pattern = re.compile(r'new boom\.v3\.common\.WithNCustomBooms\(\d+\)')
+        for i, line in enumerate(lines):
+            if 'class CustomisedBoomV3Config' in line:
+
+                for j in range(i+1, len(lines)):
+                    if pattern.search(lines[j]):
+                        lines[j] = pattern.sub(f'new boom.v3.common.WithNCustomBooms({n})', lines[j])
+                        break
+                break
+        with open(self.cpu_level_config_file, 'w') as file:
+            file.writelines(lines)
+
+    def modify_custom_core_internal_config(self, input_vals):
+        params_name = list(self.cpu_info.config_params.params_map.keys())
+        with open(self.core_level_configuration_file, 'r') as file:
+            lines = file.readlines()
+
+        new_lines = []
+        cache_context = None  # Track whether we're inside a dcache or icache block
+
+        for line in lines:
+            if 'DCacheParams' in line:
+                cache_context = 'dcache'
+            elif 'ICacheParams' in line:
+                cache_context = 'icache'
+            elif cache_context and ')' in line:  # Check for end of cache block
+                cache_context = None
+            
+            modified_line = line
+            if cache_context:
+                for param, value in zip(params_name, input_vals):
+                    if param.startswith(cache_context):
+                        param_name = param.split('_')[1]
+                        pattern = re.compile(rf'(\b{param_name}\s*=\s*)(\d+)')
+                        modified_line = pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
+            else:
+                for param, value in zip(params_name, input_vals):
+                    if not ('dcache' in param or 'icache' in param):
+                        core_param_pattern = re.compile(rf'(\b{re.escape(param)}\s*=\s*)(\d+)')
+                        modified_line = core_param_pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
+
+            new_lines.append(modified_line)
+
+        with open(self.core_level_configuration_file, 'w') as file:
+            file.writelines(new_lines)
 
     def modify_config_files(self, input_vals):
-
-
-        
-        with open(self.configuration_file, 'r') as file:
-            scala_code = file.read()
-        
-        # Regular expression to find the WithCustomisedCore class definition
-        class_pattern = re.compile(r'\bclass\s+WithNCustomBooms\(\s*n\s*:\s*Int\s*=\s*1\s*\)\s*extends\s*Config\(', re.DOTALL)
-        match = class_pattern.search(scala_code)
-        
-        if match:
-            print("pass")
-            # params = match.group(1)
-            # body = match.group(4)
-            # for var_name, var_val in zip(self.tunable_params, input_vals):
-            #     class_name, sub_name = var_name.split('_')
-            #     print(class_name, sub_name)
-            #     if class_name == 'icache':
-            #         pattern = re.compile(r'icache\s*=\s*Some\(ICacheParams\((.*?)\)\)', re.DOTALL)
-            #         match = pattern.search(body)
-            #     elif class_name == 'dcache':
-            #         pattern = re.compile(r'dcache\s*=\s*Some\(DCacheParams\((.*?)\)\)', re.DOTALL)
-            #         match = pattern.search(body)
-            #     if match:
-            #         params = match.group(1)
-            #         sub_pattern = re.compile(rf'{sub_name}\s*=\s*\d+')
-            #         if sub_pattern.search(params):
-            #             new_params = sub_pattern.sub(f'{sub_name} = {var_val}', params)
-            #             new_body = body.replace(params, new_params)
-            #             scala_code = scala_code.replace(body, new_body)
-            #             body = new_body  # update the body for subsequent iterations
-            #         else:
-            #             print(f"{sub_name} not found in {class_name} parameters.")
-            #     else:
-            #         print(f"{class_name} class not found in the body.")
-            with open(self.configuration_file, 'w') as file:
-                file.write(scala_code)
-        else:
-            print("WithCustomisedCore class definition not found.")
+        # CPU's overall configuration, Only modify the number of Cores
+        self.modify_custom_cpu(input_vals[0])
+        # Core's internal configuration
+        self.modify_custom_core_internal_config(input_vals[1:])
 
     def extract_mcycle_minstret(self):
         # Initialize variables to store mcycle and minstret
@@ -353,7 +368,4 @@ class BOOM_Chip_Tuner:
 
 
 if __name__ == '__main__':
-    rocket_test = Rocket_Chip_Tuner(['icache_nSets', 'dcache_nSets'], [0, 0], '../processors/rocket-chip/emulator', '../processors/Vivado_Prj/rocket_chip/')
-    # rocket_test.tune_and_run_performance_simulation([32, 64], 'dhrystone')
-    print("hihi")
-    rocket_test.run_synthesis()
+    pass

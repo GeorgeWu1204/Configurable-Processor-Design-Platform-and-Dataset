@@ -9,13 +9,13 @@ def main():
     # cpu_info.debug_print()
     # quit()
     print()
-    create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
-    quit()
+    # create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
+    # quit()
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
-    quit()
     # processor_dataset.debug_print()
-
+    processor_dataset.tuner.modify_config_files([1, 1, 1, 1, 1, 1, 1, 1, 1])
+    quit()
     # Sampling Mode: Automatically exploring the design space
     if len(sys.argv) == 1 and sys.argv == "Sampling":
         pass
