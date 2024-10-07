@@ -1,1 +1,3 @@
 src/__pycache__/
+processors/Vivado_Prj/
+processors/chipyard/
