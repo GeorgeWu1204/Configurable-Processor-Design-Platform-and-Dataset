@@ -226,14 +226,14 @@ class Rocket_Chip_Tuner:
 class BOOM_Chip_Tuner:
     """This is the tuner for scr1 Cores, it could automatically customise the processor according to the param settings"""
     def __init__(self, cpu_info):
-        self.generation_path = '../processors/chipyard/sim/verilator'
+        self.generation_path = '../processors/chipyard/sims/verilator'
         self.vivado_project_path = '../../tools/BOOM/run_BOOM_synthesis.tcl'
         self.tcl_path = '../../processors/tools/BOOM/run_BOOM_synthesis.tcl'
         # Log file for the generated reports
         self.generated_report_num = 0
         self.generated_report_directory = '../processors/Proc_Report/'
         self.generated_filename = 'rocket_utilization_synth.rpt'
-        self.generated_logfile = '../processors/Logs/'
+        self.generated_logfile = '../processors/Logs/Generation_Log/'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/BoomConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/boom/src/main/scala/v3/common/config-mixins.scala'
         self.cpu_info = cpu_info
@@ -254,7 +254,8 @@ class BOOM_Chip_Tuner:
             file.writelines(lines)
 
     def modify_custom_core_internal_config(self, input_vals):
-        params_name = list(self.cpu_info.config_params.params_map.keys())
+        # This is because the 0 index describing the number of cores.
+        params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
         with open(self.core_level_configuration_file, 'r') as file:
             lines = file.readlines()
 
@@ -326,16 +327,22 @@ class BOOM_Chip_Tuner:
         
         return mcycle, minstret
 
-    def tune_and_run_performance_simulation(self, new_value, benchmark):
+    def tune_and_run_performance_simulation(self, new_value):
         try:
             # generate the design
-            rounded_value = [round(val) for val in new_value]   
-            self.modify_config_files(rounded_value)
+            self.modify_config_files(new_value)
+
             clean_command = ["make", "clean"]
             subprocess.run(clean_command, cwd = self.generation_path, check=True)
-            run_benchmark_command = ["make", "-j12", "CONFIG=freechips.rocketchip.system.CustomisedConfig", f"output/{benchmark}.riscv.run"]
+            run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
+            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+
+            benchmark = "dhrystone"
+            run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark}.riscv"]
             with open(self.generated_logfile + 'Processor_Generation.log', 'w') as f:
                 subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
+
+            quit()
             minstret, mcycle = self.extract_mcycle_minstret()
             if mcycle is None:
                 return False, None, None

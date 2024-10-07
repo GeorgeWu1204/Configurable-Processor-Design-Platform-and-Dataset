@@ -14,7 +14,7 @@ def main():
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
     # processor_dataset.debug_print()
-    processor_dataset.tuner.modify_config_files([1, 1, 1, 1, 1, 1, 1, 1, 1])
+    processor_dataset.tuner.tune_and_run_performance_simulation([1, 4, 1, 32, 64, 4, 8, 64, 4])
     quit()
     # Sampling Mode: Automatically exploring the design space
     if len(sys.argv) == 1 and sys.argv == "Sampling":
