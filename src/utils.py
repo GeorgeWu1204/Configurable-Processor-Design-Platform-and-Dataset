@@ -30,6 +30,17 @@ class classification_metrics:
         self.value = None
         self.constraints = None
 
+class target_benchmark_metrics:
+    def __init__(self, benchmark_name, benchmark_activated_metrics):
+        self.name = benchmark_name
+        self.activated_benchmark_metric = {
+            "exe_time"   :  "exe_time" in benchmark_activated_metrics,
+            "throughput" :  "throughput" in benchmark_activated_metrics,
+            "mcycles"    :  "mcycles" in benchmark_activated_metrics,
+            "minstret"   :  "minstret" in benchmark_activated_metrics                  
+                                           }
+            
+
 class output_params:
     def __init__(self, Power, Resource_Utilisation, Benchmark):
         self.power = Power
@@ -44,17 +55,19 @@ class object_cpu_info:
         self.config_params = params
         self.supported_output_objs = output_objs
         self.tunable_params_index = []  
-        self.target_objs = []
+        self.tunable_params_name = []
+        self.target_benchmark = []
 
     def update_tunable_param(self, target_tunable_param):
         for param in self.config_params.params:
             if param.name == target_tunable_param:
                 self.tunable_params_index.append(param.index)
+                self.tunable_params_name.append(target_tunable_param)
                 return True
         return False        
 
-    def update_target_objs(self, target_objs):
-        self.target_objs.append(target_objs)
+    def update_target_benchmark(self, target_benchmark, target_benchmark_metric):
+        self.target_benchmark.append(target_benchmark_metrics(target_benchmark, target_benchmark_metric))
 
     def check_parameter_validity(self, new_design):
         if len(new_design) != len(self.config_params):
@@ -67,16 +80,20 @@ class object_cpu_info:
             #TODO
         return True
     
-    # def check_fpga_deployability(self, synthesis_results):
-    #     if self.target_fpga is None:
-    #         return False
-    #     return True
-    
     def debug_print(self):
         print(f"CPU Name is {self.cpu_name}")
         print(f"All Supported Parameters are {self.config_params.params_map.keys()}")
         print(f"Tunable Parameters are {self.tunable_params_index}")
-        print(f"Target Objs are {self.target_objs}")
+        print(f"Target Objs are {self.target_benchmark}")
+    
+    def display_summary(self):
+        print("\n<--------------Settings Summary------------->")
+        print(f"CPU Name is {self.cpu_name}")
+        print(f"Configurable Parameters {self.tunable_params_name}")
+        print(f"Benchmark and Metrics include: ")
+        for benchmark in self.target_benchmark:
+            print(f"Name: {benchmark.name} Metrics : {benchmark.activated_benchmark_metric}")
+
 
 
 def read_cpu_info_from_json(json_file):

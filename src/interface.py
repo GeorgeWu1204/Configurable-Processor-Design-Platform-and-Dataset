@@ -42,11 +42,16 @@ def define_cpu_settings():
     while True:
         output_name = input("Enter the name of the RISC-V benchmark: ")
         if output_name in supported_benchmarks:
-            cpu_info.update_target_objs(output_name)
+            print("There are four performance metrics available for this benchmark")
+            print("exe_time, throughput, mcycles, minstret")
+            tmp_metrics = input("Type the metric you want to consider, split by ,")
+            considered_metrics = tmp_metrics.split(", ")
+            cpu_info.update_target_benchmark(output_name, considered_metrics)
         else:
             print("The benchmark does not exist in the database. Please try again.")
             continue
         choice = input("Do you want to add more output parameters? (y/n): ")
         if choice == 'n':
             break
+    cpu_info.display_summary()
     return cpu_info, fpga_info

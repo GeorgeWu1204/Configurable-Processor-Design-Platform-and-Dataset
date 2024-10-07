@@ -233,7 +233,7 @@ class BOOM_Chip_Tuner:
         self.generated_report_num = 0
         self.generated_report_directory = '../processors/Proc_Report/'
         self.generated_filename = 'rocket_utilization_synth.rpt'
-        self.generated_logfile = '../processors/Logs/Generation_Log/'
+        self.generated_logfile = '../processors/Logs/Generation_Log/Processor_Generation.log'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/BoomConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/boom/src/main/scala/v3/common/config-mixins.scala'
         self.cpu_info = cpu_info
@@ -294,63 +294,75 @@ class BOOM_Chip_Tuner:
         # Core's internal configuration
         self.modify_custom_core_internal_config(input_vals[1:])
 
-    def extract_mcycle_minstret(self):
-        # Initialize variables to store mcycle and minstret
-        mcycle = None
-        minstret = None
-        
-        # Define the regex patterns to match the desired lines
-        mcycle_pattern = re.compile(r'mcycle\s*=\s*(\d+)')
-        minstret_pattern = re.compile(r'minstret\s*=\s*(\d+)')
-        
-        # Open the file and read its contents
-        with open(self.generated_logfile + 'Processor_Generation.log', 'r') as file:
-            lines = file.readlines()
-        
-        # Iterate over the lines to find the section and extract values
-        for line in lines:
-            if 'Microseconds for one run through Dhrystone:' in line:
-                # Once we find the section, we start looking for mcycle and minstret
-                for subsequent_line in lines[lines.index(line):]:
-                    mcycle_match = mcycle_pattern.search(subsequent_line)
-                    minstret_match = minstret_pattern.search(subsequent_line)
-                    
-                    if mcycle_match:
-                        mcycle = int(mcycle_match.group(1))
-                    
-                    if minstret_match:
-                        minstret = int(minstret_match.group(1))
-                    
-                    # Break the loop once both values are found
-                    if mcycle is not None and minstret is not None:
-                        break
-        
-        return mcycle, minstret
+    def extract_metrics_from_log(self):
+        # Define the regular expressions to capture the required metrics
+        time_pattern = r"Microseconds for one run through Dhrystone: (\d+)"
+        throughput_pattern = r"Dhrystones per Second: +(\d+)"
+        mcycles_pattern = r"mcycle = (\d+)"
+        minstret_pattern = r"minstret = (\d+)"
+        # Prepare to store the values
+        metrics = {
+            "exe_time": None,
+            "throughput": None,
+            "mcycles": None,
+            "minstret": None
+        }
+
+        try:
+            # Open the log file
+            with open(self.generated_logfile, 'r') as file:
+                # Read all lines from the file
+                log_content = file.read()
+
+                # Search for exe_time
+                time_match = re.search(time_pattern, log_content)
+                if time_match:
+                    metrics["exe_time"] = int(time_match.group(1))
+
+                # Search for throughput
+                throughput_match = re.search(throughput_pattern, log_content)
+                if throughput_match:
+                    metrics["throughput"] = int(throughput_match.group(1))
+
+                # Search for mcycles
+                mcycles_match = re.search(mcycles_pattern, log_content)
+                if mcycles_match:
+                    metrics["mcycles"] = int(mcycles_match.group(1))
+
+                # Search for minstret
+                minstret_match = re.search(minstret_pattern, log_content)
+                if minstret_match:
+                    metrics["minstret"] = int(minstret_match.group(1))
+
+        except FileNotFoundError:
+            print(f"Error: The file {self.generated_logfile} does not exist.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+        return metrics
 
     def tune_and_run_performance_simulation(self, new_value):
         try:
             # generate the design
             self.modify_config_files(new_value)
-
             clean_command = ["make", "clean"]
             subprocess.run(clean_command, cwd = self.generation_path, check=True)
             run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
             subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            performance_results = {}
+            for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
+                run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
+                with open(self.generated_logfile + 'Processor_Generation.log', 'w') as f:
+                    subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
+                performance_results[benchmark_to_examine] = self.extract_metrics_from_log()
 
-            benchmark = "dhrystone"
-            run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark}.riscv"]
-            with open(self.generated_logfile + 'Processor_Generation.log', 'w') as f:
-                subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-
-            quit()
-            minstret, mcycle = self.extract_mcycle_minstret()
-            if mcycle is None:
-                return False, None, None
-            return True, minstret, mcycle
+            if len(performance_results) == 0:
+                return False, None
+            return True, performance_results
         except subprocess.CalledProcessError as e:
             # Optionally, log the error message from the exception
             print(f"Error occurred: {e}")
-            return False, None, None
+            return False, None
     
     def run_synthesis(self):
         '''Run synthesis using the new parameters.'''
@@ -375,4 +387,5 @@ class BOOM_Chip_Tuner:
 
 
 if __name__ == '__main__':
+    
     pass

@@ -22,7 +22,8 @@ def create_table_from_json(cpu_info, dataset_direct):
     ## 3. Benchmark Performance
     for metric in cpu_info.supported_output_objs.benchmark.metrics:
         tmp_benchmark_metric = metric.replace("-", "_")
-        sql_command += f"    Benchmark_{tmp_benchmark_metric} INTEGER,\n"
+        for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
+            sql_command += f"    Benchmark_{tmp_benchmark_metric}_{benchmark_criterion} INTEGER,\n"
     
     ## Define the Primary Key
     sql_command += "    PRIMARY KEY ("
@@ -63,21 +64,30 @@ class Processor_Dataset:
             self.insert_command += f"{param.name},\n"
             temp_data_index += 1
         # Output Params
+
         ## 1. Power
         for metric in self.cpu_info.supported_output_objs.power.metrics:
             self.insert_command += f"Power_{metric},\n"
             temp_data_index += 1
+
         ## 2. Resource_Utilisation
         for metric in self.cpu_info.supported_output_objs.resource.metrics:
             self.insert_command += f"Resource_Utilisation_{metric},\n"
             self.resource_utilisation_indexes.append(temp_data_index)
             temp_data_index += 1
+            
         ## 3. Benchmark Performance
         for metric in self.cpu_info.supported_output_objs.benchmark.metrics:
-            self.insert_command += f"Benchmark_{metric},\n"
-            if metric in self.cpu_info.target_objs:
-                self.target_obj_indexes.append(temp_data_index)
-            temp_data_index += 1
+            tmp_benchmark_metric = metric.replace("-", "_")
+            for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
+                self.insert_command += f"    Benchmark_{tmp_benchmark_metric}_{benchmark_criterion},\n"
+            # This is for evaluation purposes
+            for target_benchmark in self.cpu_info.target_benchmark:
+                if target_benchmark.name == metric:
+                    for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
+                        if target_benchmark.activated_benchmark_metric[benchmark_criterion] == True:
+                            self.target_obj_indexes.append(temp_data_index)
+                    temp_data_index += 1
 
         self.insert_command = self.insert_command.rstrip(',\n') + ') VALUES ('
         for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts):
@@ -163,8 +173,6 @@ class Processor_Dataset:
 
         return results
     
-
-
     
     def debug_print(self):
         print("Insert Command is ")

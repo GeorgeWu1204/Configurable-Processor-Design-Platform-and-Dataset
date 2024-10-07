@@ -9,8 +9,8 @@ def main():
     # cpu_info.debug_print()
     # quit()
     print()
-    # create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
-    # quit()
+    create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
+    quit()
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
     # processor_dataset.debug_print()
