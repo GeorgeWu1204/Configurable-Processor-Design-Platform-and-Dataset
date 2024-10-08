@@ -28,6 +28,13 @@
             "BRAM": 0,
             "DSP": 0
         },
+        "Timing" : {
+            "Period": 0,
+            "WNS" : 0,
+            "Setup_Worst_Slack": 0,
+            "Hold_Worst_Slack": 0,
+            "PW_Worst_Slack": 0
+        },
         "Benchmark" : {
             "common": 0,
             "dhrystone": 0,

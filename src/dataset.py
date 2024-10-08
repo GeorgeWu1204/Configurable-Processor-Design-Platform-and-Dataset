@@ -32,7 +32,7 @@ def create_table_from_json(cpu_info, dataset_direct):
 
     # Remove the last comma and add closing parenthesis
     sql_command = sql_command.rstrip(',') + '  ) \n)'
-    print(sql_command)
+    # print(sql_command)
     # Connect to the SQLite database and execute the command
     try:
         conn = sqlite3.connect(dataset_direct)
@@ -93,7 +93,6 @@ class Processor_Dataset:
         for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts):
             self.insert_command += '?, '
         self.insert_command = self.insert_command.rstrip(', ') + ')'
- 
         # Prepare Fetch Command
         self.fetch_command = f"SELECT * FROM {self.dataset_name} WHERE "
         for i, param in enumerate(self.cpu_info.config_params.params):

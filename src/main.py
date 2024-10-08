@@ -9,13 +9,14 @@ def main():
     # cpu_info.debug_print()
     # quit()
     print()
-    create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
-    quit()
+    # create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
+    # quit()
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
     # processor_dataset.debug_print()
-    processor_dataset.tuner.tune_and_run_performance_simulation([1, 4, 1, 32, 64, 4, 8, 64, 4])
-    quit()
+    # processor_dataset.tuner.tune_and_run_performance_simulation([1, 4, 1, 32, 64, 4, 8, 64, 4])
+    # processor_dataset.tuner.run_synthesis()
+    print(processor_dataset.tuner.extract_worst_slack())
     # Sampling Mode: Automatically exploring the design space
     if len(sys.argv) == 1 and sys.argv == "Sampling":
         pass
