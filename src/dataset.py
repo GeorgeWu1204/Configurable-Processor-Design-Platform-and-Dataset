@@ -1,6 +1,6 @@
 import sqlite3
 from processor_tuning import Rocket_Chip_Tuner, BOOM_Chip_Tuner
-
+from sampler import Sampler
 
 def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
@@ -57,8 +57,12 @@ class Processor_Dataset:
         temp_data_index = 0
         self.resource_utilisation_indexes = []
         self.target_obj_indexes = []
+        # Create Tuner Object
         tuner_list = {"RocketChip" : Rocket_Chip_Tuner, "BOOM" : BOOM_Chip_Tuner}
         self.tuner = tuner_list[self.cpu_info.cpu_name] (cpu_info)
+        # Create Sampler
+        self.sampler = Sampler(cpu_info)
+
 
         # Prepare Insertion Command
         self.insert_command = f"INSERT INTO {self.dataset_name} ( "
@@ -128,29 +132,6 @@ class Processor_Dataset:
             conn.close() 
         except sqlite3.Error as e:
             print(f"An error occurred: {e}")
-
-    def fetch_single_data_as_dict_from_dataset(self, data_input):
-        """Fetch data based on certain input values and return it as a list of dictionaries."""
-        data_to_fetch = self.default_params
-        results = []
-        for i in range(len(data_input)):
-            data_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
-        try:
-            conn = sqlite3.connect(self.dataset_directory)
-            # Create a cursor object and execute the SQL command
-            cursor = conn.cursor()
-            cursor.execute(self.fetch_command, data_to_fetch)
-            # Fetch all results from the cursor
-            columns = [column[0] for column in cursor.description]
-            rows = cursor.fetchall()
-            # Convert each row into a dictionary
-            for row in rows:
-                results.append(dict(zip(columns, row)))
-
-        except sqlite3.Error as e:
-            print(f"An error occurred: {e}")
-
-        return results
     
     def conduct_experiments(self, config_params):
         """Conduct experiments based on the configuration parameters"""
@@ -164,17 +145,29 @@ class Processor_Dataset:
         results = []
         
         for power in self.cpu_info.supported_output_objs.power.metrics:
-            results.append(power_results[power])
+            if power_results[power] == None:
+                results.append(-1)
+            else:
+                results.append(power_results[power])
         
         for utilisation in self.cpu_info.supported_output_objs.resource.metrics:
-            results.append(utilisation_results[utilisation])
+            if utilisation_results[utilisation] == None:
+                results.append(-1)
+            else:
+                results.append(utilisation_results[utilisation])
         
         for timing in self.cpu_info.supported_output_objs.timing.metrics:
-            results.append(timing_results[timing])
+            if timing_results[timing] == None:
+                results.append(-1)
+            else:
+                results.append(timing_results[timing])
 
         for benchmark in self.cpu_info.supported_output_objs.benchmark.metrics:
             for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
-                results.append(performance_results[benchmark][benchmark_criterion])
+                if performance_results[benchmark][benchmark_criterion] == None:
+                    results.append(-1)
+                else:
+                    results.append(performance_results[benchmark][benchmark_criterion])
                 
         return results
 
@@ -214,6 +207,15 @@ class Processor_Dataset:
             Exception(f"An error occurred: {e}")
     
     
+    def design_space_exploration(self):
+        next_sample = self.sampler.find_next_sample()
+        validity, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
+        if validity:
+            self.sampler.mark_sample_complete(next_sample)
+        else:
+            print("Skipping the sample.")
+    
+
     def debug_print(self):
         print("Insert Command is ")
         print(self.insert_command)
@@ -232,6 +234,28 @@ class Processor_Dataset:
 
 if __name__ == '__main__':
     pass
+    # def fetch_single_data_as_dict_from_dataset(self, data_input):
+    #     """Fetch data based on certain input values and return it as a list of dictionaries."""
+    #     data_to_fetch = self.default_params
+    #     results = []
+    #     for i in range(len(data_input)):
+    #         data_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
+    #     try:
+    #         conn = sqlite3.connect(self.dataset_directory)
+    #         # Create a cursor object and execute the SQL command
+    #         cursor = conn.cursor()
+    #         cursor.execute(self.fetch_command, data_to_fetch)
+    #         # Fetch all results from the cursor
+    #         columns = [column[0] for column in cursor.description]
+    #         rows = cursor.fetchall()
+    #         # Convert each row into a dictionary
+    #         for row in rows:
+    #             results.append(dict(zip(columns, row)))
+
+    #     except sqlite3.Error as e:
+    #         print(f"An error occurred: {e}")
+
+    #     return results
     # create_database('processors.db')
     # create_table_from_json('../dataset/constraints/RocketChip_Config.json', 'RocketChip_PPA', '../dataset/PPA/RocketChip_PPA.db')
     # conn = sqlite3.connect('../dataset/PPA/RocketChip_PPA.db')

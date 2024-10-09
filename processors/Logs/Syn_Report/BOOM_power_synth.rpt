@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date             : Wed Oct  9 02:07:49 2024
+| Date             : Wed Oct  9 12:08:51 2024
 | Host             : Precision-Tower-5810 running 64-bit Ubuntu 22.04.4 LTS
 | Command          : report_power -file ../../Logs/Syn_Report/BOOM_power_synth.rpt
 | Design           : ChipTop

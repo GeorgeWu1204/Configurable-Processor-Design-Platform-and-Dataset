@@ -8,17 +8,19 @@ def main():
     cpu_info, fpga_info = define_cpu_settings()
     # cpu_info.debug_print()
     # quit()
-    print()
+    # print()
     # create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
-    # quit()
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
+    print(processor_dataset.sampler.find_next_sample())
+    quit()
+    processor_dataset.tuner.tune_and_run_performance_simulation(1)
     # processor_dataset.debug_print()
     # Sampling Mode: Automatically exploring the design space
     if len(sys.argv) == 1 and sys.argv == "Sampling":
         pass
     # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
-    print(processor_dataset.fetch_single_data_acc_to_def_from_dataset([64]))
+    # print(processor_dataset.fetch_single_data_acc_to_def_from_dataset([64]))
 
 if __name__ == "__main__":
     main()

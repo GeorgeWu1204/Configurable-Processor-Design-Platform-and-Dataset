@@ -346,18 +346,20 @@ class BOOM_Chip_Tuner:
     def tune_and_run_performance_simulation(self, new_value):
         try:
             # generate the design
-            self.modify_config_files(new_value)
-            clean_command = ["make", "clean"]
-            subprocess.run(clean_command, cwd = self.generation_path, check=True)
-            run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
-            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            # self.modify_config_files(new_value)
+            # clean_command = ["make", "clean"]
+            # subprocess.run(clean_command, cwd = self.generation_path, check=True)
+            # run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
+            # subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             performance_results = {}
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
                 with open(self.generated_logfile, 'w') as f:
                     subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
                 performance_results[benchmark_to_examine] = self.extract_metrics_from_log()
-
+                print("<---------------------->")
+                print(benchmark_to_examine)
+                print(performance_results[benchmark_to_examine])
             if len(performance_results) == 0:
                 return False, None
             return True, performance_results
