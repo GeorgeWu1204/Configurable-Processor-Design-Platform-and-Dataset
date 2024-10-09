@@ -135,12 +135,24 @@ class Processor_Dataset:
     
     def conduct_experiments(self, config_params):
         """Conduct experiments based on the configuration parameters"""
-
-        performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
-        self.tuner.run_synthesis()
+        # Performance Simulation   
+        simulation_validity, performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
+        if not simulation_validity:
+            return [-1] * self.cpu_info.supported_output_objs.metric_amounts
+        # Synthesis
+        synthesis_validity = self.tuner.run_synthesis()
+        if not synthesis_validity:
+            return [-1] * self.cpu_info.supported_output_objs.metric_amounts
+        
         utilisation_results = self.tuner.parse_vivado_resource_utilisation_report()
+        print("Utilisation Results")
+        print(utilisation_results)
         power_results = self.tuner.parse_vivado_power_report()
+        print("Power Results")
+        print(power_results)
         timing_results= self.tuner.parse_vivado_timing_report()
+        print("Timing Results")
+        print(timing_results)
 
         results = []
         
@@ -174,6 +186,7 @@ class Processor_Dataset:
     
     def fetch_single_data_acc_to_def_from_dataset(self, data_input):
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
+        # Output (Validity of the data, FPGA Deployability, Target Objectives)
         data_to_fetch = self.default_params
         results = []
         for i in range(len(data_input)):
@@ -191,29 +204,36 @@ class Processor_Dataset:
                 print("No data found in the database. Conducting experiments...")
                 results = self.conduct_experiments(data_to_fetch)
                 data_to_insert = data_to_fetch + results
+                print(data_to_insert)
                 self.insert_single_data(data_to_insert)
-                rc_results = [results[i] for i in self.resource_utilisation_indexes]
-                target_obj_results = [results[i] for i in self.target_obj_indexes]
+                rc_results = [data_to_insert[i] for i in self.resource_utilisation_indexes]
+                target_obj_results = [data_to_insert[i] for i in self.target_obj_indexes]
             else:
                 rc_results = [rows[0][i] for i in self.resource_utilisation_indexes]
                 target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
             
             if  self.fpga_considered:
-                return self.fpga_info.check_fpga_deployability(rc_results), target_obj_results  
+                return True, self.fpga_info.check_fpga_deployability(rc_results), target_obj_results  
             else:
-                return True, target_obj_results          
+                return True, True, target_obj_results          
             
         except sqlite3.Error as e:
             Exception(f"An error occurred: {e}")
+            return False, False, None
     
-    
+
     def design_space_exploration(self):
-        next_sample = self.sampler.find_next_sample()
-        validity, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
-        if validity:
-            self.sampler.mark_sample_complete(next_sample)
-        else:
-            print("Skipping the sample.")
+        """Explore the design space by iteratively querying the dataset."""
+        while True:
+            next_sample = self.sampler.find_next_sample()
+            if len(next_sample) == 0:
+                print("All samples have been evaluated.")
+                break
+            validity, _, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
+            if validity:
+                self.sampler.mark_sample_complete(next_sample)
+            else:
+                print("Skipping the sample.")
     
 
     def debug_print(self):
@@ -227,8 +247,6 @@ class Processor_Dataset:
         print(self.resource_utilisation_indexes)
         print("Objective Indexes")
         print(self.target_obj_indexes)
-
-
 
 
 

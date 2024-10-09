@@ -36,7 +36,6 @@ class EL2_VeeR_Tuner:
                 param_setting+= '-set={param}={value} '.format(param=param, value=value)  
             param_setting += ''
             command = ['make', '-f', os.path.join(rv_root, 'tools/Makefile'), target, param_setting]
-            # print(command)
             # Prepare the command with the expanded environment variable
             # Run the 'make' command in the directory where the Makefile is located
             with open(self.generated_logfile + 'Processor_Generation.log', 'w') as f:
@@ -296,7 +295,7 @@ class BOOM_Chip_Tuner:
         # Core's internal configuration
         self.modify_custom_core_internal_config(input_vals[1:])
 
-    def extract_metrics_from_log(self):
+    def extract_metrics_from_log(self, train_validity):
         # Define the regular expressions to capture the required metrics
         time_pattern = r"Microseconds for one run through Dhrystone: (\d+)"
         throughput_pattern = r"Dhrystones per Second: +(\d+)"
@@ -309,7 +308,8 @@ class BOOM_Chip_Tuner:
             "mcycles": None,
             "minstret": None
         }
-
+        if not train_validity:
+            return metrics
         try:
             # Open the log file
             with open(self.generated_logfile, 'r') as file:
@@ -354,12 +354,21 @@ class BOOM_Chip_Tuner:
             performance_results = {}
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
-                with open(self.generated_logfile, 'w') as f:
-                    subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-                performance_results[benchmark_to_examine] = self.extract_metrics_from_log()
-                print("<---------------------->")
-                print(benchmark_to_examine)
-                print(performance_results[benchmark_to_examine])
+                
+                # For testing
+                performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
+
+
+                # try:
+                #     with open(self.generated_logfile, 'w') as f:
+                #         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
+                #     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True)
+                #     print("<---------------------->")
+                #     print(benchmark_to_examine)
+                #     print(performance_results[benchmark_to_examine])
+                # except subprocess.CalledProcessError as e:
+                #     print(f"Error occurred for the current benchmark {benchmark_to_examine}")
+                #     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
             if len(performance_results) == 0:
                 return False, None
             return True, performance_results
@@ -371,11 +380,16 @@ class BOOM_Chip_Tuner:
     def run_synthesis(self):
         '''Run synthesis using the new parameters.'''
         command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
+        # For testing
+        return True
+
         try:
             with open(self.generated_logfile, 'w') as f:
                 subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
+            return True
         except subprocess.CalledProcessError as e:
             print(f"Error executing Vivado: {e}")
+            return False
     
 
     def parse_vivado_resource_utilisation_report(self):
@@ -389,12 +403,12 @@ class BOOM_Chip_Tuner:
         
         # Define the regular expressions for each resource type
         patterns = {
-            "LUTs": re.compile(r"\|\s*CLB LUTs*\s*\|\s*(\d+)\s*\|"),
+            "LUTs": re.compile(r"\|\s*CLB LUTs\*\s*\|\s*(\d+)\s*\|"),
             "FFs": re.compile(r"\|\s*CLB Registers\s*\|\s*(\d+)\s*\|"),
             "BRAM": re.compile(r"\|\s*Block RAM Tile\s*\|\s*(\d+)\s*\|"),
             "DSP": re.compile(r"\|\s*DSPs\s*\|\s*(\d+)\s*\|")
         }
-        
+        print("here")
         # Open the report file
         with open(self.generated_report_directory + self.generated_utilisation_filename, 'r') as file:
             # Read through each line of the file

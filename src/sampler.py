@@ -38,9 +38,14 @@ class Sampler:
         return rounded_samples
     
     def find_next_sample(self):
+        # This is to continue the evaluation of the samples, if the previous evaluation was terminated before completion due to various problems.
         df = pd.read_csv(self.sample_file_name)
-        next_sample = df[df['Evaluation Complete'] == 0].iloc[0]
-        return list(next_sample.values)[:-1]
+        filtered_df = df[df['Evaluation Complete'] == 0]
+        if not filtered_df.empty:
+            next_sample = filtered_df.iloc[0]
+            return list(next_sample.values)[:-1]
+        else:
+            return [] 
     
     def mark_sample_complete(self, sample):
         df = pd.read_csv(self.sample_file_name)

@@ -47,7 +47,7 @@ class output_params:
         self.resource = Resource_Utilisation
         self.benchmark = Benchmark
         self.timing = Timing
-        self.metric_amounts = len(self.power.metrics) + len(self.resource.metrics) + len(self.benchmark.metrics) 
+        self.metric_amounts = len(self.power.metrics)+ len(self.resource.metrics) + len(self.benchmark.metrics) * 4 + len(self.timing.metrics)
 
 
 class object_cpu_info:
