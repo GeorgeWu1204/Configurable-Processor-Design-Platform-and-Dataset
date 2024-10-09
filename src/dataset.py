@@ -19,7 +19,10 @@ def create_table_from_json(cpu_info, dataset_direct):
     ## 2. Resource_Utilisation
     for metric in cpu_info.supported_output_objs.resource.metrics:
         sql_command += f"    Resource_Utilisation_{metric} INTEGER,\n"
-    ## 3. Benchmark Performance
+    ## 3. Timing
+    for metric in cpu_info.supported_output_objs.timing.metrics:
+        sql_command += f"    Timing_{metric} INTEGER,\n"
+    ## 4. Benchmark Performance
     for metric in cpu_info.supported_output_objs.benchmark.metrics:
         tmp_benchmark_metric = metric.replace("-", "_")
         for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
@@ -32,7 +35,6 @@ def create_table_from_json(cpu_info, dataset_direct):
 
     # Remove the last comma and add closing parenthesis
     sql_command = sql_command.rstrip(',') + '  ) \n)'
-    # print(sql_command)
     # Connect to the SQLite database and execute the command
     try:
         conn = sqlite3.connect(dataset_direct)
@@ -75,8 +77,13 @@ class Processor_Dataset:
             self.insert_command += f"Resource_Utilisation_{metric},\n"
             self.resource_utilisation_indexes.append(temp_data_index)
             temp_data_index += 1
-            
-        ## 3. Benchmark Performance
+
+        ## 3. Timing
+        for metric in self.cpu_info.supported_output_objs.timing.metrics:
+            self.insert_command += f"Timing_{metric},\n"
+            temp_data_index += 1    
+        
+        ## 4. Benchmark Performance
         for metric in self.cpu_info.supported_output_objs.benchmark.metrics:
             tmp_benchmark_metric = metric.replace("-", "_")
             for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
@@ -87,7 +94,9 @@ class Processor_Dataset:
                     for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
                         if target_benchmark.activated_benchmark_metric[benchmark_criterion] == True:
                             self.target_obj_indexes.append(temp_data_index)
-                    temp_data_index += 1
+                        temp_data_index += 1
+                else:
+                    temp_data_index += 4
 
         self.insert_command = self.insert_command.rstrip(',\n') + ') VALUES ('
         for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts):
@@ -120,7 +129,7 @@ class Processor_Dataset:
         except sqlite3.Error as e:
             print(f"An error occurred: {e}")
 
-    def fetch_single_data_as_dict(self, data_input):
+    def fetch_single_data_as_dict_from_dataset(self, data_input):
         """Fetch data based on certain input values and return it as a list of dictionaries."""
         data_to_fetch = self.default_params
         results = []
@@ -143,12 +152,41 @@ class Processor_Dataset:
 
         return results
     
-    def fetch_single_data_acc_to_def(self, data_input):
+    def conduct_experiments(self, config_params):
+        """Conduct experiments based on the configuration parameters"""
+
+        performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
+        self.tuner.run_synthesis()
+        utilisation_results = self.tuner.parse_vivado_resource_utilisation_report()
+        power_results = self.tuner.parse_vivado_power_report()
+        timing_results= self.tuner.parse_vivado_timing_report()
+
+        results = []
+        
+        for power in self.cpu_info.supported_output_objs.power.metrics:
+            results.append(power_results[power])
+        
+        for utilisation in self.cpu_info.supported_output_objs.resource.metrics:
+            results.append(utilisation_results[utilisation])
+        
+        for timing in self.cpu_info.supported_output_objs.timing.metrics:
+            results.append(timing_results[timing])
+
+        for benchmark in self.cpu_info.supported_output_objs.benchmark.metrics:
+            for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
+                results.append(performance_results[benchmark][benchmark_criterion])
+                
+        return results
+
+    
+    def fetch_single_data_acc_to_def_from_dataset(self, data_input):
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
         data_to_fetch = self.default_params
         results = []
         for i in range(len(data_input)):
             data_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
+        print(data_to_fetch)
+
         try:
             conn = sqlite3.connect(self.dataset_directory)
             # Create a cursor object and execute the SQL command
@@ -157,20 +195,23 @@ class Processor_Dataset:
             # Fetch all results from the cursor
             rows = cursor.fetchall()
             if len(rows) == 0:
-                # TODO
-                pass
-                quit()
-                
-            rc_results = [rows[0][i] for i in self.resource_utilisation_indexes]
-            target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
+                print("No data found in the database. Conducting experiments...")
+                results = self.conduct_experiments(data_to_fetch)
+                data_to_insert = data_to_fetch + results
+                self.insert_single_data(data_to_insert)
+                rc_results = [results[i] for i in self.resource_utilisation_indexes]
+                target_obj_results = [results[i] for i in self.target_obj_indexes]
+            else:
+                rc_results = [rows[0][i] for i in self.resource_utilisation_indexes]
+                target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
             
             if  self.fpga_considered:
-                return self.fpga_info.check_fpga_deployability(rc_results), target_obj_results            
+                return self.fpga_info.check_fpga_deployability(rc_results), target_obj_results  
+            else:
+                return True, target_obj_results          
             
         except sqlite3.Error as e:
-            print(f"An error occurred: {e}")
-
-        return results
+            Exception(f"An error occurred: {e}")
     
     
     def debug_print(self):

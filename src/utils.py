@@ -42,10 +42,11 @@ class target_benchmark_metrics:
             
 
 class output_params:
-    def __init__(self, Power, Resource_Utilisation, Benchmark):
+    def __init__(self, Power, Resource_Utilisation, Benchmark, Timing):
         self.power = Power
         self.resource = Resource_Utilisation
         self.benchmark = Benchmark
+        self.timing = Timing
         self.metric_amounts = len(self.power.metrics) + len(self.resource.metrics) + len(self.benchmark.metrics) 
 
 
@@ -118,7 +119,7 @@ def read_cpu_info_from_json(json_file):
     extracted_config_params = config_params(tmp_config_params, extracted_conditional_constraints)
 
     ## Build output objective library    
-    for classification, settings in data["PPA"].items():
+    for classification, settings in data["Performance"].items():
         metrics = []
         for m in settings.keys():
             metrics.append(m)
@@ -126,9 +127,11 @@ def read_cpu_info_from_json(json_file):
             tmp_power = classification_metrics(metrics)
         elif classification == "Resource_Utilisation":
             tmp_resource = classification_metrics(metrics)
+        elif classification == "Timing":
+            tmp_timing = classification_metrics(metrics)
         elif classification == "Benchmark":
             tmp_benchmark = classification_metrics(metrics)        
-    output_lib = output_params(tmp_power, tmp_resource, tmp_benchmark)
+    output_lib = output_params(tmp_power, tmp_resource, tmp_benchmark, tmp_timing)
     # Build CPU object
     cpu_info = object_cpu_info(data["CPU_Name"], extracted_config_params, output_lib)
     return cpu_info

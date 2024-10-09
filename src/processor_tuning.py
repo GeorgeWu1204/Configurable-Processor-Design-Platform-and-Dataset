@@ -354,7 +354,7 @@ class BOOM_Chip_Tuner:
             performance_results = {}
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
-                with open(self.generated_logfile + 'Processor_Generation.log', 'w') as f:
+                with open(self.generated_logfile, 'w') as f:
                     subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
                 performance_results[benchmark_to_examine] = self.extract_metrics_from_log()
 
@@ -370,13 +370,13 @@ class BOOM_Chip_Tuner:
         '''Run synthesis using the new parameters.'''
         command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
         try:
-            with open(self.generated_logfile + 'Synthesis.log', 'w') as f:
+            with open(self.generated_logfile, 'w') as f:
                 subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
         except subprocess.CalledProcessError as e:
             print(f"Error executing Vivado: {e}")
     
 
-    def parse_vivado_report(self):
+    def parse_vivado_resource_utilisation_report(self):
         # Define the dictionary to hold the results
         resource_info = {
             "LUTs": 0,
@@ -439,7 +439,7 @@ class BOOM_Chip_Tuner:
                         break
         return wns
     
-    def extract_worst_slack(self):
+    def parse_vivado_timing_report(self):
         timing_info = {
             "Period": 20, # Default value acc to time_constraints.xdc
             "WNS" : 0,

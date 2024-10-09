@@ -14,15 +14,11 @@ def main():
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
     # processor_dataset.debug_print()
-    # processor_dataset.tuner.tune_and_run_performance_simulation([1, 4, 1, 32, 64, 4, 8, 64, 4])
-    # processor_dataset.tuner.run_synthesis()
-    print(processor_dataset.tuner.extract_worst_slack())
     # Sampling Mode: Automatically exploring the design space
     if len(sys.argv) == 1 and sys.argv == "Sampling":
         pass
     # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
-    # processor_dataset.insert_single_data([8, 8, 8, 8, 4, 4, 0, 0, 0, 0, 0, 0, 0 , 0, 0])
-    print(processor_dataset.fetch_single_data_acc_to_def([10]))
+    print(processor_dataset.fetch_single_data_acc_to_def_from_dataset([64]))
 
 if __name__ == "__main__":
     main()
