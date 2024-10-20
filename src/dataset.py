@@ -122,6 +122,14 @@ class Processor_Dataset:
         if self.fpga_considered:
             self.fpga_info.update_rc_data_indexes(self.resource_utilisation_indexes)
         
+        # Prepare delete command
+        self.delete_command = f"DELETE FROM {self.dataset_name} WHERE "
+        for i, param in enumerate(self.cpu_info.config_params.params):
+            if i == 0:
+                self.delete_command += f"{param.name} = ? "
+            else:
+                self.delete_command += f"AND {param.name} = ? "
+        
     def insert_single_data(self, data):
         """Insert data into the database, only used during the sampling stage"""
         try:
@@ -135,7 +143,8 @@ class Processor_Dataset:
     
     def conduct_experiments(self, config_params):
         """Conduct experiments based on the configuration parameters"""
-        # Performance Simulation   
+        # Performance Simulation  
+        print(f"Starting the performance simulation with the Config{config_params}") 
         simulation_validity, performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
         if not simulation_validity:
             return [-1] * self.cpu_info.supported_output_objs.metric_amounts
@@ -153,7 +162,6 @@ class Processor_Dataset:
         timing_results= self.tuner.parse_vivado_timing_report()
         print("Timing Results")
         print(timing_results)
-
         results = []
         
         for power in self.cpu_info.supported_output_objs.power.metrics:
@@ -183,16 +191,17 @@ class Processor_Dataset:
                 
         return results
 
-    
-    def fetch_single_data_acc_to_def_from_dataset(self, data_input):
+    def query_dataset(self, data_input):
+        config_to_fetch = self.default_params
+        for i in range(len(data_input)):
+            config_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
+        return self.fetch_single_data_acc_to_def_from_dataset(config_to_fetch)
+
+
+    def fetch_single_data_acc_to_def_from_dataset(self, data_to_fetch):
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
         # Output (Validity of the data, FPGA Deployability, Target Objectives)
-        data_to_fetch = self.default_params
         results = []
-        for i in range(len(data_input)):
-            data_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
-        print(data_to_fetch)
-
         try:
             conn = sqlite3.connect(self.dataset_directory)
             # Create a cursor object and execute the SQL command
@@ -229,12 +238,24 @@ class Processor_Dataset:
             if len(next_sample) == 0:
                 print("All samples have been evaluated.")
                 break
+            print(f"Next Sample: {next_sample}")
+            self.delete_single_data(next_sample)
             validity, _, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
             if validity:
                 self.sampler.mark_sample_complete(next_sample)
             else:
                 print("Skipping the sample.")
+            quit()
     
+    def delete_single_data(self, data_input):
+        try:
+            conn = sqlite3.connect(self.dataset_directory)
+            cursor = conn.cursor()
+            cursor.execute(self.delete_command, data_input)
+            conn.commit()
+            conn.close()
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
 
     def debug_print(self):
         print("Insert Command is ")

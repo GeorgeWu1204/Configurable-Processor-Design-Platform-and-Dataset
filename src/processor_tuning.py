@@ -245,7 +245,6 @@ class BOOM_Chip_Tuner:
         pattern = re.compile(r'new boom\.v3\.common\.WithNCustomBooms\(\d+\)')
         for i, line in enumerate(lines):
             if 'class CustomisedBoomV3Config' in line:
-
                 for j in range(i+1, len(lines)):
                     if pattern.search(lines[j]):
                         lines[j] = pattern.sub(f'new boom.v3.common.WithNCustomBooms({n})', lines[j])
@@ -254,37 +253,81 @@ class BOOM_Chip_Tuner:
         with open(self.cpu_level_config_file, 'w') as file:
             file.writelines(lines)
 
+    # def modify_custom_core_internal_config(self, input_vals):
+    #     # This is because the 0 index describing the number of cores.
+    #     params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
+    #     with open(self.core_level_configuration_file, 'r') as file:
+    #         lines = file.readlines()
+
+    #     new_lines = []
+    #     cache_context = None  # Track whether we're inside a dcache or icache block
+
+    #     for line in lines:
+    #         if 'DCacheParams' in line:
+    #             cache_context = 'dcache'
+    #         elif 'ICacheParams' in line:
+    #             cache_context = 'icache'
+    #         elif cache_context and ')' in line:  # Check for end of cache block
+    #             cache_context = None
+            
+    #         modified_line = line
+    #         if cache_context:
+    #             for param, value in zip(params_name, input_vals):
+    #                 if param.startswith(cache_context):
+    #                     param_name = param.split('_')[1]
+    #                     pattern = re.compile(rf'(\b{param_name}\s*=\s*)(\d+)')
+    #                     modified_line = pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
+    #         else:
+    #             for param, value in zip(params_name, input_vals):
+    #                 if not ('dcache' in param or 'icache' in param):
+    #                     core_param_pattern = re.compile(rf'(\b{re.escape(param)}\s*=\s*)(\d+)')
+    #                     modified_line = core_param_pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
+
+    #         new_lines.append(modified_line)
+
+    #     with open(self.core_level_configuration_file, 'w') as file:
+    #         file.writelines(new_lines)
     def modify_custom_core_internal_config(self, input_vals):
-        # This is because the 0 index describing the number of cores.
         params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
+        
         with open(self.core_level_configuration_file, 'r') as file:
             lines = file.readlines()
 
         new_lines = []
+        in_custom_boom_class = False  # Flag to check if within the correct class block
         cache_context = None  # Track whether we're inside a dcache or icache block
 
         for line in lines:
-            if 'DCacheParams' in line:
-                cache_context = 'dcache'
-            elif 'ICacheParams' in line:
-                cache_context = 'icache'
-            elif cache_context and ')' in line:  # Check for end of cache block
-                cache_context = None
-            
-            modified_line = line
-            if cache_context:
-                for param, value in zip(params_name, input_vals):
-                    if param.startswith(cache_context):
-                        param_name = param.split('_')[1]
-                        pattern = re.compile(rf'(\b{param_name}\s*=\s*)(\d+)')
-                        modified_line = pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
-            else:
-                for param, value in zip(params_name, input_vals):
-                    if not ('dcache' in param or 'icache' in param):
-                        core_param_pattern = re.compile(rf'(\b{re.escape(param)}\s*=\s*)(\d+)')
-                        modified_line = core_param_pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
+            # Check for start of WithNCustomBooms class
+            if line.strip().startswith('class WithNCustomBooms'):
+                in_custom_boom_class = True
+            elif line.strip().startswith('class') and 'WithNCustomBooms' not in line:
+                in_custom_boom_class = False  # Exit block when a new class definition starts
 
-            new_lines.append(modified_line)
+            if in_custom_boom_class:
+                if 'DCacheParams' in line:
+                    cache_context = 'dcache'
+                elif 'ICacheParams' in line:
+                    cache_context = 'icache'
+                elif cache_context and ')' in line:  # Check for end of cache block
+                    cache_context = None
+                
+                modified_line = line
+                if cache_context:
+                    for param, value in zip(params_name, input_vals):
+                        if param.startswith(cache_context):
+                            param_name = param.split('_')[1]
+                            pattern = re.compile(rf'(\b{param_name}\s*=\s*)(\d+)')
+                            modified_line = pattern.sub(r'\g<1>' + str(value), modified_line)  # Replace with new value
+                else:
+                    for param, value in zip(params_name, input_vals):
+                        if not ('dcache' in param or 'icache' in param):
+                            core_param_pattern = re.compile(rf'(\b{re.escape(param)}\s*=\s*)(\d+)')
+                            modified_line = core_param_pattern.sub(r'\g<1>' + str(value), modified_line)  # Replace with new value
+
+                new_lines.append(modified_line)
+            else:
+                new_lines.append(line)  # Keep lines outside WithNCustomBooms class unchanged
 
         with open(self.core_level_configuration_file, 'w') as file:
             file.writelines(new_lines)
@@ -346,29 +389,25 @@ class BOOM_Chip_Tuner:
     def tune_and_run_performance_simulation(self, new_value):
         try:
             # generate the design
-            # self.modify_config_files(new_value)
-            # clean_command = ["make", "clean"]
-            # subprocess.run(clean_command, cwd = self.generation_path, check=True)
-            # run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
-            # subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            self.modify_config_files(new_value)
+            clean_command = ["make", "clean"]
+            subprocess.run(clean_command, cwd = self.generation_path, check=True)
+            run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
+            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             performance_results = {}
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
                 
-                # For testing
-                performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
-
-
-                # try:
-                #     with open(self.generated_logfile, 'w') as f:
-                #         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-                #     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True)
-                #     print("<---------------------->")
-                #     print(benchmark_to_examine)
-                #     print(performance_results[benchmark_to_examine])
-                # except subprocess.CalledProcessError as e:
-                #     print(f"Error occurred for the current benchmark {benchmark_to_examine}")
-                #     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
+                try:
+                    with open(self.generated_logfile, 'w') as f:
+                        subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True)
+                    print("<---------------------->")
+                    print(benchmark_to_examine)
+                    print(performance_results[benchmark_to_examine])
+                except subprocess.CalledProcessError as e:
+                    print(f"Error occurred for the current benchmark {benchmark_to_examine}")
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
             if len(performance_results) == 0:
                 return False, None
             return True, performance_results
@@ -380,9 +419,6 @@ class BOOM_Chip_Tuner:
     def run_synthesis(self):
         '''Run synthesis using the new parameters.'''
         command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
-        # For testing
-        return True
-
         try:
             with open(self.generated_logfile, 'w') as f:
                 subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
