@@ -234,7 +234,8 @@ class BOOM_Chip_Tuner:
         self.generated_utilisation_filename = 'BOOM_utilization_synth.rpt'
         self.generated_power_filename = 'BOOM_power_synth.rpt'
         self.generated_time_filename = 'BOOM_timing_synth.rpt'
-        self.generated_logfile = '../processors/Logs/Generation_Log/Processor_Generation.log'
+        self.processor_generation_log = '../processors/Logs/Generation_Log/Processor_Generation.log'
+        self.processor_synthesis_log = '../processors/Logs/Generation_Log/Synthesis.log'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/BoomConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/boom/src/main/scala/v3/common/config-mixins.scala'
         self.cpu_info = cpu_info
@@ -253,40 +254,6 @@ class BOOM_Chip_Tuner:
         with open(self.cpu_level_config_file, 'w') as file:
             file.writelines(lines)
 
-    # def modify_custom_core_internal_config(self, input_vals):
-    #     # This is because the 0 index describing the number of cores.
-    #     params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
-    #     with open(self.core_level_configuration_file, 'r') as file:
-    #         lines = file.readlines()
-
-    #     new_lines = []
-    #     cache_context = None  # Track whether we're inside a dcache or icache block
-
-    #     for line in lines:
-    #         if 'DCacheParams' in line:
-    #             cache_context = 'dcache'
-    #         elif 'ICacheParams' in line:
-    #             cache_context = 'icache'
-    #         elif cache_context and ')' in line:  # Check for end of cache block
-    #             cache_context = None
-            
-    #         modified_line = line
-    #         if cache_context:
-    #             for param, value in zip(params_name, input_vals):
-    #                 if param.startswith(cache_context):
-    #                     param_name = param.split('_')[1]
-    #                     pattern = re.compile(rf'(\b{param_name}\s*=\s*)(\d+)')
-    #                     modified_line = pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
-    #         else:
-    #             for param, value in zip(params_name, input_vals):
-    #                 if not ('dcache' in param or 'icache' in param):
-    #                     core_param_pattern = re.compile(rf'(\b{re.escape(param)}\s*=\s*)(\d+)')
-    #                     modified_line = core_param_pattern.sub(r'\g<1>' + str(value), modified_line)  # Concatenation
-
-    #         new_lines.append(modified_line)
-
-    #     with open(self.core_level_configuration_file, 'w') as file:
-    #         file.writelines(new_lines)
     def modify_custom_core_internal_config(self, input_vals):
         params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
         
@@ -355,7 +322,7 @@ class BOOM_Chip_Tuner:
             return metrics
         try:
             # Open the log file
-            with open(self.generated_logfile, 'r') as file:
+            with open(self.processor_generation_log, 'r') as file:
                 # Read all lines from the file
                 log_content = file.read()
 
@@ -380,7 +347,7 @@ class BOOM_Chip_Tuner:
                     metrics["minstret"] = int(minstret_match.group(1))
 
         except FileNotFoundError:
-            print(f"Error: The file {self.generated_logfile} does not exist.")
+            print(f"Error: The file {self.processor_generation_log} does not exist.")
         except Exception as e:
             print(f"An error occurred: {e}")
 
@@ -399,7 +366,7 @@ class BOOM_Chip_Tuner:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
                 
                 try:
-                    with open(self.generated_logfile, 'w') as f:
+                    with open(self.processor_generation_log, 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
                     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True)
                     print("<---------------------->")
@@ -420,7 +387,7 @@ class BOOM_Chip_Tuner:
         '''Run synthesis using the new parameters.'''
         command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
         try:
-            with open(self.generated_logfile, 'w') as f:
+            with open(self.processor_synthesis_log, 'w') as f:
                 subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
             return True
         except subprocess.CalledProcessError as e:
@@ -444,7 +411,6 @@ class BOOM_Chip_Tuner:
             "BRAM": re.compile(r"\|\s*Block RAM Tile\s*\|\s*(\d+)\s*\|"),
             "DSP": re.compile(r"\|\s*DSPs\s*\|\s*(\d+)\s*\|")
         }
-        print("here")
         # Open the report file
         with open(self.generated_report_directory + self.generated_utilisation_filename, 'r') as file:
             # Read through each line of the file
