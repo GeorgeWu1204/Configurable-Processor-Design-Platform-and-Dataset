@@ -15,7 +15,6 @@ def main():
     # processor_dataset.debug_print()
 
     # Sampling Mode: Automatically exploring the design space
-    quit()
     if len(sys.argv) == 2 and sys.argv[1] == "Sampling":
         print("---------------Sampling Mode---------------")
         processor_dataset.design_space_exploration()

@@ -2,6 +2,7 @@ import re
 import subprocess
 import os
 import shutil
+from processor_config_matching import config_matcher
 
 class EL2_VeeR_Tuner:
     """This is the tuner for EL2 Cores, it could automatically customise the processor according to the param settings"""
@@ -239,6 +240,9 @@ class BOOM_Chip_Tuner:
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/BoomConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/boom/src/main/scala/v3/common/config-mixins.scala'
         self.cpu_info = cpu_info
+        self.top_level_design_name = "ChipTop"
+        self.processor_config_matcher = config_matcher(cpu_info, self.top_level_design_name)
+        
     
     def modify_custom_cpu(self, n):
         with open(self.cpu_level_config_file, 'r') as file:
@@ -383,12 +387,16 @@ class BOOM_Chip_Tuner:
             print(f"Error occurred: {e}")
             return False, None
     
-    def run_synthesis(self):
+    def run_synthesis(self, new_config):
         '''Run synthesis using the new parameters.'''
-        command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
+        checkpoint_index = self.processor_config_matcher.match_config(new_config)
+        self.processor_config_matcher.prepare_checkpoint(checkpoint_index)
+        command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name]
         try:
             with open(self.processor_synthesis_log, 'w') as f:
                 subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
+            self.processor_config_matcher.store_checkpoint(new_config)
+            self.processor_config_matcher.rename_and_store_checkpoint(checkpoint_index)
             return True
         except subprocess.CalledProcessError as e:
             print(f"Error executing Vivado: {e}")

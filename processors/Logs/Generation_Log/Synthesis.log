@@ -9,15 +9,1068 @@
 source ../../tools/BOOM/run_BOOM_synthesis.tcl
 # open_project BOOM_Prj.xpr
 INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/BOOM_Prj/BOOM_Prj.gen/sources_1'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/Synthesis/BOOM/ChipTop.dcp'.
+WARNING: [Project 1-865] Could not find the file /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/Synthesis/BOOM/ChipTop.dcp
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/Synthesis/BOOM/synth_1/ChipTop.dcp'.
+WARNING: [Project 1-865] Could not find the file /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/Synthesis/BOOM/synth_1/ChipTop.dcp
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/Config_1.dcp'.
+WARNING: [Project 1-865] Could not find the file /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/Config_1.dcp
 Scanning sources...
 Finished scanning sources
-CRITICAL WARNING: [Runs 36-271] Incremental checkpoint part, xc7vx485tffg1157-1, does not match run part, xczu19eg-ffvc1760-2-i.
-open_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1343.695 ; gain = 5.961 ; free physical = 14867 ; free virtual = 19608
+WARNING: [Project 1-865] Could not find the file /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/Config_1.dcp
+open_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1343.258 ; gain = 5.961 ; free physical = 17057 ; free virtual = 26376
+# if { [llength $argv] < 1 } {
+#     puts "No incremental checkpoint identified, starting synthesis from scratch."
+#     # Remove any previous incremental checkpoint setting for a fresh start
+#     set_property incremental_checkpoint {} [get_runs synth_1]
+# } else {
+#     # Retrieve the config name argument
+#     set config_name [lindex $argv 0]
+#     # Define the path to the DCP file based on the config name
+#     set dcp_path "/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/${config_name}.dcp"
+#     
+#     # Check if the specified DCP file exists
+#     if { ![file exists $dcp_path] } {
+#         puts "Error: Checkpoint file $dcp_path not found. Exiting."
+#         exit 1
+#     }
+#     
+#     # Add the DCP file to the project (ensuring no file duplication or conflict)
+#     add_files -fileset utils_1 -norecurse $dcp_path
+#     
+#     # Set incremental synthesis properties
+#     set_property STEPS.SYNTH_DESIGN.ARGS.INCREMENTAL_MODE aggressive [get_runs synth_1]
+#     set_property incremental_checkpoint $dcp_path [get_runs synth_1]
+# }
+# reset_run synth_1
+# launch_runs synth_1 -jobs 12
+[Sun Oct 27 23:05:49 2024] Launched synth_1...
+Run output will be captured here: /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/BOOM_Prj/BOOM_Prj.runs/synth_1/runme.log
+# wait_on_run synth_1
+[Sun Oct 27 23:05:49 2024] Waiting for synth_1 to finish...
+
+*** Running vivado
+    with args -log ChipTop.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source ChipTop.tcl
+
+
+****** Vivado v2023.2 (64-bit)
+  **** SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+  **** IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+  **** SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source ChipTop.tcl -notrace
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1341.754 ; gain = 2.992 ; free physical = 16683 ; free virtual = 25901
+Command: read_checkpoint -incremental /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/ChipTop.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/ChipTop.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top ChipTop -part xczu19eg-ffvc1760-2-i -incremental_mode aggressive
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu19eg'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu19eg'
+INFO: [Device 21-403] Loading part xczu19eg-ffvc1760-2-i
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 951946
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2836.926 ; gain = 300.691 ; free physical = 14482 ; free virtual = 24137
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'ChipTop' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ChipTop.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'DigitalTop' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/DigitalTop.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'IntXbar_i1_o1' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/IntXbar_i1_o1.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'IntXbar_i1_o1' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/IntXbar_i1_o1.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'SystemBus' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SystemBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'FixedClockBroadcast_4' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FixedClockBroadcast_4.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FixedClockBroadcast_4' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FixedClockBroadcast_4.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_sbus_i2_o2_a32d64s6k3z4c' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_sbus_i2_o2_a32d64s6k3z4c.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_sbus_i2_o2_a32d64s6k3z4c.sv:436]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'plusarg_reader' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/plusarg_reader.v:7]
+	Parameter FORMAT bound to: tilelink_timeout=%d - type: string 
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter DEFAULT bound to: 32'b00000000000000000000000000000000 
+INFO: [Synth 8-6155] done synthesizing module 'plusarg_reader' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/plusarg_reader.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_sbus_i2_o2_a32d64s6k3z4c.sv:458]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_1' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_1.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_1' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_1.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_sbus_i2_o2_a32d64s6k3z4c' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_sbus_i2_o2_a32d64s6k3z4c.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'SystemBus' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SystemBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'PeripheryBus_pbus' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/PeripheryBus_pbus.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'FixedClockBroadcast_2' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FixedClockBroadcast_2.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FixedClockBroadcast_2' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FixedClockBroadcast_2.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_pbus_out_i1_o2_a29d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_pbus_out_i1_o2_a29d64s7k1z3u.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_pbus_out_i1_o2_a29d64s7k1z3u.sv:193]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_2' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_2.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_2' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_2.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_pbus_out_i1_o2_a29d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_pbus_out_i1_o2_a29d64s7k1z3u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a29d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z3u.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z3u.sv:52]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_3' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_3.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_3' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_3.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a29d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a29d64s7k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x118' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x118.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x118' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x118.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a29d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a29d64s7k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a29d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a29d64s7k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x82' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x82.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x82' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x82.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a29d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a29d64s7k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a29d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z3u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLAtomicAutomata_pbus' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLAtomicAutomata_pbus.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLAtomicAutomata_pbus.sv:338]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_4' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_4.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_4' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_4.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLAtomicAutomata_pbus' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLAtomicAutomata_pbus.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a29d64s7k1z3u_1' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z3u_1.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z3u_1.sv:56]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_5' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_5.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_5' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_5.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a29d64s7k1z3u_1' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z3u_1.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_pbus_to_bootaddressreg' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_pbus_to_bootaddressreg.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_BootAddrReg' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_BootAddrReg.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_BootAddrReg.sv:186]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_6' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_6.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_6' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_6.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a13d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a13d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a13d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a13d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_BootAddrReg' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_BootAddrReg.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_pbus_to_bootaddressreg' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_pbus_to_bootaddressreg.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_uart_0' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_uart_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_UART' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_UART.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_UART.sv:186]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_7' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_7.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_7' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_7.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a29d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a29d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a29d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a29d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_UART' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_UART.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_uart_0' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_uart_0.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/PeripheryBus_pbus.sv:489]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_8' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_8.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_8' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_8.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'PeripheryBus_pbus' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/PeripheryBus_pbus.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'FrontBus' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FrontBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_fbus_i2_o1_a32d64s5k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_fbus_i2_o1_a32d64s5k3z4u.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_fbus_i2_o1_a32d64s5k3z4u.sv:202]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_9' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_9.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_9' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_9.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_fbus_i2_o1_a32d64s5k3z4u.sv:220]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_10' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_10.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_10' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_10.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_fbus_i2_o1_a32d64s5k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_fbus_i2_o1_a32d64s5k3z4u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a32d64s5k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s5k3z4u.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s5k3z4u.sv:56]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_11' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_11.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_11' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_11.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a32d64s5k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a32d64s5k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x120' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x120.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x120' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x120.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a32d64s5k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a32d64s5k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a32d64s5k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a32d64s5k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x83' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x83.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x83' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x83.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a32d64s5k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a32d64s5k3z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a32d64s5k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s5k3z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_fbus_from_debug_sb' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_fbus_from_debug_sb.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLWidthWidget1' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLWidthWidget1.sv:46]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLWidthWidget1.sv:194]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_12' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_12.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_12' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_12.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleD_a32d64s1k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleD_a32d64s1k3z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleD_a32d64s1k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleD_a32d64s1k3z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLWidthWidget1' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLWidthWidget1.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_fbus_from_debug_sb' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_fbus_from_debug_sb.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_fbus_from_port_named_serial_tl_0_in' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_fbus_from_port_named_serial_tl_0_in.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a32d64s4k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s4k3z4u.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s4k3z4u.sv:56]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_13' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_13.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_13' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_13.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a32d64s4k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a32d64s4k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x119' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x119.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x119' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x119.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a32d64s4k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a32d64s4k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a32d64s4k3z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a32d64s4k3z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a32d64s4k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a32d64s4k3z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a32d64s4k3z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s4k3z4u.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_fbus_from_port_named_serial_tl_0_in' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_fbus_from_port_named_serial_tl_0_in.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FrontBus' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FrontBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'PeripheryBus_cbus' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/PeripheryBus_cbus.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'FixedClockBroadcast_7' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FixedClockBroadcast_7.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FixedClockBroadcast_7' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FixedClockBroadcast_7.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_cbus_in_i2_o1_a29d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_cbus_in_i2_o1_a29d64s7k1z4u.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_cbus_in_i2_o1_a29d64s7k1z4u.sv:190]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_14' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_14.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_14' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_14.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_cbus_in_i2_o1_a29d64s7k1z4u.sv:212]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_15' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_15.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_15' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_15.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_cbus_in_i2_o1_a29d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_cbus_in_i2_o1_a29d64s7k1z4u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_cbus_out_i1_o8_a29d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_cbus_out_i1_o8_a29d64s7k1z4u.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_cbus_out_i1_o8_a29d64s7k1z4u.sv:373]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_16' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_16.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_16' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_16.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_cbus_out_i1_o8_a29d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_cbus_out_i1_o8_a29d64s7k1z4u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a29d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z4u.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z4u.sv:56]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_17' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_17.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_17' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_17.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a29d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a29d64s7k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a29d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a29d64s7k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a29d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a29d64s7k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a29d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a29d64s7k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a29d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a29d64s7k1z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLAtomicAutomata_cbus' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLAtomicAutomata_cbus.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLAtomicAutomata_cbus.sv:341]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_18' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_18.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_18' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_18.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLAtomicAutomata_cbus' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLAtomicAutomata_cbus.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'ErrorDeviceWrapper' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ErrorDeviceWrapper.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLError' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLError.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLError.sv:134]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_19' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_19.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_19' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_19.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_TLBundleA_a14d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue1_TLBundleA_a14d64s7k1z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_TLBundleA_a14d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue1_TLBundleA_a14d64s7k1z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLError' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLError.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a14d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a14d64s7k1z4u.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a14d64s7k1z4u.sv:52]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_20' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_20.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_20' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_20.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a14d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a14d64s7k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x104' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x104.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x104' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x104.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a14d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a14d64s7k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a14d64s7k1z4u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a14d64s7k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a14d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a14d64s7k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a14d64s7k1z4u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a14d64s7k1z4u.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ErrorDeviceWrapper' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ErrorDeviceWrapper.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_l2_ctrl' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_l2_ctrl.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a26d64s11k1z2u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a26d64s11k1z2u.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a26d64s11k1z2u.sv:52]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_21' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_21.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_21' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_21.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_TLBundleA_a26d64s11k1z2u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue1_TLBundleA_a26d64s11k1z2u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_TLBundleA_a26d64s11k1z2u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue1_TLBundleA_a26d64s11k1z2u.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_TLBundleD_a26d64s11k1z2u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue1_TLBundleD_a26d64s11k1z2u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_TLBundleD_a26d64s11k1z2u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue1_TLBundleD_a26d64s11k1z2u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a26d64s11k1z2u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a26d64s11k1z2u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_LLCCtrl' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_LLCCtrl.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_LLCCtrl.sv:194]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_22' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_22.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_22' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_22.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a26d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a26d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a26d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a26d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_LLCCtrl' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_LLCCtrl.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_l2_ctrl' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_l2_ctrl.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_clint' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_clint.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_CLINT' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_CLINT.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_CLINT.sv:186]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_23' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_23.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_23' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_23.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_CLINT' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_CLINT.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_clint' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_clint.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_plic' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_plic.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_PLIC' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_PLIC.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_PLIC.sv:186]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_24' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_24.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_24' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_24.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a28d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a28d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a28d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a28d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_PLIC' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_PLIC.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_plic' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_plic.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_debug' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_debug.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_Debug' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_Debug.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_Debug.sv:186]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_25' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_25.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_25' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_25.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a12d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a12d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a12d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a12d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_Debug' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_Debug.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_debug' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_debug.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_bootrom' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_bootrom.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_BootROM' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_BootROM.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_BootROM.sv:172]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_26' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_26.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_26.sv:643]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_26' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_26.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a17d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a17d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a17d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Repeater_TLBundleA_a17d64s7k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_BootROM' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_BootROM.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_bootrom' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_bootrom.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_prci_ctrl' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_prci_ctrl.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a21d64s7k1z3u' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a21d64s7k1z3u.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a21d64s7k1z3u.sv:52]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_27' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_27.sv:64]
+INFO: [Common 17-14] Message 'Synth 8-6157' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_27' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_27.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x110' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ram_2x110.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a21d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleA_a21d64s7k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a21d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Queue2_TLBundleD_a21d64s7k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a21d64s7k1z3u' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a21d64s7k1z3u.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_prci_ctrl' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLInterconnectCoupler_cbus_to_prci_ctrl.sv:2]
+INFO: [Common 17-14] Message 'Synth 8-6155' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_mbus_i1_o2_a32d64s4k1z3u.sv:207]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ProbePicker.sv:83]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ProbePicker.sv:103]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLToAXI4.sv:406]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a28d64s4k1z3u.sv:56]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/InclusiveCacheControl.sv:155]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/InclusiveCache.sv:132]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s6k3z3c.sv:86]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLCacheCork.sv:300]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BankBinder.sv:46]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_MasterXbar_BoomTile_i2_o1_a32d64s3k3z4c.sv:226]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_MasterXbar_BoomTile_i2_o1_a32d64s3k3z4c.sv:266]
+WARNING: [Synth 8-2898] ignoring Assertion statement with non-constant assert expression [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Rob.sv:1862]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Rob.sv:4196]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/rob_debug_inst_mem_0.sv:12]
+WARNING: [Synth 8-2898] ignoring Assertion statement with non-constant assert expression [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/LSU.sv:3323]
+WARNING: [Synth 8-2898] ignoring Assertion statement with non-constant assert expression [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/LSU.sv:3325]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a32d64s3k3z4c_1.sv:100]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TilePRCIDomain.sv:238]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TilePRCIDomain.sv:244]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TilePRCIDomain.sv:250]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/CLINT.sv:137]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLPLIC.sv:212]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_dmixbar_i1_o2_a9d32s1k1z2u.sv:179]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLDebugModuleOuter.sv:160]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBusBypassBar.sv:151]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLError_1.sv:144]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLAsyncCrossingSource_a9d32s1k1z2u.sv:50]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLDebugModuleInner.sv:2280]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLDebugModuleInner.sv:2298]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLROM.sv:534]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLMonitor_50.sv:887]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLRAM_ScratchpadBank.sv:158]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_ScratchpadBank.sv:186]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLBuffer_a28d64s4k1z3u_1.sv:52]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SerialTL0ClockSinkDomain.sv:101]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLUART.sv:168]
+	Parameter FORMAT bound to: uart_tx=%d - type: string 
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter DEFAULT bound to: 32'b00000000000000000000000000000001 
+	Parameter FORMAT bound to: uart_tx_printf=%d - type: string 
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter DEFAULT bound to: 32'b00000000000000000000000000000000 
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLXbar_prcibus_i1_o2_a21d64s7k1z3u.sv:191]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TileClockGater.sv:33]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_TileClockGater.sv:186]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TileResetSetter.sv:26]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TLFragmenter_TileResetSetter.sv:182]
+WARNING: [Synth 8-6014] Unused sequential element s2_pdata_r_corrupt_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SourceD.sv:346]
+WARNING: [Synth 8-6014] Unused sequential element s3_pdata_corrupt_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SourceD.sv:363]
+WARNING: [Synth 8-6014] Unused sequential element s4_need_pb_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SourceD.sv:371]
+WARNING: [Synth 8-6014] Unused sequential element s4_pdata_corrupt_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SourceD.sv:379]
+WARNING: [Synth 8-4767] Trying to implement RAM 'Memory_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Unable to determine number of words or word size in RAM. 
+	3: No valid read/write found for RAM. 
+RAM "Memory_reg" dissolved into registers
+WARNING: [Synth 8-4767] Trying to implement RAM 'Memory_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Unable to determine number of words or word size in RAM. 
+	3: No valid read/write found for RAM. 
+RAM "Memory_reg" dissolved into registers
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:1961]
+WARNING: [Synth 8-6014] Unused sequential element ren1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/Directory.sv:192]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2057]
+WARNING: [Synth 8-4767] Trying to implement RAM 'Memory_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Unable to determine number of words or word size in RAM. 
+	3: No valid read/write found for RAM. 
+RAM "Memory_reg" dissolved into registers
+WARNING: [Synth 8-6014] Unused sequential element REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/IDPool.sv:119]
+WARNING: [Synth 8-6014] Unused sequential element req_needs_wb_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomMSHR.sv:690]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2154]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2252]
+WARNING: [Synth 8-6014] Unused sequential element REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:881]
+WARNING: [Synth 8-6014] Unused sequential element REG_1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:882]
+WARNING: [Synth 8-6014] Unused sequential element debug_sc_fail_addr_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:785]
+WARNING: [Synth 8-6014] Unused sequential element debug_sc_fail_cnt_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:1011]
+WARNING: [Synth 8-6014] Unused sequential element s2_sc_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:643]
+WARNING: [Synth 8-6014] Unused sequential element s2_repl_meta_REG_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:983]
+WARNING: [Synth 8-6014] Unused sequential element s2_repl_meta_REG_1_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:985]
+WARNING: [Synth 8-6014] Unused sequential element s2_repl_meta_REG_2_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:987]
+WARNING: [Synth 8-6014] Unused sequential element s2_repl_meta_REG_3_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:989]
+WARNING: [Synth 8-6014] Unused sequential element s2_nack_hit_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:664]
+WARNING: [Synth 8-6014] Unused sequential element s2_send_nack_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:671]
+WARNING: [Synth 8-6014] Unused sequential element mshrs_io_meta_resp_bits_REG_0_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:994]
+WARNING: [Synth 8-6014] Unused sequential element mshrs_io_meta_resp_bits_REG_1_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:995]
+WARNING: [Synth 8-6014] Unused sequential element mshrs_io_meta_resp_bits_REG_2_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:996]
+WARNING: [Synth 8-6014] Unused sequential element mshrs_io_meta_resp_bits_REG_3_coh_state_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BoomNonBlockingDCache.sv:997]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2351]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2447]
+WARNING: [Synth 8-6014] Unused sequential element f4_idx_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/LoopBranchPredictorColumn.sv:1110]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_bits_meta_reg' and it is trimmed from '120' to '40' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/LoopBranchPredictorBank.sv:220]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2546]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2647]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2748]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2849]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:2950]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_valid_REG_1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:696]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_pc_REG_1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:697]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_valid_REG_2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:698]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_pc_REG_2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:699]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_valid_REG_3_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:700]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_pc_REG_3_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:701]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_valid_REG_4_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:702]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_pc_REG_4_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:703]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_valid_REG_5_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:704]
+WARNING: [Synth 8-6014] Unused sequential element t_io_f1_req_pc_REG_5_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:705]
+WARNING: [Synth 8-6014] Unused sequential element tt_1_1_io_update_pc_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:756]
+WARNING: [Synth 8-6014] Unused sequential element tt_1_1_io_update_hist_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:757]
+WARNING: [Synth 8-6014] Unused sequential element tt_2_1_io_update_pc_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:782]
+WARNING: [Synth 8-6014] Unused sequential element tt_2_1_io_update_hist_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:783]
+WARNING: [Synth 8-6014] Unused sequential element tt_3_1_io_update_pc_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:808]
+WARNING: [Synth 8-6014] Unused sequential element tt_3_1_io_update_hist_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:809]
+WARNING: [Synth 8-6014] Unused sequential element tt_4_1_io_update_pc_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:834]
+WARNING: [Synth 8-6014] Unused sequential element tt_4_1_io_update_hist_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:835]
+WARNING: [Synth 8-6014] Unused sequential element tt_5_1_io_update_pc_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:860]
+WARNING: [Synth 8-6014] Unused sequential element tt_5_1_io_update_hist_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:861]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_bits_meta_reg' and it is trimmed from '120' to '56' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:544]
+WARNING: [Synth 8-6014] Unused sequential element tt_1_1_io_update_old_ctr_0_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:735]
+WARNING: [Synth 8-6014] Unused sequential element tt_1_1_io_update_old_ctr_1_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:741]
+WARNING: [Synth 8-6014] Unused sequential element tt_1_1_io_update_old_ctr_2_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:747]
+WARNING: [Synth 8-6014] Unused sequential element tt_1_1_io_update_old_ctr_3_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:753]
+WARNING: [Synth 8-6014] Unused sequential element tt_2_1_io_update_old_ctr_0_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:761]
+WARNING: [Synth 8-6014] Unused sequential element tt_2_1_io_update_old_ctr_1_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:767]
+WARNING: [Synth 8-6014] Unused sequential element tt_2_1_io_update_old_ctr_2_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:773]
+WARNING: [Synth 8-6014] Unused sequential element tt_2_1_io_update_old_ctr_3_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:779]
+WARNING: [Synth 8-6014] Unused sequential element tt_3_1_io_update_old_ctr_0_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:787]
+WARNING: [Synth 8-6014] Unused sequential element tt_3_1_io_update_old_ctr_1_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:793]
+WARNING: [Synth 8-6014] Unused sequential element tt_3_1_io_update_old_ctr_2_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:799]
+WARNING: [Synth 8-6014] Unused sequential element tt_3_1_io_update_old_ctr_3_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:805]
+WARNING: [Synth 8-6014] Unused sequential element tt_4_1_io_update_old_ctr_0_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:813]
+WARNING: [Synth 8-6014] Unused sequential element tt_4_1_io_update_old_ctr_1_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:819]
+WARNING: [Synth 8-6014] Unused sequential element tt_4_1_io_update_old_ctr_2_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:825]
+WARNING: [Synth 8-6014] Unused sequential element tt_4_1_io_update_old_ctr_3_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:831]
+WARNING: [Synth 8-6014] Unused sequential element tt_5_1_io_update_old_ctr_0_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:839]
+WARNING: [Synth 8-6014] Unused sequential element tt_5_1_io_update_old_ctr_1_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:845]
+WARNING: [Synth 8-6014] Unused sequential element tt_5_1_io_update_old_ctr_2_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:851]
+WARNING: [Synth 8-6014] Unused sequential element tt_5_1_io_update_old_ctr_3_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TageBranchPredictorBank.sv:857]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:3051]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:3152]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:3252]
+WARNING: [Synth 8-6014] Unused sequential element REG_1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:378]
+WARNING: [Synth 8-6014] Unused sequential element REG_2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:379]
+WARNING: [Synth 8-6014] Unused sequential element REG_4_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:385]
+WARNING: [Synth 8-6014] Unused sequential element REG_7_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:392]
+WARNING: [Synth 8-6014] Unused sequential element REG_8_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:393]
+WARNING: [Synth 8-6014] Unused sequential element REG_10_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:399]
+WARNING: [Synth 8-6014] Unused sequential element REG_13_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:406]
+WARNING: [Synth 8-6014] Unused sequential element REG_14_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:407]
+WARNING: [Synth 8-6014] Unused sequential element REG_16_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:413]
+WARNING: [Synth 8-6014] Unused sequential element REG_19_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:420]
+WARNING: [Synth 8-6014] Unused sequential element REG_20_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:421]
+WARNING: [Synth 8-6014] Unused sequential element REG_22_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:427]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_bits_meta_reg' and it is trimmed from '120' to '1' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BTBBranchPredictorBank.sv:301]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:3353]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_idx_reg' and it is trimmed from '37' to '11' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BIMBranchPredictorBank.sv:218]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_bits_meta_reg' and it is trimmed from '120' to '8' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/BIMBranchPredictorBank.sv:223]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_bits_pc_reg' and it is trimmed from '40' to '13' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FAMicroBTBBranchPredictorBank.sv:538]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_bits_target_reg' and it is trimmed from '40' to '13' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FAMicroBTBBranchPredictorBank.sv:538]
+WARNING: [Synth 8-3936] Found unconnected internal register 's1_update_bits_meta_reg' and it is trimmed from '120' to '8' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FAMicroBTBBranchPredictorBank.sv:541]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:3453]
+WARNING: [Synth 8-6014] Unused sequential element ram_R_0_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/chipyard.harness.TestHarness.CustomisedBoomV3Config.top.mems.v:3553]
+WARNING: [Synth 8-6014] Unused sequential element do_commit_update_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:436]
+WARNING: [Synth 8-6014] Unused sequential element io_bpdupdate_bits_is_mispredict_update_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:1110]
+WARNING: [Synth 8-6014] Unused sequential element io_bpdupdate_bits_is_repair_update_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:1111]
+WARNING: [Synth 8-6014] Unused sequential element REG_3_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:449]
+WARNING: [Synth 8-6014] Unused sequential element ram_REG_cfi_idx_valid_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:570]
+WARNING: [Synth 8-6014] Unused sequential element ram_REG_cfi_idx_bits_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:571]
+WARNING: [Synth 8-6014] Unused sequential element ram_REG_cfi_taken_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:572]
+WARNING: [Synth 8-6014] Unused sequential element ram_REG_cfi_is_call_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/FetchTargetQueue.sv:588]
+INFO: [Common 17-14] Message 'Synth 8-6014' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+WARNING: [Synth 8-4767] Trying to implement RAM 'Memory_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Unable to determine number of words or word size in RAM. 
+	3: No valid read/write found for RAM. 
+RAM "Memory_reg" dissolved into registers
+WARNING: [Synth 8-4767] Trying to implement RAM 'Memory_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Unable to determine number of words or word size in RAM. 
+	3: No valid read/write found for RAM. 
+RAM "Memory_reg" dissolved into registers
+WARNING: [Synth 8-3936] Found unconnected internal register 'wb_forward_ld_addr_0_reg' and it is trimmed from '40' to '3' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/LSU.sv:2697]
+WARNING: [Synth 8-7129] Port reset in module JtagBypassChain is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_chainIn_update in module JtagBypassChain is either unconnected or has no load
+WARNING: [Synth 8-7129] Port reset in module CaptureUpdateChain_UInt5_To_UInt5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port reset in module CaptureChain_JTAGIdcodeBundle is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_chainIn_update in module CaptureChain_JTAGIdcodeBundle is either unconnected or has no load
+WARNING: [Synth 8-7129] Port reset in module CaptureUpdateChain_DMIAccessCapture_To_DMIAccessUpdate is either unconnected or has no load
+WARNING: [Synth 8-7129] Port reset in module CaptureUpdateChain_DTMInfo_To_DTMInfo is either unconnected or has no load
+WARNING: [Synth 8-7129] Port clock in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port reset in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_ready in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_valid in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_opcode[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_opcode[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_opcode[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_param[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_param[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_param[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_size[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_size[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_size[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[6] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[5] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[4] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[3] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[20] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[19] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[18] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[17] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[16] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[15] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[14] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[13] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[12] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[11] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[10] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[9] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[8] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[7] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[6] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[5] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[4] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[3] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[7] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[6] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[5] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[4] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[3] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_mask[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_corrupt in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_ready in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_valid in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_opcode[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_opcode[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_opcode[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_size[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_size[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_size[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_source[6] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_source[5] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_source[4] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_source[3] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_source[2] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_source[1] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_d_bits_source[0] in module TLMonitor_59 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port clock in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port reset in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_ready in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_valid in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_opcode[2] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_opcode[1] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_opcode[0] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_param[2] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_param[1] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_param[0] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_size[1] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_size[0] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[10] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[9] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[8] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[7] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[6] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[5] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[4] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[3] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[2] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[1] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_source[0] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[20] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[19] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[18] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[17] in module TLMonitor_58 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_a_bits_address[16] in module TLMonitor_58 is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 3793.418 ; gain = 1257.184 ; free physical = 13340 ; free virtual = 23014
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:32 ; elapsed = 00:00:33 . Memory (MB): peak = 3793.418 ; gain = 1257.184 ; free physical = 13410 ; free virtual = 23084
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:32 ; elapsed = 00:00:33 . Memory (MB): peak = 3793.418 ; gain = 1257.184 ; free physical = 13410 ; free virtual = 23084
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 3793.418 ; gain = 0.000 ; free physical = 13485 ; free virtual = 23159
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/BOOM/BOOM_Time_Constraints.xdc]
+WARNING: [Constraints 18-619] A clock with name 'clock' already exists, overwriting the previous clock with the same name. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/BOOM/BOOM_Time_Constraints.xdc:3]
+Finished Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/BOOM/BOOM_Time_Constraints.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 4208.879 ; gain = 0.000 ; free physical = 13214 ; free virtual = 22888
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 4294.879 ; gain = 85.965 ; free physical = 13104 ; free virtual = 22777
+INFO: [Designutils 20-5008] Incremental synthesis strategy aggressive
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:01:11 ; elapsed = 00:01:07 . Memory (MB): peak = 4294.879 ; gain = 1758.645 ; free physical = 13043 ; free virtual = 22717
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Doing Graph Differ : Time (s): cpu = 00:01:22 ; elapsed = 00:01:18 . Memory (MB): peak = 4294.879 ; gain = 1758.645 ; free physical = 10408 ; free virtual = 20103
+---------------------------------------------------------------------------------
+BoomNonBlockingDCache__GC0FpPipeline__GB3ComposedBranchPredictorBank__GC0DigitalTop__GCB2BoomTile__GC0BoomFrontend__GCB1DigitalTop__GCB1BoomCore__GCB2ChipTop__GC0RegisterFileSynthesizable_1BoomCore__GCB0DigitalTop__GCB0BranchPredictor__GC0BoomMSHRBoomCore__GCB1TilePRCIDomain__GC0LoopBranchPredictorBank__GC0RegisterFileSynthesizableBoomFrontend__GCB0BoomMSHRFile__GC0LoopBranchPredictorColumnBoomCore__GCB4LSU__GB0FpPipeline__GB0LSU__GB1---------------------------------------------------------------------------------
+Finished Preparing Guide Design : Time (s): cpu = 00:01:26 ; elapsed = 00:01:22 . Memory (MB): peak = 4294.879 ; gain = 1758.645 ; free physical = 9848 ; free virtual = 19542
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:32 ; elapsed = 00:01:28 . Memory (MB): peak = 4294.879 ; gain = 1758.645 ; free physical = 6890 ; free virtual = 16584
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Mimic Skeleton from Reference
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Mimic Skeleton from Reference : Time (s): cpu = 00:01:37 ; elapsed = 00:01:33 . Memory (MB): peak = 4294.879 ; gain = 1758.645 ; free physical = 4783 ; free virtual = 14478
+---------------------------------------------------------------------------------
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM ram_reg. We will not be able to pipeline it. This may degrade performance. 
+
+
+Incremental Synthesis Report Summary:
+
+1. Incremental synthesis run: yes
+
+   Stitch points used : changed
+
+
+2. Change Summary
+
+Report Incremental Modules: 
++-+----------------+------------+----------+----------+
+| |Changed Modules |Replication |Instances |Changed % |
++-+----------------+------------+----------+----------+
++-+----------------+------------+----------+----------+
+
+
+   Full Design Size (number of cells) : 565071
+   Resynthesis Design Size (number of cells) : 1
+   Resynth % : 0.0002,  Reuse % : 99.9998
+
+3. Reference Checkpoint Information
+
++----------------------------------------------------------------------------------------------------------------------------------------------+
+| DCP Location:  | /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/ChipTop.dcp |
++----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+------------------------------+
+|         DCP Information        |             Value            |
++--------------------------------+------------------------------+
+| Vivado Version                 |                    v2023.2 |
+| DCP State                      |                              |
++--------------------------------+------------------------------+
+
+
+
+Report RTL Partitions: 
++------+-----------------------------------------+------------+----------+
+|      |RTL Partition                            |Replication |Instances |
++------+-----------------------------------------+------------+----------+
+|1     |BoomMSHR_#REUSE#                         |           2|         0|
+|2     |BoomMSHRFile__GC0_#REUSE#                |           1|         0|
+|3     |BoomNonBlockingDCache__GC0_#REUSE#       |           1|         0|
+|4     |LoopBranchPredictorColumn_#REUSE#        |           4|         0|
+|5     |LoopBranchPredictorBank__GC0_#REUSE#     |           1|         0|
+|6     |ComposedBranchPredictorBank__GC0_#REUSE# |           1|         0|
+|7     |BranchPredictor__GC0_#REUSE#             |           1|         0|
+|8     |BoomFrontend__GCB0_#REUSE#               |           1|         0|
+|9     |BoomFrontend__GCB1_#REUSE#               |           1|         0|
+|10    |RegisterFileSynthesizable_#REUSE#        |           1|         0|
+|11    |FpPipeline__GB0_#REUSE#                  |           1|         0|
+|12    |FpPipeline__GB3_#REUSE#                  |           1|         0|
+|13    |RegisterFileSynthesizable_1_#REUSE#      |           1|         0|
+|14    |BoomCore__GCB0_#REUSE#                   |           1|         0|
+|15    |BoomCore__GCB1_#REUSE#                   |           1|         0|
+|16    |BoomCore__GCB2_#REUSE#                   |           1|         0|
+|17    |BoomCore__GCB4_#REUSE#                   |           1|         0|
+|18    |LSU__GB0_#REUSE#                         |           1|         0|
+|19    |LSU__GB1_#REUSE#                         |           1|         0|
+|20    |BoomTile__GC0_#REUSE#                    |           1|         0|
+|21    |TilePRCIDomain__GC0_#REUSE#              |           1|         0|
+|22    |DigitalTop__GCB0_#REUSE#                 |           1|         0|
+|23    |DigitalTop__GCB1_#REUSE#                 |           1|         0|
+|24    |DigitalTop__GCB2_#REUSE#                 |           1|         0|
+|25    |ChipTop__GC0_#REUSE#                     |           1|         0|
++------+-----------------------------------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1968 (col length:264)
+BRAMs: 1968 (col length: RAMB18 264 RAMB36 132)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7077] IncrSyn: subsequent runs will still be incremental as the reference run was parallel and that data is reused
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:43 ; elapsed = 00:01:40 . Memory (MB): peak = 4294.879 ; gain = 1758.645 ; free physical = 4573 ; free virtual = 14436
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Stitch Unchanged AreaOpt Partitions
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Stitch Unchanged AreaOpt Partitions : Time (s): cpu = 00:01:45 ; elapsed = 00:01:42 . Memory (MB): peak = 4294.879 ; gain = 1758.645 ; free physical = 4577 ; free virtual = 14440
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-565] redefining clock 'clock'
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:56 ; elapsed = 00:01:53 . Memory (MB): peak = 4362.207 ; gain = 1825.973 ; free physical = 4495 ; free virtual = 14487
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:01:57 ; elapsed = 00:01:54 . Memory (MB): peak = 4362.207 ; gain = 1825.973 ; free physical = 4497 ; free virtual = 14488
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7077] IncrSyn: subsequent runs will still be incremental as the reference run was parallel and that data is reused
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:01:57 ; elapsed = 00:01:54 . Memory (MB): peak = 4362.207 ; gain = 1825.973 ; free physical = 4503 ; free virtual = 14495
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Stitch Unchanged Partitions
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Stitch Unchanged Partitions : Time (s): cpu = 00:01:59 ; elapsed = 00:01:56 . Memory (MB): peak = 4362.207 ; gain = 1825.973 ; free physical = 4514 ; free virtual = 14506
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_0/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_1/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_2/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_3/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_4/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_5/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_6/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/bank/ram/mem/mem_ext/mem_0_7/ram_reg_bram_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_0/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_1/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_2/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_3/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_4/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_5/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_6/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/directory/cc_dir/cc_dir_ext/mem_0_7/ram_reg_bram_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_0/cc_banks_0_ext/mem_0_0/ram_reg_bram_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_0/cc_banks_0_ext/mem_0_0/ram_reg_bram_15 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_1/cc_banks_0_ext/mem_0_0/ram_reg_bram_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_1/cc_banks_0_ext/mem_0_0/ram_reg_bram_15 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_2/cc_banks_0_ext/mem_0_0/ram_reg_bram_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_2/cc_banks_0_ext/mem_0_0/ram_reg_bram_15 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_3/cc_banks_0_ext/mem_0_0/ram_reg_bram_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/cc_banks_3/cc_banks_0_ext/mem_0_0/ram_reg_bram_15 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:02:20 ; elapsed = 00:02:17 . Memory (MB): peak = 4443.363 ; gain = 1907.129 ; free physical = 4363 ; free virtual = 14487
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:20 ; elapsed = 00:02:18 . Memory (MB): peak = 4443.363 ; gain = 1907.129 ; free physical = 4363 ; free virtual = 14487
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:32 ; elapsed = 00:02:30 . Memory (MB): peak = 4443.363 ; gain = 1907.129 ; free physical = 4368 ; free virtual = 14492
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:34 ; elapsed = 00:02:31 . Memory (MB): peak = 4443.363 ; gain = 1907.129 ; free physical = 4370 ; free virtual = 14494
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:38 ; elapsed = 00:02:36 . Memory (MB): peak = 4443.363 ; gain = 1907.129 ; free physical = 4370 ; free virtual = 14495
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:39 ; elapsed = 00:02:36 . Memory (MB): peak = 4443.363 ; gain = 1907.129 ; free physical = 4370 ; free virtual = 14495
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++------------+-----------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name | RTL Name                                                                                                              | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++------------+-----------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/frontend/bpd/banked_predictors_0/loop/s3_mask_reg[2]           | 3      | 3     | NO           | NO                 | YES               | 3      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/alu_exe_unit/ALUUnit/r_uops_2_ctrl_csr_cmd_reg[2]         | 3      | 3     | NO           | NO                 | YES               | 3      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/alu_exe_unit/ALUUnit/r_uops_2_imm_packed_reg[19]          | 3      | 12    | NO           | NO                 | YES               | 12     | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/alu_exe_unit/ALUUnit/r_uops_2_uses_stq_reg                | 3      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/alu_exe_unit/ALUUnit/r_uops_2_is_amo_reg                  | 3      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/alu_exe_unit/ALUUnit/r_uops_2_bypassable_reg              | 3      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_uopc_reg[6]      | 4      | 7     | NO           | NO                 | YES               | 7      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_fu_code_reg[9]   | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_rob_idx_reg[4]   | 4      | 5     | NO           | NO                 | YES               | 5      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_stq_idx_reg[2]   | 4      | 3     | NO           | NO                 | YES               | 3      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_pdst_reg[5]      | 4      | 6     | NO           | NO                 | YES               | 6      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_is_amo_reg       | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_uses_stq_reg     | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|ChipTop     | system/tile_prci_domain/element_reset_domain_boom_tile/core/FpPipeline/fpu_exe_unit/FPUUnit/r_uops_3_dst_rtype_reg[1] | 4      | 2     | NO           | NO                 | YES               | 2      | 0       | 
+|ChipTop     | system/tile_prci_domain/intsink/chain/output_chain/sync_0_reg                                                         | 3      | 1     | NO           | NO                 | YES               | 1      | 0       | 
++------------+-----------------------------------------------------------------------------------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++---------------------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name                | DSP Mapping      | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++---------------------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|DivSqrtRecF64              | A''*B''          | 20     | 17     | -      | -      | 0      | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | PCIN+A''*B''     | 20     | 17     | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | PCIN>>17+A''*B'' | 20     | 17     | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | A''*B''          | 20     | 17     | -      | -      | 0      | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | PCIN+A''*B''     | 17     | 17     | -      | -      | 0      | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | PCIN+A''*B''     | 20     | 17     | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | A''*B''          | 17     | 17     | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | PCIN>>17+A''*B'' | 17     | 17     | -      | -      | 0      | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|DivSqrtRecF64              | PCIN+A''*B''     | 17     | 17     | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | A*B'             | 19     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | PCIN+A*B'        | 19     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | PCIN>>17+A*B'    | 19     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | A*B'             | 19     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | PCIN+A*B'        | 19     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | A'*B'            | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | PCIN>>17+A'*B'   | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e11_s53 | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e8_s24  | A*B'             | 24     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|MulAddRecFNPipe_l2_e8_s24  | PCIN>>17+A*B     | 24     | 7      | -      | -      | 31     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | A'*B'            | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | PCIN+A'*B'       | 17     | 15     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | A'*B'            | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | PCIN>>17+A'*B'   | 17     | 15     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | A'*B'            | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | PCIN>>17+A'*B'   | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv                     | PCIN>>17+A'*B'   | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | A*B'             | 17     | 17     | -      | -      | 0      | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 26     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMultiplier        | A'*B             | 9      | 18     | -      | -      | 0      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B        | 17     | 17     | -      | -      | 9      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMultiplier        | A*B              | 17     | 17     | -      | -      | 26     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 17     | 17     | -      | -      | 0      | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 17     | 17     | -      | -      | 26     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | A*B'             | 17     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN>>17+A'*B    | 17     | 18     | -      | -      | 0      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B        | 17     | 17     | -      | -      | 0      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B        | 17     | 17     | -      | -      | 26     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | A'*B             | 17     | 17     | -      | -      | 0      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B        | 17     | 17     | -      | -      | 0      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 17     | 17     | -      | -      | 0      | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 17     | 17     | -      | -      | 43     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | A'*B'            | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 17     | 17     | -      | -      | 0      | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 17     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN>>17+A'*B    | 17     | 17     | -      | -      | 43     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | A'*B'            | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A*B'        | 17     | 17     | -      | -      | 48     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN>>17+A'*B    | 17     | 17     | -      | -      | 0      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B        | 17     | 17     | -      | -      | 48     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | A'*B'            | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN>>17+A'*B    | 17     | 17     | -      | -      | 0      | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | A'*B'            | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN>>17+A'*B'   | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN+A'*B'       | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|PipelinedMulUnit           | PCIN>>17+A'*B'   | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
++---------------------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+----------------+------+
+|      |Cell            |Count |
++------+----------------+------+
+|1     |BUFG            |     4|
+|2     |CARRY8          |   980|
+|3     |DSP_ALU         |    61|
+|4     |DSP_A_B_DATA    |    61|
+|5     |DSP_C_DATA      |    61|
+|6     |DSP_MULTIPLIER  |    61|
+|7     |DSP_M_DATA      |    61|
+|8     |DSP_OUTPUT      |    61|
+|9     |DSP_PREADD      |    61|
+|10    |DSP_PREADD_DATA |    61|
+|11    |LUT1            |   337|
+|12    |LUT2            |  4424|
+|13    |LUT3            |  9413|
+|14    |LUT4            | 10301|
+|15    |LUT5            | 13224|
+|16    |LUT6            | 48988|
+|17    |MUXF7           |  6426|
+|18    |MUXF8           |  2031|
+|19    |RAM128X1D       |    32|
+|20    |RAM16X1D        |    30|
+|21    |RAM256X1D       |    16|
+|22    |RAM32M          |    14|
+|23    |RAM32M16        |   245|
+|24    |RAM32X1D        |    12|
+|25    |RAM64M          |    18|
+|26    |RAM64M8         |   278|
+|27    |RAM64X1D        |     4|
+|28    |RAMB18E2        |    16|
+|29    |RAMB36E2        |   137|
+|30    |SRL16E          |    48|
+|31    |FDCE            |   526|
+|32    |FDPE            |     7|
+|33    |FDRE            | 51374|
+|34    |FDSE            |   433|
+|35    |LD              |     1|
+|36    |IBUF            |   124|
+|37    |OBUF            |   238|
++------+----------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:39 ; elapsed = 00:02:37 . Memory (MB): peak = 4443.363 ; gain = 1907.129 ; free physical = 4370 ; free virtual = 14495
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 5 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:10 ; elapsed = 00:02:14 . Memory (MB): peak = 4447.273 ; gain = 1409.578 ; free physical = 12793 ; free virtual = 22917
+Synthesis Optimization Complete : Time (s): cpu = 00:02:42 ; elapsed = 00:02:40 . Memory (MB): peak = 4447.273 ; gain = 1911.039 ; free physical = 12793 ; free virtual = 22917
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 4447.273 ; gain = 0.000 ; free physical = 12791 ; free virtual = 22916
+INFO: [Netlist 29-17] Analyzing 10276 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 1 inverter(s) to 1 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 4531.945 ; gain = 0.000 ; free physical = 12728 ; free virtual = 22852
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 839 instances were transformed.
+  BUFG => BUFGCE: 4 instances
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 61 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 124 instances
+  LD => LDCE (inverted pins: G): 1 instance 
+  RAM128X1D => RAM128X1D (MUXF7(x2), RAMD64E(x4)): 32 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 30 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 16 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 14 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 245 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 12 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 18 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 278 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 4 instances
+
+Synth Design complete | Checksum: 785c1870
+INFO: [Common 17-83] Releasing license: Synthesis
+246 Infos, 291 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:03:14 ; elapsed = 00:03:10 . Memory (MB): peak = 4531.980 ; gain = 3187.258 ; free physical = 12720 ; free virtual = 22844
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 12231.014; main = 3740.881; forked = 8688.142
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 17243.250; main = 4531.949; forked = 12799.883
+Write ShapeDB Complete: Time (s): cpu = 00:00:00.49 ; elapsed = 00:00:00.17 . Memory (MB): peak = 4555.957 ; gain = 0.000 ; free physical = 12716 ; free virtual = 22855
+INFO: [Common 17-1381] The checkpoint '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/BOOM_Prj/BOOM_Prj.runs/synth_1/ChipTop.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:20 ; elapsed = 00:00:18 . Memory (MB): peak = 4555.957 ; gain = 23.977 ; free physical = 12634 ; free virtual = 22858
+INFO: [runtcl-4] Executing : report_utilization -file ChipTop_utilization_synth.rpt -pb ChipTop_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sun Oct 27 23:09:32 2024...
+[Sun Oct 27 23:09:43 2024] synth_1 finished
+wait_on_runs: Time (s): cpu = 00:03:49 ; elapsed = 00:03:54 . Memory (MB): peak = 1351.195 ; gain = 0.000 ; free physical = 17066 ; free virtual = 26386
 # open_run synth_1 -name synth_1
 Design is defaulting to impl run constrset: constrs_1
 Design is defaulting to synth run part: xczu19eg-ffvc1760-2-i
 INFO: [Device 21-403] Loading part xczu19eg-ffvc1760-2-i
-Netlist sorting complete. Time (s): cpu = 00:00:00.87 ; elapsed = 00:00:00.87 . Memory (MB): peak = 2617.141 ; gain = 0.000 ; free physical = 13593 ; free virtual = 18333
+Netlist sorting complete. Time (s): cpu = 00:00:00.87 ; elapsed = 00:00:00.87 . Memory (MB): peak = 2616.672 ; gain = 0.000 ; free physical = 15791 ; free virtual = 25111
 INFO: [Netlist 29-17] Analyzing 10271 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
 INFO: [Project 1-479] Netlist was created with Vivado 2023.2
@@ -26,7 +1079,7 @@ Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-
 WARNING: [Constraints 18-619] A clock with name 'clock' already exists, overwriting the previous clock with the same name. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/BOOM/BOOM_Time_Constraints.xdc:3]
 Finished Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/BOOM/BOOM_Time_Constraints.xdc]
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2923.480 ; gain = 0.000 ; free physical = 13356 ; free virtual = 18096
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2927.980 ; gain = 0.000 ; free physical = 15572 ; free virtual = 24892
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 834 instances were transformed.
   DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 61 instances
@@ -41,15 +1094,21 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   RAM64M8 => RAM64M8 (RAMD64E(x8)): 278 instances
   RAM64X1D => RAM64X1D (RAMD64E(x2)): 4 instances
 
-open_run: Time (s): cpu = 00:00:28 ; elapsed = 00:00:27 . Memory (MB): peak = 2923.516 ; gain = 1579.820 ; free physical = 13356 ; free virtual = 18096
+open_run: Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 2928.016 ; gain = 1576.820 ; free physical = 15572 ; free virtual = 24892
+# report_utilization -file ../../Logs/Syn_Report/BOOM_utilization_synth.rpt
+# report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 -file ../../Logs/Syn_Report/BOOM_timing_synth.rpt
+WARNING: [Common 17-708] report_timing_summary: The '-name' option will be ignored because it is only relevant in GUI mode.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Temperature grade: I, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+report_timing_summary: Time (s): cpu = 00:01:16 ; elapsed = 00:00:37 . Memory (MB): peak = 4814.719 ; gain = 1886.703 ; free physical = 13812 ; free virtual = 23263
 # report_power -file ../../Logs/Syn_Report/BOOM_power_synth.rpt
 Command: report_power -file ../../Logs/Syn_Report/BOOM_power_synth.rpt
-INFO: [Timing 38-35] Done setting XDC timing constraints.
 Running Vector-less Activity Propagation...
 
 Finished Running Vector-less Activity Propagation
-1 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+0 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 report_power completed successfully
-report_power: Time (s): cpu = 00:02:01 ; elapsed = 00:00:53 . Memory (MB): peak = 5087.840 ; gain = 2164.324 ; free physical = 11540 ; free virtual = 16280
+report_power: Time (s): cpu = 00:01:02 ; elapsed = 00:00:32 . Memory (MB): peak = 4902.762 ; gain = 88.043 ; free physical = 13734 ; free virtual = 23185
 # close_project
-INFO: [Common 17-206] Exiting Vivado at Tue Oct  8 16:04:07 2024...
+INFO: [Common 17-206] Exiting Vivado at Sun Oct 27 23:11:21 2024...

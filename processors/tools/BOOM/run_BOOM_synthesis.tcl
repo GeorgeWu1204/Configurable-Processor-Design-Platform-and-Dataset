@@ -1,4 +1,29 @@
 open_project BOOM_Prj.xpr
+
+if { [llength $argv] < 1 } {
+    puts "No incremental checkpoint identified, starting synthesis from scratch."
+    # Remove any previous incremental checkpoint setting for a fresh start
+    set_property incremental_checkpoint {} [get_runs synth_1]
+} else {
+    # Retrieve the config name argument
+    set config_name [lindex $argv 0]
+    # Define the path to the DCP file based on the config name
+    set dcp_path "/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/${config_name}.dcp"
+    
+    # Check if the specified DCP file exists
+    if { ![file exists $dcp_path] } {
+        puts "Error: Checkpoint file $dcp_path not found. Exiting."
+        exit 1
+    }
+    
+    # Add the DCP file to the project (ensuring no file duplication or conflict)
+    add_files -fileset utils_1 -norecurse $dcp_path
+    
+    # Set incremental synthesis properties
+    set_property STEPS.SYNTH_DESIGN.ARGS.INCREMENTAL_MODE aggressive [get_runs synth_1]
+    set_property incremental_checkpoint $dcp_path [get_runs synth_1]
+}
+
 reset_run synth_1
 launch_runs synth_1 -jobs 12
 wait_on_run synth_1
@@ -7,3 +32,4 @@ report_utilization -file ../../Logs/Syn_Report/BOOM_utilization_synth.rpt
 report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 -file ../../Logs/Syn_Report/BOOM_timing_synth.rpt
 report_power -file ../../Logs/Syn_Report/BOOM_power_synth.rpt
 close_project
+
