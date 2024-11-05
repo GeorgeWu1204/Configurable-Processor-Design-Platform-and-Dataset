@@ -75,21 +75,23 @@ The Simulation Results of the benchmarks such as Dhrystone are currently not sup
 ## [Rocket Chip](https://github.com/chipsalliance/rocket-chip.git)
 
 ### Setup
-```git clone https://github.com/chipsalliance/rocket-chip.git```
-```cd rocket-chip```
-```git checkout v1.6```
-```git submodule update --init```
-```export RISCV=/home/hw1020/Documents/Installations```
+```git clone https://github.com/chipsalliance/rocket-chip.git``` \
+```cd rocket-chip```    \
+```git checkout v1.6``` \
+```git submodule update --init --recursive``` \
+```export RISCV=/home/hw1020/Documents/Installations``` \
+```git submodule update --init``` \
+```export RISCV=/home/hw1020/Documents/Installations``` \
 Then need to modify according to the issue proposed [GitHub Issue](https://github.com/chipsalliance/rocket-chip/pull/3226)
 
 ## [BOOM](https://github.com/riscv-boom/riscv-boom)
 
 ### Setup
-```git clone https://github.com/ucb-bar/chipyard.git```
-```git checkout 1.12.3```
-```cd chipyard```
-```./build-setup.sh riscv-tools```
-```source env.sh```
-Benchmark Execution
-```cd sims/verilator``
+```git clone https://github.com/ucb-bar/chipyard.git``` \
+```git checkout 1.12.3``` \
+```cd chipyard``` \
+```./build-setup.sh riscv-tools``` \
+```source env.sh``` \
+Benchmark Execution \
+```cd sims/verilator``` \
 ```make run-binary CONFIG=MediumBoomV3Config BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/dhrystone.riscv```

@@ -1,6 +1,7 @@
 import sqlite3
-from processor_tuning import Rocket_Chip_Tuner, BOOM_Chip_Tuner
+from processor_tuner.BOOM import Rocket_Chip_Tuner, BOOM_Chip_Tuner
 from sampler import Sampler
+import processor_tuner
 
 def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
@@ -58,11 +59,9 @@ class Processor_Dataset:
         self.resource_utilisation_indexes = []
         self.target_obj_indexes = []
         # Create Tuner Object
-        tuner_list = {"RocketChip" : Rocket_Chip_Tuner, "BOOM" : BOOM_Chip_Tuner}
-        self.tuner = tuner_list[self.cpu_info.cpu_name] (cpu_info)
+        self.tuner = processor_tuner.get_chip_tuner(cpu_info)
         # Create Sampler
         self.sampler = Sampler(cpu_info)
-
 
         # Prepare Insertion Command
         self.insert_command = f"INSERT INTO {self.dataset_name} ( "
@@ -145,9 +144,9 @@ class Processor_Dataset:
         """Conduct experiments based on the configuration parameters"""
         # Performance Simulation  
         print(f"Starting the performance simulation with the Config{config_params}") 
-        # simulation_validity, performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
-        # if not simulation_validity:
-        #     return [-1] * self.cpu_info.supported_output_objs.metric_amounts
+        simulation_validity, performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
+        if not simulation_validity:
+            return [-1] * self.cpu_info.supported_output_objs.metric_amounts
         # Synthesis
         synthesis_validity = self.tuner.run_synthesis(config_params)
         quit()
