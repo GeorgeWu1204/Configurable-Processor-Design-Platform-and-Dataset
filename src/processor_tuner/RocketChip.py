@@ -1,7 +1,7 @@
 import re
 import subprocess
-from processor_config_matching import config_matcher
-from GeneralChip import General_Chip_Tuner
+from .processor_config_matching import config_matcher
+from .GeneralChip import General_Chip_Tuner
 
 
 class Rocket_Chip_Tuner(General_Chip_Tuner):
@@ -10,47 +10,78 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         super().__init__(cpu_info)
         # Log file for the generated reports
         self.generation_path = '../processors/chipyard/sims/verilator'
-        self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/BoomConfigs.scala'
-        self.core_level_configuration_file = '../processors/chipyard/generators/boom/src/main/scala/v3/common/config-mixins.scala'
+        self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/RocketConfigs.scala'
+        self.core_level_configuration_file = '../processors/chipyard/generators/rocket-chip/src/main/scala/rocket/Configs.scala'
         self.top_level_design_name = "ChipTop"
         self.processor_config_matcher = config_matcher(cpu_info, self.top_level_design_name)
 
-    def modify_config_files(self, input_vals):
-            with open(self.configuration_file, 'r') as file:
+
+    def modify_custom_cpu(self, n):
+        with open(self.cpu_level_config_file, 'r') as file:
+            lines = file.readlines()
+        pattern = re.compile(r'new freechips\.rocketchip\.rocket\.WithCustomisedCore\(\d+\)')
+        for i, line in enumerate(lines):
+            if 'class CustomisedRocketConfig' in line:
+                for j in range(i+1, len(lines)):
+                    if pattern.search(lines[j]):
+                        lines[j] = pattern.sub(f'new freechips.rocketchip.rocket.WithCustomisedCore({n})', lines[j])
+                        break
+                break
+        with open(self.cpu_level_config_file, 'w') as file:
+            file.writelines(lines)
+
+    def modify_custom_core_internal_config(self, input_vals):
+            params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
+            print(params_name)
+            print(input_vals)
+            with open(self.core_level_configuration_file, 'r') as file:
                 scala_code = file.read()
             
             # Regular expression to find the WithCustomisedCore class definition
-            class_pattern = re.compile(r'class WithCustomisedCore\((.*?)\)\s*extends\s*Config\((.*?)=>\s*{(.*?)case RocketTilesKey\s*=>\s*{(.*?)}\s*}\)', re.DOTALL)
+            class_pattern = re.compile(
+                    r'class\s+WithCustomisedCore\(\s*n:\s*Int,\s*crossing:\s*RocketCrossingParams\s*=\s*RocketCrossingParams\(\s*\),\s*\)\s*extends\s*Config\(\(site,\s*here,\s*up\)\s*=>\s*{\s*(.*?)\s*}\)',
+                    re.DOTALL)
+
             match = class_pattern.search(scala_code)
-            
+
             if match:
-                params = match.group(1)
-                body = match.group(4)
-                for var_name, var_val in zip(self.tunable_params, input_vals):
+                print("WithCustomisedCore class definition found.")
+                config_body = match.group(1)  # Corrected to match the single capture group
+                for var_name, var_val in zip(params_name, input_vals):
+                    print(var_name, var_val)
                     class_name, sub_name = var_name.split('_')
-                    print(class_name, sub_name)
                     if class_name == 'icache':
-                        pattern = re.compile(r'icache\s*=\s*Some\(ICacheParams\((.*?)\)\)', re.DOTALL)
-                        match = pattern.search(body)
+                        pattern = re.compile(rf'icache\s*=\s*Some\(ICacheParams\((.*?)\)\)', re.DOTALL)
+                        cache_match = pattern.search(config_body)
                     elif class_name == 'dcache':
-                        pattern = re.compile(r'dcache\s*=\s*Some\(DCacheParams\((.*?)\)\)', re.DOTALL)
-                        match = pattern.search(body)
-                    if match:
-                        params = match.group(1)
+                        pattern = re.compile(rf'dcache\s*=\s*Some\(DCacheParams\((.*?)\)\)', re.DOTALL)
+                        cache_match = pattern.search(config_body)
+                    if cache_match:
+                        params = cache_match.group(1)
                         sub_pattern = re.compile(rf'{sub_name}\s*=\s*\d+')
                         if sub_pattern.search(params):
                             new_params = sub_pattern.sub(f'{sub_name} = {var_val}', params)
-                            new_body = body.replace(params, new_params)
-                            scala_code = scala_code.replace(body, new_body)
-                            body = new_body  # update the body for subsequent iterations
+                            new_cache_body = cache_match.group(0).replace(params, new_params)
+                            config_body = config_body.replace(cache_match.group(0), new_cache_body)
                         else:
                             print(f"{sub_name} not found in {class_name} parameters.")
                     else:
                         print(f"{class_name} class not found in the body.")
-                with open(self.configuration_file, 'w') as file:
+                
+                # Rewrite the modified block back into the scala_code
+                scala_code = class_pattern.sub(f'class WithCustomisedCore(n: Int, crossing: RocketCrossingParams = RocketCrossingParams()) extends Config((site, here, up) => {{{config_body}}})', scala_code)
+
+                with open(self.core_level_configuration_file, 'w') as file:
                     file.write(scala_code)
             else:
                 print("WithCustomisedCore class definition not found.")
+
+    def modify_config_files(self, input_vals):
+        # CPU's overall configuration, Only modify the number of Cores
+        self.modify_custom_cpu(input_vals[0])
+        # Core's internal configuration
+        self.modify_custom_core_internal_config(input_vals[1:])
+        quit()
 
     def extract_mcycle_minstret(self):
         # Initialize variables to store mcycle and minstret
@@ -85,30 +116,43 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         
         return mcycle, minstret
 
-    def tune_and_run_performance_simulation(self, new_value, benchmark):
+    def tune_and_run_performance_simulation(self, new_value):
         try:
             # generate the design
-            rounded_value = [round(val) for val in new_value]   
-            self.modify_config_files(rounded_value)
-            clean_command = ["make", "clean"]
+            self.modify_config_files(new_value)
+            # TODO : Try to use Zinc to accelerate the process
+            clean_command = ["make", "clean"] 
             subprocess.run(clean_command, cwd = self.generation_path, check=True)
-            run_benchmark_command = ["make", "-j12", "CONFIG=freechips.rocketchip.system.CustomisedConfig", f"output/{benchmark}.riscv.run"]
-            with open(self.generated_logfile + 'Processor_Generation.log', 'w') as f:
-                subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-            minstret, mcycle = self.extract_mcycle_minstret()
-            if mcycle is None:
-                return False, None, None
-            return True, minstret, mcycle
+            run_configure_command = ["make", "-j12", "CONFIG=CustomisedRocketConfig"]
+            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            performance_results = {}
+            for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
+                run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedRocketConfig", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
+                
+                try:
+                    with open(self.processor_generation_log, 'w') as f:
+                        subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True)
+                    print("<---------------------->")
+                    print(benchmark_to_examine)
+                    print(performance_results[benchmark_to_examine])
+                except subprocess.CalledProcessError as e:
+                    print(f"Error occurred for the current benchmark {benchmark_to_examine}")
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
+            if len(performance_results) == 0:
+                return False, None
+            return True, performance_results
         except subprocess.CalledProcessError as e:
             # Optionally, log the error message from the exception
             print(f"Error occurred: {e}")
-            return False, None, None
+            return False, None
     
-    def run_synthesis(self):
-        '''Run synthesis using the new parameters.'''
-        command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
-        try:
-            with open(self.generated_logfile + 'Synthesis.log', 'w') as f:
-                subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
-        except subprocess.CalledProcessError as e:
-            print(f"Error executing Vivado: {e}")
+
+
+
+if __name__ == '__main__':
+    pass
+    # from interface import define_cpu_settings
+    # cpu_info, fpga_info = define_cpu_settings()
+    # rocket_chip_tuner = Rocket_Chip_Tuner(cpu_info)
+    # rocket_chip_tuner.modify_custom_cpu(3)

@@ -4,10 +4,12 @@
     "Configurable_Params": {
         "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
         "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
+        "icache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4},
+        "icache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4},
         "dcache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
         "dcache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-        "nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4},
-        "nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4}
+        "dcache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4},
+        "dcache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4}
     },
 
     "Conditional_Constraints" : {

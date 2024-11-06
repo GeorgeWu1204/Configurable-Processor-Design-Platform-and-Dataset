@@ -1,8 +1,8 @@
 import re
 import subprocess
 import os
-from processor_config_matching import config_matcher
-from GeneralChip import General_Chip_Tuner
+from .processor_config_matching import config_matcher
+from .GeneralChip import General_Chip_Tuner
 
 
 class EL2_VeeR_Tuner(General_Chip_Tuner):

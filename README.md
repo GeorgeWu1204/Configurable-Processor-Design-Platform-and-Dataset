@@ -21,3 +21,7 @@ This repositry contains the platform and dataset for configurable RISC-V process
 ## Supported Benchmark
 
 - RISC-V Benchmark Library
+
+## Future Work
+
+- The design space for RocketChip and BOOM is still not fully explored by this platform.

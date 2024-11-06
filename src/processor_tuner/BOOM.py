@@ -1,9 +1,7 @@
 import re
 import subprocess
-from processor_config_matching import config_matcher
-from GeneralChip import General_Chip_Tuner
-
-
+from .processor_config_matching import config_matcher
+from .GeneralChip import General_Chip_Tuner
 
 
 class BOOM_Chip_Tuner(General_Chip_Tuner):

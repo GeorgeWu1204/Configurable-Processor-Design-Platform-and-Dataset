@@ -1,5 +1,4 @@
 import sqlite3
-from processor_tuner.BOOM import Rocket_Chip_Tuner, BOOM_Chip_Tuner
 from sampler import Sampler
 import processor_tuner
 
@@ -149,7 +148,6 @@ class Processor_Dataset:
             return [-1] * self.cpu_info.supported_output_objs.metric_amounts
         # Synthesis
         synthesis_validity = self.tuner.run_synthesis(config_params)
-        quit()
         if not synthesis_validity:
             return [-1] * self.cpu_info.supported_output_objs.metric_amounts
         

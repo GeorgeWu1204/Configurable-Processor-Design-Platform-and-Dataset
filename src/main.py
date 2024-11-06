@@ -8,7 +8,7 @@ def main():
     cpu_info, fpga_info = define_cpu_settings()
     # cpu_info.debug_print()
     # print()
-    # create_table_from_json(cpu_info, '../dataset/PPA/BOOM_PPA.db')
+    # create_table_from_json(cpu_info, '../dataset/PPA/RocketChip_PPA.db')
     # Link the corresponding dataset
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
 
@@ -24,3 +24,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # import processor_tuner
+    # cpu_info, fpga_info = define_cpu_settings()
+    # test_tuner = processor_tuner.get_chip_tuner(cpu_info)
+    # test_tuner.modify_custom_cpu(1)
