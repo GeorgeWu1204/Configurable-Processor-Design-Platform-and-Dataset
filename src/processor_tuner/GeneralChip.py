@@ -18,7 +18,7 @@ class General_Chip_Tuner:
         self.generated_utilisation_filename = f'{cpu_info.cpu_name}_utilization_synth.rpt'
         self.generated_power_filename = f'{cpu_info.cpu_name}_power_synth.rpt'
         self.generated_time_filename = f'{cpu_info.cpu_name}_timing_synth.rpt'
-        self.processor_generation_log = '../processors/Logs/Generation_Log/Processor_Generation.log'
+        self.processor_generation_log = '../processors/Logs/Generation_Log/Processor_Generation'
         self.processor_synthesis_log = '../processors/Logs/Generation_Log/Synthesis.log'
         self.cpu_info = cpu_info
         self.top_level_design_name = None
@@ -26,8 +26,8 @@ class General_Chip_Tuner:
     
     def extract_metrics_from_log(self, train_validity, benchmark_name):
         # Define the regular expressions to capture the required metrics
-        time_pattern = rf"Microseconds for one run through {benchmark_name}: (\d+)"
-        throughput_pattern = rf"{benchmark_name} per Second: +(\d+)"
+        time_pattern = rf"Microseconds for one run through {benchmark_name.capitalize()}: (\d+)"
+        throughput_pattern = rf"{benchmark_name.capitalize()}s per Second: +(\d+)"
         mcycles_pattern = r"mcycle = (\d+)"
         minstret_pattern = r"minstret = (\d+)"
         # Prepare to store the values
@@ -41,7 +41,7 @@ class General_Chip_Tuner:
             return metrics
         try:
             # Open the log file
-            with open(self.processor_generation_log, 'r') as file:
+            with open(self.processor_generation_log + benchmark_name + '.log', 'r') as file:
                 # Read all lines from the file
                 log_content = file.read()
 

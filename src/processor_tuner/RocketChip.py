@@ -120,8 +120,8 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
             # generate the design
             self.modify_config_files(new_value)
             # TODO : Try to use Zinc to accelerate the process
-            clean_command = ["make", "clean"] 
-            subprocess.run(clean_command, cwd = self.generation_path, check=True)
+            # clean_command = ["make", "clean"] 
+            # subprocess.run(clean_command, cwd = self.generation_path, check=True)
             run_configure_command = ["make", "-j12", "CONFIG=CustomisedRocketConfig"]
             subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             performance_results = {}
@@ -129,7 +129,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedRocketConfig", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
                 
                 try:
-                    with open(self.processor_generation_log, 'w') as f:
+                    with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
                     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True, benchmark_to_examine)
                     print("<---------------------->")

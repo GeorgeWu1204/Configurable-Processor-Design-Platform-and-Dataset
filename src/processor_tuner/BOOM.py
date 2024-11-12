@@ -95,7 +95,7 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
                 
                 try:
-                    with open(self.processor_generation_log, 'w') as f:
+                    with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
                     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True, benchmark_to_examine)
                     print("<---------------------->")
