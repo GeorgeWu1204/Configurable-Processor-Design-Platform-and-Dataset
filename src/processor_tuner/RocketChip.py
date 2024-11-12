@@ -12,7 +12,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         self.generation_path = '../processors/chipyard/sims/verilator'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/RocketConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/rocket-chip/src/main/scala/rocket/Configs.scala'
-        self.top_level_design_name = "ChipTop"
+        self.top_level_design_name = "RocketTile"
         self.processor_config_matcher = config_matcher(cpu_info, self.top_level_design_name)
 
 
@@ -69,7 +69,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
                         print(f"{class_name} class not found in the body.")
                 
                 # Rewrite the modified block back into the scala_code
-                scala_code = class_pattern.sub(f'class WithCustomisedCore(n: Int, crossing: RocketCrossingParams = RocketCrossingParams()) extends Config((site, here, up) => {{{config_body}}})', scala_code)
+                scala_code = class_pattern.sub(f'class WithCustomisedCore(\n  n: Int,\n  crossing: RocketCrossingParams = RocketCrossingParams(),\n) extends Config((site, here, up) => {{\n{config_body}}})', scala_code)
 
                 with open(self.core_level_configuration_file, 'w') as file:
                     file.write(scala_code)
@@ -81,7 +81,6 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         self.modify_custom_cpu(input_vals[0])
         # Core's internal configuration
         self.modify_custom_core_internal_config(input_vals[1:])
-        quit()
 
     def extract_mcycle_minstret(self):
         # Initialize variables to store mcycle and minstret
@@ -132,13 +131,13 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
                 try:
                     with open(self.processor_generation_log, 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True, benchmark_to_examine)
                     print("<---------------------->")
                     print(benchmark_to_examine)
                     print(performance_results[benchmark_to_examine])
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred for the current benchmark {benchmark_to_examine}")
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False, benchmark_to_examine)
             if len(performance_results) == 0:
                 return False, None
             return True, performance_results

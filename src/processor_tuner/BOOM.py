@@ -81,53 +81,6 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
         # Core's internal configuration
         self.modify_custom_core_internal_config(input_vals[1:])
 
-    def extract_metrics_from_log(self, train_validity):
-        # Define the regular expressions to capture the required metrics
-        time_pattern = r"Microseconds for one run through Dhrystone: (\d+)"
-        throughput_pattern = r"Dhrystones per Second: +(\d+)"
-        mcycles_pattern = r"mcycle = (\d+)"
-        minstret_pattern = r"minstret = (\d+)"
-        # Prepare to store the values
-        metrics = {
-            "exe_time": None,
-            "throughput": None,
-            "mcycles": None,
-            "minstret": None
-        }
-        if not train_validity:
-            return metrics
-        try:
-            # Open the log file
-            with open(self.processor_generation_log, 'r') as file:
-                # Read all lines from the file
-                log_content = file.read()
-
-                # Search for exe_time
-                time_match = re.search(time_pattern, log_content)
-                if time_match:
-                    metrics["exe_time"] = int(time_match.group(1))
-
-                # Search for throughput
-                throughput_match = re.search(throughput_pattern, log_content)
-                if throughput_match:
-                    metrics["throughput"] = int(throughput_match.group(1))
-
-                # Search for mcycles
-                mcycles_match = re.search(mcycles_pattern, log_content)
-                if mcycles_match:
-                    metrics["mcycles"] = int(mcycles_match.group(1))
-
-                # Search for minstret
-                minstret_match = re.search(minstret_pattern, log_content)
-                if minstret_match:
-                    metrics["minstret"] = int(minstret_match.group(1))
-
-        except FileNotFoundError:
-            print(f"Error: The file {self.processor_generation_log} does not exist.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-
-        return metrics
 
     def tune_and_run_performance_simulation(self, new_value):
         try:
@@ -144,13 +97,14 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
                 try:
                     with open(self.processor_generation_log, 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True, benchmark_to_examine)
                     print("<---------------------->")
                     print(benchmark_to_examine)
                     print(performance_results[benchmark_to_examine])
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred for the current benchmark {benchmark_to_examine}")
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False, benchmark_to_examine)
+            
             if len(performance_results) == 0:
                 return False, None
             return True, performance_results

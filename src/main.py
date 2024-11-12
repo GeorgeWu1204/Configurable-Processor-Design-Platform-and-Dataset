@@ -6,21 +6,29 @@ from dataset import Processor_Dataset, create_table_from_json
 def main():
     # Define the settings of the CPU
     cpu_info, fpga_info = define_cpu_settings()
-    # cpu_info.debug_print()
-    # print()
-    # create_table_from_json(cpu_info, '../dataset/PPA/RocketChip_PPA.db')
-    # Link the corresponding dataset
+
+    if "create_table" in sys.argv:
+        create_table_from_json(cpu_info, f'../dataset/PPA/{cpu_info.cpu_name}_PPA.db')
+
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
 
-    # processor_dataset.debug_print()
+    if "debug" in sys.argv:
+        processor_dataset.debug_print()
+        print()
+        cpu_info.debug_print()
 
-    # Sampling Mode: Automatically exploring the design space
-    if len(sys.argv) == 2 and sys.argv[1] == "Sampling":
+
+    if "Sampling" in sys.argv:
+        # Sampling Mode: Automatically exploring the design space
         print("---------------Sampling Mode---------------")
         processor_dataset.design_space_exploration()
+    elif "Querying" in sys.argv:
+        # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
+        print("---------------Querying Mode---------------")
+        processor_dataset.query_dataset()
+    else:
+        print("Invalid Mode")
 
-
-    # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
 
 if __name__ == "__main__":
     main()

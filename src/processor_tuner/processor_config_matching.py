@@ -72,15 +72,19 @@ class config_matcher:
             f.write('\n')
     
     def prepare_checkpoint(self, checkpoint_config_index):
-        try:
-            # Use subprocess to execute the copy command with rename
-            subprocess.run(
-                ['cp', '-f', f'{self.synthesis_checkpoint_directory}{checkpoint_config_index}.dcp', f'{self.synthesis_checkpoint_directory}{self.check_point_to_synthesis_name}.dcp'],
-                check=True  # Raises an error if the command fails
-            )
-            return True
-        except subprocess.CalledProcessError as e:
-            Exception(f"Error: {e}")
+        if checkpoint_config_index is None:
+            print("No checkpoint index provided.")
+            return False
+        else:
+            try:
+                # Use subprocess to execute the copy command with rename
+                subprocess.run(
+                    ['cp', '-f', f'{self.synthesis_checkpoint_directory}{checkpoint_config_index}.dcp', f'{self.synthesis_checkpoint_directory}{self.check_point_to_synthesis_name}.dcp'],
+                    check=True  # Raises an error if the command fails
+                )
+                return True
+            except subprocess.CalledProcessError as e:
+                Exception(f"Error: {e}")
 
 
     def rename_and_store_checkpoint(self, new_checkpoint_name):

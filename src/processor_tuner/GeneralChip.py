@@ -23,13 +23,61 @@ class General_Chip_Tuner:
         self.cpu_info = cpu_info
         self.top_level_design_name = None
         self.processor_config_matcher = None
+    
+    def extract_metrics_from_log(self, train_validity, benchmark_name):
+        # Define the regular expressions to capture the required metrics
+        time_pattern = rf"Microseconds for one run through {benchmark_name}: (\d+)"
+        throughput_pattern = rf"{benchmark_name} per Second: +(\d+)"
+        mcycles_pattern = r"mcycle = (\d+)"
+        minstret_pattern = r"minstret = (\d+)"
+        # Prepare to store the values
+        metrics = {
+            "exe_time": None,
+            "throughput": None,
+            "mcycles": None,
+            "minstret": None
+        }
+        if not train_validity:
+            return metrics
+        try:
+            # Open the log file
+            with open(self.processor_generation_log, 'r') as file:
+                # Read all lines from the file
+                log_content = file.read()
+
+                # Search for exe_time
+                time_match = re.search(time_pattern, log_content)
+                if time_match:
+                    metrics["exe_time"] = int(time_match.group(1))
+
+                # Search for throughput
+                throughput_match = re.search(throughput_pattern, log_content)
+                if throughput_match:
+                    metrics["throughput"] = int(throughput_match.group(1))
+
+                # Search for mcycles
+                mcycles_match = re.search(mcycles_pattern, log_content)
+                if mcycles_match:
+                    metrics["mcycles"] = int(mcycles_match.group(1))
+
+                # Search for minstret
+                minstret_match = re.search(minstret_pattern, log_content)
+                if minstret_match:
+                    metrics["minstret"] = int(minstret_match.group(1))
+
+        except FileNotFoundError:
+            print(f"Error: The file {self.processor_generation_log} does not exist.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+        return metrics
         
     
     def run_synthesis(self, new_config):
         '''Run synthesis using the new parameters.'''
         checkpoint_index = self.processor_config_matcher.match_config(new_config)
-        self.processor_config_matcher.prepare_checkpoint(checkpoint_index)
-        command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name]
+        exist_dcp = self.processor_config_matcher.prepare_checkpoint(checkpoint_index)
+        command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name, str(int(exist_dcp))]
         try:
             with open(self.processor_synthesis_log, 'w') as f:
                 subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
