@@ -4,7 +4,7 @@ import utils
 
 from interface import parse_constraints
 from format_constraints import Simpler_Constraints
-from optimisation_models import brute_force, hill_climbing, genetic_algorithm
+from design_methods.BO.optimisation_models import brute_force, hill_climbing, genetic_algorithm
 
 # Tensor Settings
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

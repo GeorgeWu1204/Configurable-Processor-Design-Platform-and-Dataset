@@ -7,7 +7,7 @@ from colorama import Fore, Style
 
 from interface import parse_constraints
 from sampler import initial_sampler
-from optimisation_models import multi_objective_BO_model, single_objective_BO_model
+from design_methods.BO.optimisation_models import multi_objective_BO_model, single_objective_BO_model
 from train_set import train_set_records
 from botorch.sampling.normal import SobolQMCNormalSampler
 from botorch.fit import fit_gpytorch_model
@@ -16,6 +16,13 @@ from botorch.fit import fit_gpytorch_model
 from botorch.exceptions import BadInitialCandidatesWarning
 from linear_operator.utils.cholesky import NumericalWarning
 from botorch.exceptions.warnings import InputDataWarning
+
+
+class Design_Framework:
+    def __init__(self):
+        # TODO: Add automatic device detection
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.t_type = torch.float64
 
 
 # Tensor Settings

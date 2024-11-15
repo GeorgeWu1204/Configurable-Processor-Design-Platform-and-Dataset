@@ -26,6 +26,12 @@ def main():
         # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
         print("---------------Querying Mode---------------")
         processor_dataset.query_dataset()
+    
+    elif "Designing" in sys.argv:
+        # Designing Mode: Designing the processor based on the dataset.
+        print("---------------Designing Mode---------------")
+        processor_dataset.design_processor
+
     else:
         print("Invalid Mode")
 
