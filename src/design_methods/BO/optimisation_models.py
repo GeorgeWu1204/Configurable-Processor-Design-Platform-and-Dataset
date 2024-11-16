@@ -5,7 +5,7 @@ from colorama import Fore, Style
 import numpy as np
 from typing import Optional
 
-from design_methods.BO.customised_modelO.customised_model import SingleTaskGP_transformed
+from customised_model import SingleTaskGP_transformed
 from botorch.models.transforms.outcome import Standardize
 from botorch.models.model_list_gp_regression import ModelListGP
 from gpytorch.mlls.sum_marginal_log_likelihood import SumMarginalLogLikelihood
@@ -15,6 +15,20 @@ from botorch.optim import optimize_acqf
 from botorch.models import SingleTaskGP
 from botorch.acquisition.objective import ConstrainedMCObjective
 from botorch.acquisition.monte_carlo import qExpectedImprovement
+
+
+
+
+def select_model(model_type, NUM_RESTARTS, RAW_SAMPLES, BATCH_SIZE, input_info, output_info, ref_points, sampler_generator, device, t_type, output_constraints_enable=True, categorical_handle_enable=True):
+    if model_type == 'single_objective_BO':
+        return single_objective_BO_model(NUM_RESTARTS, RAW_SAMPLES, BATCH_SIZE, input_info, output_info, ref_points, sampler_generator, device, t_type, output_constraints_enable, categorical_handle_enable)
+    elif model_type == 'multi_objective_BO':
+        return multi_objective_BO_model(NUM_RESTARTS, RAW_SAMPLES, BATCH_SIZE, input_info, output_info, ref_points, device, t_type, output_constraints_enable, categorical_handle_enable)
+    elif model_type == 'single_objective_mocked_BO':
+        return BOOM_EXPLORER_MOCKED(NUM_RESTARTS, RAW_SAMPLES, BATCH_SIZE, input_info, output_info, ref_points, device, t_type, output_constraints_enable, categorical_handle_enable)
+    else:
+        raise ValueError("Invalid model type")
+
 
 ### <----------------- Single Objective BO Model ----------------->
 def obj_callable(Z: torch.Tensor, X: Optional[torch.Tensor] = None):

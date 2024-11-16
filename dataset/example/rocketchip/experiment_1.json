@@ -1,4 +1,7 @@
 {
+
+    "optimisation_task_name" : "rocketchip_experiment_1",
+
     "configurable_params": [
       {
         "var": "btb_size",

@@ -144,6 +144,7 @@ class object_cpu_info:
         conditional_constraints = []
         output_objective = {}
         output_constraints = {}
+        optimisation_task_name = spec_content["optimisation_task_name"]
 
         for param in spec_content["configurable_params"]:
             # Define a flag to track the section type
@@ -155,11 +156,17 @@ class object_cpu_info:
                 input_shift_amount[param_name] = int(param["offset"])
             else:
                 self_constraints[param_name] = [param["range"], param["data_type"]]
+            # update tunable parameters
+            if not self.update_tunable_param(param_name):
+                raise ValueError("The parameter does not exist in the database. Please try again.")
         
         for const_param in spec_content["constant_params"]:
             input_constant[const_param["var"]] = const_param["value"]
+            if not self.update_tunable_param(const_param["var"]):
+                raise ValueError("The parameter does not exist in the database. Please try again.")
+            
         # TODO: Add the conditional constraints
-        
+
         for obj in spec_content["optimisation_objectives"]:
             if obj["benchmark"] != None:
                 obj_name = obj["benchmark"] + '_' + obj["metric"]
@@ -177,11 +184,12 @@ class object_cpu_info:
         for resource_metric in resource_metrics:
             output_constraints[resource_metric] = [0, int(getattr(fpga_info, resource_metric))] 
         
-        output_info = Objective_Info(output_objective, output_constraints)
+        self.objective_space_info = Objective_Info(output_objective, output_constraints, optimisation_task_name)
         # Start to Fill in the constraints information
-        input_info = fill_constraints(self_constraints, conditional_constraints, device)
-        input_info.constants = input_constant
-        return input_info, output_info
+        self.param_space_info = fill_constraints(self_constraints, conditional_constraints, device)
+        self.param_space_info.constants = input_constant
+        return fpga_info
+
 
 
 def calculate_input_dim(self_constraints):

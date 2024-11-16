@@ -220,9 +220,9 @@ class Processor_Dataset:
                 target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
             
             if  self.fpga_considered:
-                return True, self.fpga_info.check_fpga_deployability(rc_results), target_obj_results  
+                return True, self.fpga_info.check_fpga_deployability(rc_results), target_obj_results, rc_results
             else:
-                return True, True, target_obj_results          
+                return True, True, target_obj_results, None          
             
         except sqlite3.Error as e:
             Exception(f"An error occurred: {e}")

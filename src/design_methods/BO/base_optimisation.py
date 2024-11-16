@@ -1,5 +1,5 @@
 import torch
-import data
+import design_methods.processor_analyser as processor_analyser
 import definitions
 
 from interface import parse_proc_spec
@@ -16,11 +16,11 @@ input_info, output_info, param_tuner, optimisation_name = parse_proc_spec(CONSTR
 # Dataset Settings
 if output_info.optimisation_target == 'synthetic':
     RAW_DATA_FILE = '../specification/ppa_v2.db'
-    data_set = data.read_data_from_db(RAW_DATA_FILE, input_info, output_info, t_type, device)
+    data_set = processor_analyser.read_data_from_db(RAW_DATA_FILE, input_info, output_info, t_type, device)
 elif output_info.optimisation_target == 'NutShell':
-    data_set = data.NutShell_Data(input_info, output_info, param_tuner, t_type, device)
+    data_set = processor_analyser.NutShell_Data(input_info, output_info, param_tuner, t_type, device)
 elif output_info.optimisation_target == 'EL2':
-    data_set = data.EL2_Data(input_info, output_info, param_tuner, optimisation_name, t_type, device)
+    data_set = processor_analyser.EL2_Data(input_info, output_info, param_tuner, optimisation_name, t_type, device)
 
 
 print("<-------------- Optimisation Settings -------------->")

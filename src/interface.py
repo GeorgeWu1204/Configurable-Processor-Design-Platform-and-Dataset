@@ -22,7 +22,7 @@ def define_cpu_settings(mode):
         choice = input("Load from existing configuration file? (y/n)")
         if choice == 'y':
             config_file = input("Enter the path to the configuration file: ")
-            cpu_info.load_design_spec(config_file)
+            fpga_info = cpu_info.load_design_spec(config_file)
         else:
             #TODO
             print("Enter the configuration parameters: ")    
@@ -57,24 +57,24 @@ def define_cpu_settings(mode):
             if choice == 'n':
                 break
     
-    # Output Params
-    print(f"The existing supported RISC-V benchmarks for {cpu_info.cpu_name} are:")
-    supported_benchmarks = cpu_info.supported_output_objs.benchmark.metrics
-    print(supported_benchmarks)
-    while True:
-        output_name = input("Enter the name of the RISC-V benchmark: ")
-        if output_name in supported_benchmarks:
-            print("There are four performance metrics available for this benchmark")
-            print("exe_time, throughput, mcycles, minstret")
-            tmp_metrics = input("Type the metric you want to consider, split by ,")
-            considered_metrics = tmp_metrics.split(", ")
-            cpu_info.update_target_benchmark(output_name, considered_metrics)
-        else:
-            print("The benchmark does not exist in the database. Please try again.")
-            continue
-        choice = input("Do you want to add more output parameters? (y/n): ")
-        if choice == 'n':
-            break
+        # Output Params
+        print(f"The existing supported RISC-V benchmarks for {cpu_info.cpu_name} are:")
+        supported_benchmarks = cpu_info.supported_output_objs.benchmark.metrics
+        print(supported_benchmarks)
+        while True:
+            output_name = input("Enter the name of the RISC-V benchmark: ")
+            if output_name in supported_benchmarks:
+                print("There are four performance metrics available for this benchmark")
+                print("exe_time, throughput, mcycles, minstret")
+                tmp_metrics = input("Type the metric you want to consider, split by ,")
+                considered_metrics = tmp_metrics.split(", ")
+                cpu_info.update_target_benchmark(output_name, considered_metrics)
+            else:
+                print("The benchmark does not exist in the database. Please try again.")
+                continue
+            choice = input("Do you want to add more benchmark? (y/n): ")
+            if choice == 'n':
+                break
     cpu_info.display_summary()
     return cpu_info, fpga_info
 
