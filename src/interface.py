@@ -1,8 +1,9 @@
 import os.path as osp
-from utils import read_cpu_info_from_json
+from definitions import read_cpu_info_from_json
 from constraints import target_fpga_info
 
-def define_cpu_settings():
+
+def define_cpu_settings(mode):
     # CPU Info
     while True:
         name = input("Enter the name of the CPU or type 'exit' to quit: ")
@@ -14,26 +15,47 @@ def define_cpu_settings():
             print("The CPU does not exist in the database. Please try again.")
     cpu_info = read_cpu_info_from_json(f'../dataset/processor_configs/{name.lower()}_Config.json')
     
-    # FPGA Info
-    while True:
-        fpga_device = input(" If consider the deployability on target FPGA, enter target FPGA series number \n Otherwise, type SIM to ignore this ")
-        if fpga_device.lower() == 'sim':
-            fpga_info = None
-            break
-        fpga_info = target_fpga_info(fpga_device)
-        if fpga_info is not None:
-            break
-
-    # Tunable Params
-    while True:
-        print("Enter the configuration parameters: ")
-        config_name = input("Enter the name of the parameter: ")
-        if not cpu_info.update_tunable_param(config_name):
-            print("The parameter does not exist in the database. Please try again.")
-            continue
-        choice = input("Do you want to add more configuration parameters? (y/n): ")
-        if choice == 'n':
-            break
+    
+    if mode == "Designing":
+        for param in cpu_info.config_params.params:
+            print(f"Parameter: {param.name} Default Value: {param.default_value} Range: {param.self_range}")
+        choice = input("Load from existing configuration file? (y/n)")
+        if choice == 'y':
+            config_file = input("Enter the path to the configuration file: ")
+            cpu_info.load_design_spec(config_file)
+        else:
+            #TODO
+            print("Enter the configuration parameters: ")    
+            while True:
+                print("Enter the configuration parameters: ")
+                config_name = input("Enter the name of the parameter: ")
+                if not cpu_info.update_tunable_param(config_name):
+                    print("The parameter does not exist in the database. Please try again.")
+                    continue
+                print(" Enter the range of the parameter: ")
+                choice = input("Do you want to add more configuration parameters? (y/n): ")
+                if choice == 'n':
+                    break                    
+    else:
+        # FPGA Info
+        while True:
+            fpga_device = input(" If consider the deployability on target FPGA, enter target FPGA series number \n Otherwise, type SIM to ignore this ")
+            if fpga_device.lower() == 'sim':
+                fpga_info = None
+                break
+            fpga_info = target_fpga_info(fpga_device)
+            if fpga_info is not None:
+                break
+        # Tunable Params
+        while True:
+            print("Enter the configuration parameters: ")
+            config_name = input("Enter the name of the parameter: ")
+            if not cpu_info.update_tunable_param(config_name):
+                print("The parameter does not exist in the database. Please try again.")
+                continue
+            choice = input("Do you want to add more configuration parameters? (y/n): ")
+            if choice == 'n':
+                break
     
     # Output Params
     print(f"The existing supported RISC-V benchmarks for {cpu_info.cpu_name} are:")
@@ -55,3 +77,5 @@ def define_cpu_settings():
             break
     cpu_info.display_summary()
     return cpu_info, fpga_info
+
+

@@ -1,8 +1,8 @@
 import torch
 import data
-import utils
+import definitions
 
-from interface import parse_constraints
+from interface import parse_proc_spec
 from format_constraints import Simpler_Constraints
 from design_methods.BO.optimisation_models import brute_force, hill_climbing, genetic_algorithm
 
@@ -12,7 +12,7 @@ t_type = torch.float64
 
 # Input Settings
 CONSTRAINT_FILE = '../specification/input_spec_optimisation_set_4.txt'
-input_info, output_info, param_tuner, optimisation_name = parse_constraints(CONSTRAINT_FILE, device)
+input_info, output_info, param_tuner, optimisation_name = parse_proc_spec(CONSTRAINT_FILE, device)
 # Dataset Settings
 if output_info.optimisation_target == 'synthetic':
     RAW_DATA_FILE = '../specification/ppa_v2.db'
@@ -36,7 +36,7 @@ print(f"Output Objective Constraint: {output_info.output_constraints}")
 print("<--------------------------------------------------->")
 
 #Building simpler constraints
-ref_points = utils.find_ref_points(output_info.obj_to_optimise_dim, data_set.objs_direct, t_type, device)
+ref_points = definitions.find_ref_points(output_info.obj_to_optimise_dim, data_set.objs_direct, t_type, device)
 verbose = True
 record = True
 record_file_name = '../test/test_results/'

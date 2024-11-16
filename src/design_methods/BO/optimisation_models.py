@@ -1,6 +1,6 @@
 import time
 import torch
-from utils import calculate_hypervolume, encapsulate_obj_tensor_into_dict, other_model_training_result, standardize_tensor
+from definitions import calculate_hypervolume, encapsulate_obj_tensor_into_dict, other_model_training_result, standardize_tensor
 from colorama import Fore, Style
 import numpy as np
 from typing import Optional

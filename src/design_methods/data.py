@@ -4,7 +4,7 @@ import glob
 import sys
 import pickle
 import os.path as osp
-from utils import calculate_smooth_condition, recover_single_input_data, read_utilization, find_the_anticipated_fastest_time_period
+from definitions import calculate_smooth_condition, recover_single_input_data, read_utilization, find_the_anticipated_fastest_time_period
 from botorch.utils.transforms import normalize
 
 def read_data_from_db(db_name):
@@ -32,30 +32,6 @@ def read_data_from_db(db_name):
     return db
 
 
-class Input_Info:
-    """Class to store all the related input information"""
-    def __init__(self, input_dim, input_scales, input_normalized_factor, input_exp, input_offsets, input_names, input_constraints, input_categorical, self_constraints, conditional_constraints):
-        self.input_dim = input_dim
-        self.input_scales = input_scales
-        self.input_normalized_factor = input_normalized_factor
-        self.input_exp = input_exp
-        self.input_offsets = input_offsets
-        self.input_names = input_names
-        self.constraints = input_constraints
-        self.constants = None
-        self.self_constraints = self_constraints
-        self.conditional_constraints = conditional_constraints
-        self.input_categorical = input_categorical
-
-class Output_Info:
-    """Class to store all the related output information"""
-    def __init__(self, obj_to_optimise, output_constraints, optimisation_target):
-        self.obj_to_optimise = obj_to_optimise
-        self.output_constraints = output_constraints
-        self.optimisation_target = optimisation_target
-        self.obj_to_optimise_dim = len(obj_to_optimise)
-        self.obj_to_evaluate_dim = self.obj_to_optimise_dim + len(output_constraints)
-        self.obj_to_optimise_index = list(range(self.obj_to_optimise_dim))
 
 class Data_Sample:
     """Individual Storage Element"""

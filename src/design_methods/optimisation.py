@@ -1,11 +1,11 @@
 import torch
 import data
 import time
-import utils
+import definitions
 import warnings
 from colorama import Fore, Style
 
-from interface import parse_constraints
+from interface import parse_proc_spec
 from sampler import initial_sampler
 from design_methods.BO.optimisation_models import multi_objective_BO_model, single_objective_BO_model
 from train_set import train_set_records
@@ -25,19 +25,10 @@ class Design_Framework:
         self.t_type = torch.float64
 
 
-# Tensor Settings
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-t_type = torch.float64
 
-build_dataset = True
 
-# Input Settings
-CONSTRAINT_FILE = '../specification/Simple_Dataset/dataset_1_settings.txt'
-# CONSTRAINT_FILE = '../specification/Simple_Dataset/dataset_2_settings.txt'
-# CONSTRAINT_FILE = '../specification/EL2/Experiment_1.txt'
-# CONSTRAINT_FILE = '../specification/Rocket-Chip/Experiment_1.txt'
 
-input_info, output_info, param_tuner, optimisation_name = parse_constraints(CONSTRAINT_FILE, device)
+input_info, output_info, param_tuner, optimisation_name = parse_proc_spec(CONSTRAINT_FILE, device)
 
 # Dataset Settings
 if output_info.optimisation_target == 'dataset_1':
@@ -91,14 +82,14 @@ enable_train_set_modification = False
 #objective index for hypervolume calculation
 obj_index = 0
 #reference point for optimisation used for hypervolume calculation
-ref_points = utils.find_ref_points(output_info.obj_to_optimise_dim, data_set.objs_direct, t_type, device)
+ref_points = definitions.find_ref_points(output_info.obj_to_optimise_dim, data_set.objs_direct, t_type, device)
 
 #normalise objective to ensure the same scale
 sampler_generator = initial_sampler(input_info.input_dim, output_info.obj_to_evaluate_dim, input_info.constraints, data_set, t_type, device)
 train_set_storage = train_set_records(input_info.input_normalized_factor, list(input_info.self_constraints.values()), input_info.conditional_constraints, input_info.input_categorical, ref_points, output_info.obj_to_optimise_dim, enable_train_set_modification, TRAIN_SET_ACCEPTABLE_THRESHOLD, TRAIN_SET_DISTURBANCE_RANGE, t_type, device)
 
 if plot_posterior:
-    posterior_examiner = utils.test_posterior_result(input_info.input_names, t_type, device)
+    posterior_examiner = definitions.test_posterior_result(input_info.input_names, t_type, device)
     posterior_objective_index = 0
 
 
@@ -116,7 +107,7 @@ if record:
     record_file_name = '../test/test_results/'
     for obj_name in output_info.obj_to_optimise.keys():
         record_file_name = record_file_name + obj_name + '_'
-    results_record = utils.recorded_training_result(input_info.input_names, output_info.obj_to_optimise, record_file_name, N_TRIALS, N_BATCH)
+    results_record = definitions.recorded_training_result(input_info.input_names, output_info.obj_to_optimise, record_file_name, N_TRIALS, N_BATCH)
 
 # Global Best Values
 best_obj_scores_per_trial = []
@@ -145,7 +136,7 @@ for trial in range (1, N_TRIALS + 1):
     mll_ei, model_ei = Model.initialize_model(train_x_ei, train_obj_ei)
     #reset the best observation
     best_sample_point_per_interation, best_observation_per_interation, best_constraint_per_interation, best_obj_score_per_interation = \
-        utils.extract_best_from_initialisation_results(train_x_ei, exact_obj_ei, obj_score_ei, output_info.obj_to_optimise, output_info.output_constraints)
+        definitions.extract_best_from_initialisation_results(train_x_ei, exact_obj_ei, obj_score_ei, output_info.obj_to_optimise, output_info.output_constraints)
     print("best_sample_point_per_interation: ", best_sample_point_per_interation)
     print("best_obj_score_per_interation: ", best_obj_score_per_interation)
 
@@ -180,8 +171,8 @@ for trial in range (1, N_TRIALS + 1):
             obj_score_ei = torch.cat([obj_score_ei, modified_obj_score])
             if obj_score > best_obj_score_per_interation:
                 best_obj_score_per_interation = obj_score
-                best_observation_per_interation = utils.encapsulate_obj_tensor_into_dict(output_info.obj_to_optimise, new_exact_obj_ei)
-                best_constraint_per_interation = utils.encapsulate_obj_tensor_into_dict(output_info.output_constraints, new_exact_obj_ei[... , 1:])
+                best_observation_per_interation = definitions.encapsulate_obj_tensor_into_dict(output_info.obj_to_optimise, new_exact_obj_ei)
+                best_constraint_per_interation = definitions.encapsulate_obj_tensor_into_dict(output_info.output_constraints, new_exact_obj_ei[... , 1:])
                 best_sample_point_per_interation = new_x_ei
         
         # reinitialize the models so they are ready for fitting on next iteration
@@ -227,10 +218,10 @@ if record:
     results_record.store()
 # Final stage, find the best sample point and the corresponding best observation
 print("<------------------Final Result------------------>")
-best_trial = utils.find_max_index_in_list(best_obj_scores_per_trial)
+best_trial = definitions.find_max_index_in_list(best_obj_scores_per_trial)
 _, best_objective = data_set.find_evaluation_results(best_sample_points_per_trial[best_trial + 1])
 print("best_sample_points_per_trial: ", best_sample_points_per_trial[best_trial + 1])
-real_sample_point = utils.recover_single_input_data(best_sample_points_per_trial[best_trial + 1].squeeze(0), input_info.input_normalized_factor, input_info.input_scales, input_info.input_offsets, input_info.input_categorical, input_info.input_exp)
+real_sample_point = definitions.recover_single_input_data(best_sample_points_per_trial[best_trial + 1].squeeze(0), input_info.input_normalized_factor, input_info.input_scales, input_info.input_offsets, input_info.input_categorical, input_info.input_exp)
 print(f"{Fore.BLUE}Best sample point: {real_sample_point}{Style.RESET_ALL}")
 print(f"{Fore.BLUE}Best objective: {best_objective}{Style.RESET_ALL}")
 print(f"{Fore.BLUE}Best hyper volume: {best_obj_scores_per_trial[best_trial]}{Style.RESET_ALL}")

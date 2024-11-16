@@ -1,99 +1,67 @@
+
+from design_methods.format_constraints import Input_Constraints
+import math
 import json
 import os.path as osp
 
-class config_param:
-    def __init__(self, name, default_value, self_range, index):
-        self.name = name
-        self.default_value = default_value
-        self.self_range = self_range
-        self.index = index
 
-    def check_self_validity(self, new_value):
-        if new_value in self.self_range:
-            return True
+def calculate_input_dim(self_constraints):
+    """this function is used to calculate the input dimension"""
+    input_dim = 0
+    for var_obj in self_constraints.keys():
+        if self_constraints[var_obj][-1] == 'Int':
+            input_dim += 1
         else:
-            return False
-
-class config_params:
-    def __init__(self, params, conditional_constraints):
-        self.params = params
-        self.amount = len(self.params)
-        self.params_map = {}
-        self.conditional_constraints = conditional_constraints
-        for param in self.params:
-            self.params_map[param.name] = param
-
-
-class classification_metrics:
-    def __init__(self, metrics):
-        self.metrics = metrics
-        self.value = None
-        self.constraints = None
-
-class target_benchmark_metrics:
-    def __init__(self, benchmark_name, benchmark_activated_metrics):
-        self.name = benchmark_name
-        self.activated_benchmark_metric = {
-            "exe_time"   :  "exe_time" in benchmark_activated_metrics,
-            "throughput" :  "throughput" in benchmark_activated_metrics,
-            "mcycles"    :  "mcycles" in benchmark_activated_metrics,
-            "minstret"   :  "minstret" in benchmark_activated_metrics                  
-                                           }
+            input_dim += len(self_constraints[var_obj][0])
+    return input_dim
             
 
-class output_params:
-    def __init__(self, Power, Resource_Utilisation, Benchmark, Timing):
-        self.power = Power
-        self.resource = Resource_Utilisation
-        self.benchmark = Benchmark
-        self.timing = Timing
-        self.metric_amounts = len(self.power.metrics)+ len(self.resource.metrics) + len(self.benchmark.metrics) * 4 + len(self.timing.metrics)
-
-
-class object_cpu_info:
-    def __init__(self, name, params, output_objs):
-        self.cpu_name = name
-        self.config_params = params
-        self.supported_output_objs = output_objs
-        self.tunable_params_index = []  
-        self.tunable_params_name = []
-        self.target_benchmark = []
-
-    def update_tunable_param(self, target_tunable_param):
-        for param in self.config_params.params:
-            if param.name == target_tunable_param:
-                self.tunable_params_index.append(param.index)
-                self.tunable_params_name.append(target_tunable_param)
-                return True
-        return False        
-
-    def update_target_benchmark(self, target_benchmark, target_benchmark_metric):
-        self.target_benchmark.append(target_benchmark_metrics(target_benchmark, target_benchmark_metric))
-
-    def check_parameter_validity(self, new_design):
-        if len(new_design) != len(self.config_params):
-            raise ValueError("The number of parameters does not match the number of configurable parameters")
-        # Self constraints
-        for param in self.config_params:
-            if not param.check_self_validity(new_design[param.index]):
-                return False
-        # Cofnitional constraints
-            #TODO
-        return True
+def fill_constraints(self_constraints, conditional_constraints, device):
+    """this function is used to fill the constraints in the interface"""
+    # Int Val: {var_name: [lower_bound, upper_bound, scale, exp, Int]}
+    # Coupled_constraints: [{var_name: [lower_bound, upper_bound], var_name: [lower_bound, upper_bound]},... ]
+    # Input_categorical: {var_name: [index, num_categories, categorical_vals]}
+    # format_coupled_constraint : {0: [1, 4], 1: [4, 4]}
+    input_dim = calculate_input_dim(self_constraints)
+    input_scales = [1] * input_dim
+    input_normalized_factor = [1] * input_dim
+    input_offset = [0] * input_dim
+    input_exp = [1] * input_dim
+    input_names = list(self_constraints.keys())
+    input_categorical = {}
+    var_index = 0
+    for var_obj in self_constraints.keys():
+        if self_constraints[var_obj][-1] == 'Int':
+            if self_constraints[var_obj][3] > 1:
+                #has exps
+                input_offset[var_index] = int(math.log(self_constraints[var_obj][0], self_constraints[var_obj][3]))
+                #force the scales to be 1 if the exps is used
+                self_constraints[var_obj][2] = 1
+                input_normalized_factor[var_index] = int(math.log(self_constraints[var_obj][1], self_constraints[var_obj][3])) - input_offset[var_index]
+                input_exp[var_index] = self_constraints[var_obj][3]
+            else:
+                input_scales[var_index] = int(self_constraints[var_obj][2])
+                input_normalized_factor[var_index] = int((self_constraints[var_obj][1] - self_constraints[var_obj][0])/ input_scales[var_index])
+                input_offset[var_index] = int(self_constraints[var_obj][0])
+            var_index += 1
+        else:
+            input_categorical[var_obj] = [var_index, len(self_constraints[var_obj][0]), self_constraints[var_obj][0]]
+            var_index += len(self_constraints[var_obj][0])
+    # Build the constraints (This part of the program could be optimised further)
+    constraint = Input_Constraints(input_dim, input_names, input_categorical, device)
+    constraint.update_integer_transform_info(input_offset, input_scales, input_normalized_factor, input_exp)
     
-    def debug_print(self):
-        print(f"CPU Name is {self.cpu_name}")
-        print(f"All Supported Parameters are {self.config_params.params_map.keys()}")
-        print(f"Tunable Parameters are {self.tunable_params_index}")
-        print(f"Target Objs are {self.target_benchmark}")
+    if len(conditional_constraints) != 0:
+        format_coupled_constraint = []
+        for or_constraint in range(len(conditional_constraints)):
+            and_constraints = {}
+            for and_constraint in conditional_constraints[or_constraint].keys():
+                and_constraints[str(and_constraint)] = conditional_constraints[or_constraint][and_constraint]
+            format_coupled_constraint.append(and_constraints)
+        constraint.update_coupled_constraints(format_coupled_constraint)
     
-    def display_summary(self):
-        print("\n<--------------Settings Summary------------->")
-        print(f"CPU Name is {self.cpu_name}")
-        print(f"Configurable Parameters {self.tunable_params_name}")
-        print(f"Benchmark and Metrics include: ")
-        for benchmark in self.target_benchmark:
-            print(f"Name: {benchmark.name} Metrics : {benchmark.activated_benchmark_metric}")
+    return Param_Space_Info(input_dim, input_scales, input_normalized_factor, input_exp, input_offset, input_names, constraint, input_categorical, self_constraints, conditional_constraints) 
+
 
 
 
@@ -135,6 +103,3 @@ def read_cpu_info_from_json(json_file):
     # Build CPU object
     cpu_info = object_cpu_info(data["CPU_Name"], extracted_config_params, output_lib)
     return cpu_info
-
-if __name__ == '__main__':
-    read_cpu_info_from_json('../dataset/constraints/RocketChip_Config.json')

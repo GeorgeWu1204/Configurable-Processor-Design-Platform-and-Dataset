@@ -2,15 +2,15 @@
     "CPU_Name": "RocketChip",
 
     "Configurable_Params": {
-        "Core_Num": {"self_range": [1, 2, 4], "default": 1},
-        "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-        "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-        "icache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4},
-        "icache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4},
-        "dcache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-        "dcache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8},
-        "dcache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4},
-        "dcache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4}
+        "Core_Num": {"self_range": [1, 2, 4], "default": 1, "type": "int"},
+        "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8, "type": "int"},
+        "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8, "type": "int"},
+        "icache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"},
+        "icache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"},
+        "dcache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 8, "type": "int"},
+        "dcache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 8, "type": "int"},
+        "dcache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"},
+        "dcache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"}
     },
 
     "Conditional_Constraints" : {
