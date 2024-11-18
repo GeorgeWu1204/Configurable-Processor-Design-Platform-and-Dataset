@@ -2,11 +2,12 @@ import sys
 from interface import define_cpu_settings
 from dataset import Processor_Dataset, create_table_from_json
 from design_methods.optimisation import Design_Framework
+
 import argparse
 
 def main(mode):
     # Define the settings of the CPU
-
+    
     cpu_info, fpga_info = define_cpu_settings(mode)
 
     if "create_table" in sys.argv:
@@ -32,7 +33,7 @@ def main(mode):
     elif "Designing" in sys.argv:
         # Designing Mode: Designing the processor based on the dataset.
         print("---------------Designing Mode---------------")
-        df = Design_Framework(cpu_info, fpga_info, processor_dataset)
+        df = Design_Framework(cpu_info, processor_dataset)
         df.run_optimisation()
 
     else:

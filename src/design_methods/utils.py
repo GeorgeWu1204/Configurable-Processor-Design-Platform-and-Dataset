@@ -239,6 +239,17 @@ def save_data_to_file(filename, data):
         pickle.dump(data, f)
 
 
+def get_device():
+    # Checks if a GPU is available and returns it as the device, otherwise returns the CPU.
+    if torch.cuda.is_available():
+        # If a GPU is available, it sets the device to GPU (cuda)
+        return torch.device("cuda")
+    else:
+        # If no GPU is available, it sets the device to CPU
+        return torch.device("cpu")
+
+def get_tensor_type():
+    return torch.float64
 
 #<--------------------------------- Classes for recording the results --------------------------------->
 

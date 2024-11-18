@@ -4,61 +4,55 @@
 
     "configurable_params": [
       {
-        "var": "btb_size",
-        "range": [32, 512],
-        "scale": 32,
-        "exp": 2,
-        "data_type": "Int"
-      },
-      {
-        "var": "btb_enable",
-        "range": [0, 1],
+        "var": "Core_Num",
+        "range": [1, 2],
         "scale": 1,
-        "exp": 0,
-        "data_type": "Categorical"
-      },
-      {
-        "var": "lsu_num_nbload",
-        "range": [2, 8],
-        "scale": 2,
-        "exp": 2,
+        "exp": 1,
         "data_type": "Int"
       },
       {
-        "var": "lsu_stbuf_depth",
-        "range": [2, 8],
-        "scale": 2,
-        "exp": 2,
-        "data_type": "Int"
-      },
-      {
-        "var": "dccm_size",
-        "range": [32, 512],
-        "scale": 32,
-        "exp": 2,
-        "data_type": "Int"
-      },
-      {
-        "var": "iccm_size",
-        "range": [32, 512],
-        "scale": 32,
-        "exp": 2,
-        "data_type": "Int"
-      },
-      {
-        "var": "icache_enable",
-        "range": [0, 1],
-        "scale": 1,
-        "exp": 0,
-        "data_type": "Categorical"
-      },
-      {
-        "var": "icache_size",
-        "range": [4, 512],
+        "var": "icache_nSets",
+        "range": [4, 32],
         "scale": 4,
         "exp": 2,
         "data_type": "Int"
+      },
+      {
+        "var": "icache_nWays",
+        "range": [4, 32],
+        "scale": 4,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nSets",
+        "range": [4, 32],
+        "scale": 4,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nWays",
+        "range": [4, 32],
+        "scale": 4,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nTLBSets",
+        "range": [1, 8],
+        "scale": 1,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nTLBWays",
+        "range": [1, 8],
+        "scale": 1,
+        "exp": 2,
+        "data_type": "Int"
       }
+
     ],
 
     "constant_params" : {
@@ -67,7 +61,7 @@
 
     "optimisation_objectives" : [
             {
-              "obj_name": "mcycle",
+              "metric": "mcycles",
               "benchmark": "cmark",
               "obj_direct": "minimise",
               "range": [400000, 450000]

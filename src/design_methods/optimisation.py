@@ -33,13 +33,13 @@ MC_SAMPLES = 128                # number of MC samples for qNEI
 RAW_SAMPLES = 8                 # number of raw samples for qNEI
 
 class Design_Framework:
-    def __init__(self, param_space_info, objective_space_info, processor_dataset, device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu"), t_type = torch.float64, model_type = 'single_objective_BO'):
+    def __init__(self, cpu_info, processor_dataset, model_type = 'single_objective_BO'):
         # TODO: Add automatic device detection
-        self.device = device
-        self.t_type = t_type
-        self.param_space_info = param_space_info
-        self.objective_space_info = objective_space_info
-        self.processor_analyser = build_processor_analyser(param_space_info, objective_space_info, processor_dataset, t_type, device)
+        self.device = cpu_info.device
+        self.t_type = cpu_info.t_type
+        self.param_space_info = cpu_info.param_space_info
+        self.objective_space_info = cpu_info.objective_space_info
+        self.processor_analyser = build_processor_analyser(self.param_space_info, self.objective_space_info, processor_dataset, self.t_type, self.device)
 
         print("<-------------- Optimisation Settings -------------->")
         print(f"Input Names: {self.param_space_info.input_names}")
@@ -72,22 +72,22 @@ class Design_Framework:
         # obj_index = 0
 
         #reference point for optimisation used for hypervolume calculation
-        self.ref_points = utils.find_ref_points(self.objective_space_info.obj_to_optimise_dim, self.processor_analyser.objs_direct, t_type, device)
+        self.ref_points = utils.find_ref_points(self.objective_space_info.obj_to_optimise_dim, self.processor_analyser.objs_direct, self.t_type, self.device)
 
         #normalise objective to ensure the same scale
-        sampler_generator = initial_sampler(param_space_info.input_dim, objective_space_info.obj_to_evaluate_dim, param_space_info.constraints, self.processor_analyser, t_type, device)
-        self.train_set_storage = train_set_records(param_space_info.input_normalized_factor, list(param_space_info.self_constraints.values()), param_space_info.conditional_constraints, param_space_info.input_categorical, self.ref_points, objective_space_info.obj_to_optimise_dim, self.enable_train_set_modification, TRAIN_SET_ACCEPTABLE_THRESHOLD, TRAIN_SET_DISTURBANCE_RANGE, t_type, device)
+        sampler_generator = initial_sampler(self.param_space_info.input_dim, self.objective_space_info.obj_to_evaluate_dim, self.param_space_info.constraints, self.processor_analyser, self.t_type, self.device)
+        self.train_set_storage = train_set_records(self.param_space_info.input_normalized_factor, list(self.param_space_info.self_constraints.values()), self.param_space_info.conditional_constraints, self.param_space_info.input_categorical, self.ref_points, self.objective_space_info.obj_to_optimise_dim, self.enable_train_set_modification, TRAIN_SET_ACCEPTABLE_THRESHOLD, TRAIN_SET_DISTURBANCE_RANGE, self.t_type, self.device)
 
         if self.plot_posterior:
-            self.posterior_examiner = utils.test_posterior_result(param_space_info.input_names, t_type, device)
+            self.posterior_examiner = utils.test_posterior_result(self.param_space_info.input_names, self.t_type, self.device)
             self.posterior_objective_index = 0
         if self.record:
             record_file_name = '../test/test_results/'
-            for obj_name in objective_space_info.obj_to_optimise.keys():
+            for obj_name in self.objective_space_info.obj_to_optimise.keys():
                 record_file_name = record_file_name + obj_name + '_'
-            self.results_record = utils.recorded_training_result(param_space_info.input_names, objective_space_info.obj_to_optimise, record_file_name, N_TRIALS, N_BATCH)
+            self.results_record = utils.recorded_training_result(self.param_space_info.input_names, self.objective_space_info.obj_to_optimise, record_file_name, N_TRIALS, N_BATCH)
         
-        self.optimisation_model = select_model(model_type, NUM_RESTARTS, RAW_SAMPLES, BATCH_SIZE, self.param_space_info, self.objective_space_info, self.ref_points, sampler_generator, device, t_type)
+        self.optimisation_model = select_model(model_type, NUM_RESTARTS, RAW_SAMPLES, BATCH_SIZE, self.param_space_info, self.objective_space_info, self.ref_points, sampler_generator, self.device, self.t_type)
 
 #TODO: Temporarily modified for paper, change from multi-objective to single-objective while keep using the same dataset.
 # objective_space_info.obj_to_optimise = {list(objective_space_info.obj_to_optimise.keys())[obj_index] : list(objective_space_info.obj_to_optimise.values())[obj_index]}

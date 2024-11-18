@@ -3,6 +3,7 @@ import math
 import os.path as osp
 from design_methods.format_constraints import Input_Constraints
 from constraints import target_fpga_info
+from design_methods.utils import get_device, get_tensor_type
 
 class config_param:
     def __init__(self, name, default_value, self_range, index):
@@ -89,6 +90,8 @@ class object_cpu_info:
         self.target_benchmark = []
         self.param_space_info = None
         self.objective_space_info = None
+        self.device = get_device()
+        self.t_type = get_tensor_type()
 
 
     def update_tunable_param(self, target_tunable_param):
@@ -128,19 +131,16 @@ class object_cpu_info:
             print(f"Name: {benchmark.name} Metrics : {benchmark.activated_benchmark_metric}")
 
 
-    def load_design_spec(self, design_spec):
+    def parse_proc_spec(self, design_spec):
+        """this function is used to parse the constraints set by the CPU, it will investigate the constraints only related to the parameters to be tuned"""
+        # Define dictionaries to store the parsed data
         if not osp.exists(design_spec):
             raise FileNotFoundError(f"File {design_spec} not found")
         with open(design_spec, 'r') as file:
-            data = json.load(file)
-        return data
+            spec_content = json.load(file)
 
-    def parse_proc_spec(self, spec_content, device):
-        """this function is used to parse the constraints set by the CPU, it will investigate the constraints only related to the parameters to be tuned"""
-        # Define dictionaries to store the parsed data
         self_constraints = {}
         input_constant = {}
-        input_shift_amount = {}
         conditional_constraints = []
         output_objective = {}
         output_constraints = {}
@@ -148,33 +148,33 @@ class object_cpu_info:
 
         for param in spec_content["configurable_params"]:
             # Define a flag to track the section type
-            param_name = param["name"]
+            param_name = param["var"]
             if param["data_type"] == "Int":
                 scale = int(param["scale"])
                 exp = int(param["exp"])
                 self_constraints[param_name] = [int(param["range"][0]), int(param["range"][1]), scale, exp, param["data_type"]]
-                input_shift_amount[param_name] = int(param["offset"])
             else:
                 self_constraints[param_name] = [param["range"], param["data_type"]]
             # update tunable parameters
             if not self.update_tunable_param(param_name):
-                raise ValueError("The parameter does not exist in the database. Please try again.")
+                raise ValueError(f"The parameter {param_name} does not exist in the database. Please try again.")
         
         for const_param in spec_content["constant_params"]:
             input_constant[const_param["var"]] = const_param["value"]
             if not self.update_tunable_param(const_param["var"]):
-                raise ValueError("The parameter does not exist in the database. Please try again.")
+                raise ValueError(f"The parameter does not exist in the database. Please try again.")
             
         # TODO: Add the conditional constraints
 
         for obj in spec_content["optimisation_objectives"]:
             if obj["benchmark"] != None:
+                self.update_target_benchmark(obj["benchmark"], obj["metric"])
                 obj_name = obj["benchmark"] + '_' + obj["metric"]
                 obj_direction = obj["obj_direct"]
                 range_values = obj["range"]
                 output_objective[obj_name] = [obj_direction, int(range_values[0]), int(range_values[1]), obj["benchmark"]]
             else:
-                obj_name = obj["name"]
+                obj_name = obj["metric"]
                 obj_direction = obj["obj_direct"]
                 range_values = obj["range"]
                 output_objective[obj_name] = [obj_direction, int(range_values[0]), int(range_values[1]), 'NotBenchmark']
@@ -186,7 +186,7 @@ class object_cpu_info:
         
         self.objective_space_info = Objective_Info(output_objective, output_constraints, optimisation_task_name)
         # Start to Fill in the constraints information
-        self.param_space_info = fill_constraints(self_constraints, conditional_constraints, device)
+        self.param_space_info = fill_constraints(self_constraints, conditional_constraints, self.device)
         self.param_space_info.constants = input_constant
         return fpga_info
 
@@ -248,7 +248,6 @@ def fill_constraints(self_constraints, conditional_constraints, device):
         constraint.update_coupled_constraints(format_coupled_constraint)
     
     return Param_Space_Info(input_dim, input_scales, input_normalized_factor, input_exp, input_offset, input_names, constraint, input_categorical, self_constraints, conditional_constraints) 
-
 
 
 

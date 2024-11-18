@@ -22,7 +22,7 @@ def define_cpu_settings(mode):
         choice = input("Load from existing configuration file? (y/n)")
         if choice == 'y':
             config_file = input("Enter the path to the configuration file: ")
-            fpga_info = cpu_info.load_design_spec(config_file)
+            fpga_info = cpu_info.parse_proc_spec(config_file)
         else:
             #TODO
             print("Enter the configuration parameters: ")    
