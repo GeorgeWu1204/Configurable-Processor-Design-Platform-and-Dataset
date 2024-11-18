@@ -191,8 +191,9 @@ class Processor_Dataset:
 
     def query_dataset(self, data_input):
         config_to_fetch = self.default_params
+        print("default_params: ", self.default_params)
         for i in range(len(data_input)):
-            config_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
+            config_to_fetch[self.cpu_info.tunable_params_index[i]] = int(data_input[i])
         return self.fetch_single_data_acc_to_def_from_dataset(config_to_fetch)
 
 

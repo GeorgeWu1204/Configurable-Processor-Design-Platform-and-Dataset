@@ -173,9 +173,9 @@ class single_objective_BO_model():
         new_obj_score = calculate_weighted_obj_score(new_train_obj, self.ref_points, 0)
         return valid_generated_sample, new_x, new_exact_obj, new_train_obj, new_obj_score
     
-    def generate_initial_data(self, NUM_OF_INITIAL_POINT, data_set):
+    def generate_initial_data(self, NUM_OF_INITIAL_POINT):
         """generate training data"""
-        unnormalised_train_x, exact_objs, con_objs, normalised_objs = self.sampler.generate_valid_initial_data(NUM_OF_INITIAL_POINT, data_set)
+        unnormalised_train_x, exact_objs, con_objs, normalised_objs = self.sampler.generate_valid_initial_data(NUM_OF_INITIAL_POINT)
         train_obj = torch.cat([normalised_objs[:,:-con_objs.shape[-1]], con_objs], dim=-1)
         obj_scores = calculate_weighted_obj_score(train_obj, self.ref_points, 0)
         # new_exact_obj = torch.cat([exact_objs, con_objs], dim=-1)

@@ -96,7 +96,6 @@ class Design_Framework:
         # Global Best Values
         best_obj_scores_per_trial = []
         best_sample_points_per_trial = {trial : {input : 0.0 for input in self.param_space_info.input_names} for trial in range(1, N_TRIALS + 1)}
-        quit()
         #Optimisation Loop
         for trial in range (1, N_TRIALS + 1):
 
@@ -106,7 +105,7 @@ class Design_Framework:
                 exact_obj_ei,
                 train_obj_ei,
                 obj_score_ei,
-            ) = self.optimisation_model.generate_initial_data(NUM_OF_INITIAL_POINT, self.processor_analyser)
+            ) = self.optimisation_model.generate_initial_data(NUM_OF_INITIAL_POINT)
         
 
             print("<----------------Initial Data--------------->")

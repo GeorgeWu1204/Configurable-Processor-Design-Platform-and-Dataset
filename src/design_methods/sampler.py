@@ -3,10 +3,10 @@ import torch
 import time
 
 class initial_sampler:
-    def __init__(self, input_dim, output_dim, constraint_set=None, data_set=None, gen_type=torch.float, gen_device=torch.device('cpu')):
+    def __init__(self, input_dim, output_dim, constraint_set=None, processor_analyser=None, gen_type=torch.float, gen_device=torch.device('cpu')):
         self.input_dim = input_dim
         self.constraint_set = constraint_set
-        self.data_set = data_set
+        self.processor_analyser = processor_analyser
         self.type = gen_type
         self.device = gen_device
         self.sample_counter = 0  # Introduce a sample counter to add variability to the seed
@@ -23,7 +23,7 @@ class initial_sampler:
         samples = torch.tensor(self.sampler.random(n=num_samples), device=self.device, dtype=self.type)
         return samples
     
-    def generate_valid_initial_data(self, num_samples, data_set):
+    def generate_valid_initial_data(self, num_samples):
         """This function is used to generate valid initial data that meet the input constraints and also the output constraints"""
         train_x = torch.empty((num_samples, self.input_dim), device=self.device, dtype=self.type)
         exact_objs = torch.empty((num_samples, self.output_dim), device=self.device, dtype=self.type)
@@ -37,12 +37,12 @@ class initial_sampler:
                 if self.constraint_set.check_single_point_meet_constraint(possible_initial_tensor[i,:]) == False:
                     continue
                 # check internal constraints
-                valid_sample, possible_obj = data_set.find_evaluation_results(possible_initial_tensor[i:i+1,:])
+                valid_sample, possible_obj = self.processor_analyser.find_evaluation_results(possible_initial_tensor[i:i+1,:])
                 # if the generated desgin does not meet the internal constraints that are not disclosed in the spec.
                 if valid_sample == False:
                     continue
-                normalised_obj = data_set.normalise_output_data_tensor(possible_obj)
-                con_obj = data_set.check_obj_constraints(normalised_obj)
+                normalised_obj = self.processor_analyser.normalise_output_data_tensor(possible_obj)
+                con_obj = self.processor_analyser.check_obj_constraints(normalised_obj)
                 if con_obj.item() <= 0.0:
                     train_x[valid_sample_index] = possible_initial_tensor[i,:]
                     exact_objs[valid_sample_index] = possible_obj
@@ -54,11 +54,11 @@ class initial_sampler:
         return train_x[:valid_sample_index, : ], exact_objs[:valid_sample_index, :], con_objs[:valid_sample_index, :], normalised_objs[:valid_sample_index, :]
 
 # class single_sampler(initial_sampler):
-#     def __init__(self, input_dim, output_dim, constraint_set=None, data_set=None, gen_type=torch.float, gen_device=torch.device('cpu')):
-#         super(single_sampler, self).__init__(input_dim, output_dim, constraint_set, data_set, gen_type, gen_device)
+#     def __init__(self, input_dim, output_dim, constraint_set=None, processor_analyser=None, gen_type=torch.float, gen_device=torch.device('cpu')):
+#         super(single_sampler, self).__init__(input_dim, output_dim, constraint_set, processor_analyser, gen_type, gen_device)
 #         self.output_dim = 1
 
-#     def generate_valid_initial_data(self, num_samples, data_set):
+#     def generate_valid_initial_data(self, num_samples, processor_analyser):
 #         """This function is used to generate valid initial data that meet the input constraints and also the output constraints"""
 #         train_x = torch.empty((num_samples, self.input_dim), device=self.device, dtype=self.type)
 #         exact_objs = torch.empty((num_samples, self.output_dim), device=self.device, dtype=self.type)
@@ -71,12 +71,12 @@ class initial_sampler:
 #                 if self.constraint_set.check_single_point_meet_constraint(possible_initial_tensor[i,:]) == False:
 #                     continue
 #                 # check internal constraints
-#                 valid_sample, possible_obj = data_set.find_evaluation_results(possible_initial_tensor[i:i+1,:])
+#                 valid_sample, possible_obj = processor_analyser.find_evaluation_results(possible_initial_tensor[i:i+1,:])
 #                 # if the generated desgin does not meet the internal constraints that are not disclosed in the spec.
 #                 if valid_sample == False:
 #                     continue
-#                 normalised_obj = data_set.normalise_output_data_tensor(possible_obj)
-#                 con_obj = data_set.check_obj_constraints(normalised_obj)
+#                 normalised_obj = processor_analyser.normalise_output_data_tensor(possible_obj)
+#                 con_obj = processor_analyser.check_obj_constraints(normalised_obj)
 #                 if con_obj.item() <= 0.0:
 #                     train_x[valid_sample_index] = possible_initial_tensor[i,:]
 #                     exact_objs[valid_sample_index] = possible_obj

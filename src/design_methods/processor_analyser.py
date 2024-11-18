@@ -145,10 +145,15 @@ class Processor_Analyser:
         return result
     
     def format_and_add_const_to_data(self, input_data):
-        """This function is used to add constant input to the input data to make it able to find the ppa result"""
+        """This function is used to add constant input to the input data and convert to integer type to make it able to find the ppa result"""
+        formatted_data = []
+        for index, value in enumerate(input_data):
+            # Convert float to int if the original value is float
+            formatted_data.append(int(value))
+        
         for index in self.input_constants.keys():
-            input_data.insert(index, self.input_constants[index])
-        return tuple(input_data)
+            formatted_data.insert(index, int(self.input_constants[index]))
+        return tuple(formatted_data)
     
     def find_evaluation_results(self, sample_inputs):
         """Find the ppa result for given data input, if the objective is to find the minimal value, return the negative value"""
