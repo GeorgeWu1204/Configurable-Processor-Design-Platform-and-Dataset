@@ -1,11 +1,13 @@
 import sys
 from interface import define_cpu_settings
 from dataset import Processor_Dataset, create_table_from_json
+from design_methods.optimisation import Design_Framework
+import argparse
 
-
-def main():
+def main(mode):
     # Define the settings of the CPU
-    cpu_info, fpga_info = define_cpu_settings()
+
+    cpu_info, fpga_info = define_cpu_settings(mode)
 
     if "create_table" in sys.argv:
         create_table_from_json(cpu_info, f'../dataset/PPA/{cpu_info.cpu_name}_PPA.db')
@@ -30,15 +32,15 @@ def main():
     elif "Designing" in sys.argv:
         # Designing Mode: Designing the processor based on the dataset.
         print("---------------Designing Mode---------------")
-        processor_dataset.design_processor
+        df = Design_Framework(cpu_info, fpga_info, processor_dataset)
+        df.run_optimisation()
 
     else:
         print("Invalid Mode")
 
 
 if __name__ == "__main__":
-    main()
-    # import processor_tuner
-    # cpu_info, fpga_info = define_cpu_settings()
-    # test_tuner = processor_tuner.get_chip_tuner(cpu_info)
-    # test_tuner.modify_custom_cpu(1)
+    parser = argparse.ArgumentParser(description="Process some integers.")
+    parser.add_argument('--mode', type=str, help='An operation mode')
+    args = parser.parse_args()
+    main(args.mode)

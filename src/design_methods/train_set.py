@@ -2,7 +2,7 @@ import torch
 import numpy as np
 from itertools import product
 from botorch.utils.multi_objective.box_decompositions.non_dominated import NondominatedPartitioning
-from definitions import calculate_hypervolume, recover_categorical_input_data
+from design_methods.utils import calculate_hypervolume, recover_categorical_input_data
 
 class train_set_records():
     """This class is used to record the training set"""

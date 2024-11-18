@@ -4,7 +4,7 @@ import glob
 import sys
 import pickle
 import os.path as osp
-from definitions import calculate_smooth_condition, recover_single_input_data, read_utilization, find_the_anticipated_fastest_time_period
+from design_methods.utils import calculate_smooth_condition, recover_single_input_data, read_utilization, find_the_anticipated_fastest_time_period
 from botorch.utils.transforms import normalize
 
 def build_processor_analyser(param_space_info, objective_space_info, processor_dataset, t_type, device):

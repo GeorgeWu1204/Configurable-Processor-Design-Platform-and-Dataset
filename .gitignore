@@ -3,3 +3,5 @@ src/processor_tuner/__pycache__/
 processors/Vivado_Prj/
 processors/chipyard/
 processors/checkpoints/
+src/design_methods/__pycache__/
+src/design_methods/BO/__pycache__/

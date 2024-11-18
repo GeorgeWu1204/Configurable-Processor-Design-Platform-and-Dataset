@@ -1,6 +1,6 @@
 from botorch.models import SingleTaskGP
 from gpytorch.distributions.multivariate_normal import MultivariateNormal
-from utils import recover_categorical_input_data
+from design_methods.utils import recover_categorical_input_data
 import torch
 
 class SingleTaskGP_transformed(SingleTaskGP):

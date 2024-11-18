@@ -1,11 +1,11 @@
 import time
 import torch
-from definitions import calculate_hypervolume, encapsulate_obj_tensor_into_dict, other_model_training_result, standardize_tensor
+from design_methods.utils import calculate_hypervolume, encapsulate_obj_tensor_into_dict, other_model_training_result, standardize_tensor
 from colorama import Fore, Style
 import numpy as np
 from typing import Optional
 
-from customised_model import SingleTaskGP_transformed
+from design_methods.BO.customised_model import SingleTaskGP_transformed
 from botorch.models.transforms.outcome import Standardize
 from botorch.models.model_list_gp_regression import ModelListGP
 from gpytorch.mlls.sum_marginal_log_likelihood import SumMarginalLogLikelihood

@@ -1,14 +1,13 @@
 import torch
 import time
 import definitions
-import utils
+import design_methods.utils as utils
 import warnings
 from colorama import Fore, Style
 
-from interface import parse_proc_spec
-from sampler import initial_sampler
+from design_methods.sampler import initial_sampler
 from design_methods.BO.optimisation_models import select_model
-from train_set import train_set_records
+from design_methods.train_set import train_set_records
 from botorch.sampling.normal import SobolQMCNormalSampler
 from botorch.fit import fit_gpytorch_model
 
@@ -17,8 +16,8 @@ from botorch.exceptions import BadInitialCandidatesWarning
 from linear_operator.utils.cholesky import NumericalWarning
 from botorch.exceptions.warnings import InputDataWarning
 
-from processor_analyser import build_processor_analyser
-from train_set import train_set_records
+from design_methods.processor_analyser import build_processor_analyser
+from design_methods.train_set import train_set_records
 
 # Train Set Settings
 TRAIN_SET_DISTURBANCE_RANGE = 0.01                  # noise standard deviation for objective
@@ -97,7 +96,7 @@ class Design_Framework:
         # Global Best Values
         best_obj_scores_per_trial = []
         best_sample_points_per_trial = {trial : {input : 0.0 for input in self.param_space_info.input_names} for trial in range(1, N_TRIALS + 1)}
-        
+        quit()
         #Optimisation Loop
         for trial in range (1, N_TRIALS + 1):
 
