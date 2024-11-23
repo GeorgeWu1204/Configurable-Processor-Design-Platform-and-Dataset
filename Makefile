@@ -16,5 +16,9 @@ test_rocket:
 	@echo "Running tests for Rocket"
 	@cd src; bash scripts/rocket_test.sh
 
+test_rocket_BO:
+	@echo "Running tests for processor design framework for Rocket"
+	@cd src; bash scripts/rocket_test_BO.sh
+
 clean:
 	make -C $(SIM_DIR) clean

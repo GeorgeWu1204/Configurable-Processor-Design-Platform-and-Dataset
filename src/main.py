@@ -5,20 +5,24 @@ from design_methods.optimisation import Design_Framework
 
 import argparse
 
-def main(mode):
+def main(mode, debug=False, create_table=False):
     # Define the settings of the CPU
+    print(f"Mode: {mode}")
+    print(f"Debug: {debug}")
+    print(f"Create Table: {create_table}")
     
     cpu_info, fpga_info = define_cpu_settings(mode)
 
-    if "create_table" in sys.argv:
+    if create_table == True:
         create_table_from_json(cpu_info, f'../dataset/PPA/{cpu_info.cpu_name}_PPA.db')
 
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)
 
-    if "debug" in sys.argv:
+    if debug == True:
         processor_dataset.debug_print()
         print()
         cpu_info.debug_print()
+    quit()
 
 
     if "Sampling" in sys.argv:
@@ -43,5 +47,7 @@ def main(mode):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process some integers.")
     parser.add_argument('--mode', type=str, help='An operation mode')
+    parser.add_argument('--debug', type=bool, help='Whether to print debug information')
+    parser.add_argument('--create_table', type=bool, help='Whether to create the table from the json file')
     args = parser.parse_args()
-    main(args.mode)
+    main(args.mode, args.debug, args.create_table)
