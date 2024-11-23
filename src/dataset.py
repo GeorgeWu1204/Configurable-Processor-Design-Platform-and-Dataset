@@ -244,7 +244,6 @@ class Processor_Dataset:
                 self.sampler.mark_sample_complete(next_sample)
             else:
                 print("Skipping the sample.")
-            quit()
     
     def delete_single_data(self, data_input):
         try:
