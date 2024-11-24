@@ -1,16 +1,12 @@
 import sys
 from interface import define_cpu_settings
 from dataset import Processor_Dataset, create_table_from_json
-from design_methods.optimisation import Design_Framework
+from design_methods.design_framework import Design_Framework
 
 import argparse
 
 def main(mode, debug=False, create_table=False):
     # Define the settings of the CPU
-    print(f"Mode: {mode}")
-    print(f"Debug: {debug}")
-    print(f"Create Table: {create_table}")
-    
     cpu_info, fpga_info = define_cpu_settings(mode)
 
     if create_table == True:
@@ -22,19 +18,17 @@ def main(mode, debug=False, create_table=False):
         processor_dataset.debug_print()
         print()
         cpu_info.debug_print()
-    quit()
 
-
-    if "Sampling" in sys.argv:
+    if mode == "Sampling":
         # Sampling Mode: Automatically exploring the design space
         print("---------------Sampling Mode---------------")
         processor_dataset.design_space_exploration()
-    elif "Querying" in sys.argv:
+    elif mode == "Querying":
         # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
         print("---------------Querying Mode---------------")
         processor_dataset.query_dataset()
     
-    elif "Designing" in sys.argv:
+    elif mode == "Designing":
         # Designing Mode: Designing the processor based on the dataset.
         print("---------------Designing Mode---------------")
         df = Design_Framework(cpu_info, processor_dataset)

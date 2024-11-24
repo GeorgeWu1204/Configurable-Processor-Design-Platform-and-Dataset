@@ -4,13 +4,15 @@ import os.path as osp
 from design_methods.format_constraints import Input_Constraints
 from constraints import target_fpga_info
 from design_methods.utils import get_device, get_tensor_type
+from constraints import Conditional_Constraints
 
 class config_param:
-    def __init__(self, name, default_value, self_range, index):
+    def __init__(self, name, default_value, self_range, index, param_type):
         self.name = name
         self.default_value = default_value
         self.self_range = self_range
         self.index = index
+        self.param_type = param_type
 
     def check_self_validity(self, new_value):
         if new_value in self.self_range:
@@ -19,13 +21,13 @@ class config_param:
             return False
 
 class config_params:
-    def __init__(self, params, conditional_constraints):
+    def __init__(self, params, parsed_conditional_constraints):
         self.params = params     # self.params = list of config_param variables.
         self.amount = len(self.params)
         self.params_map = {}
-        self.conditional_constraints = conditional_constraints
         for param in self.params:
             self.params_map[param.name] = param
+        self.conditional_constraints = Conditional_Constraints(self.params_map, parsed_conditional_constraints)
 
 
 class classification_metrics:
@@ -43,7 +45,6 @@ class target_benchmark_metrics:
             "mcycles"    :  "mcycles" in benchmark_activated_metrics,
             "minstret"   :  "minstret" in benchmark_activated_metrics                  
                                            }
-            
 
 class output_params:
     def __init__(self, Power, Resource_Utilisation, Benchmark, Timing):
@@ -261,15 +262,17 @@ def read_cpu_info_from_json(json_file):
     tmp_config_params = []
     param_index = 0
     for param, settings in data["Configurable_Params"].items():
-        tmp_param = config_param(param, settings["default"], settings["self_range"], param_index)
+        tmp_param = config_param(param, settings["default"], settings["self_range"], param_index, settings["type"])
         tmp_config_params.append(tmp_param)
         param_index += 1
 
     # Identify conditional constraints
-    extracted_conditional_constraints = None
+    extracted_conditional_constraints = data["Conditional_Constraints"]
     if data["Conditional_Constraints"] is not None:
         #TODO
         pass
+
+
     extracted_config_params = config_params(tmp_config_params, extracted_conditional_constraints)
 
     ## Build output objective library    

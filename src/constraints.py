@@ -1,27 +1,32 @@
 import json
 import os.path as osp
 
-class conditional_constraints:
-    def __init__(self, params_map):
+class Conditional_Constraints:
+    def __init__(self, params_map, or_conditions):
         # Conditional Constraints in the following formats: [{A:[4,5], B: [5,6]}], representing if A in [4,5], then B should in [5,6]
+        # It is in the struct [or conditions, satisfying any of the and constraints is enough. {And constraints, every constaints within the and constraints need to be satisfied} ]
+        
         self.params_map = params_map
         self.conditional_constraints = []
+        for and_condition in or_conditions:
+            self.update_conditional_constraints(and_condition)
 
     def update_conditional_constraints(self, extracted_constraint):
-        conditional_constraints = {}
-        for constraint_name in extracted_constraint:
+        conditional_constraint = {}
+        for constraint_name in extracted_constraint.keys():
             index = self.params_map[constraint_name]
             if index == None:
                 raise ValueError("The name of the variables within the specified constraints does not meet requiremnet")
-            conditional_constraints[index] = extracted_constraint[constraint_name]
-        self.conditional_constraints.append(conditional_constraints)
+            conditional_constraint[index] = extracted_constraint[constraint_name]
+        self.conditional_constraints.append(conditional_constraint)
 
     def check_conditional_constraints(self, new_design):
         if len(self.conditional_constraints) == 0:
             return True
-        for conditional_constraint in self.conditional_constraints:
-            for index in conditional_constraint.keys():
-                if new_design[index] not in conditional_constraint[index]:
+        for and_conditional_constraint in self.conditional_constraints:
+            # in every and condition
+            for index in and_conditional_constraint.keys():
+                if new_design[index] not in and_conditional_constraint[index]:
                     return False        
         return True
 

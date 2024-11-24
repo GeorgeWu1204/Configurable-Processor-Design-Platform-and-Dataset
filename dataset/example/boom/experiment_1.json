@@ -1,0 +1,76 @@
+{
+
+    "optimisation_task_name" : "boom_experiment_1",
+
+    "configurable_params": [
+      {
+        "var": "Core_Num",
+        "range": [1, 2],
+        "scale": 1,
+        "exp": 1,
+        "data_type": "Int"
+      },
+      {
+        "var": "icache_nSets",
+        "range": [4, 32],
+        "scale": 4,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "icache_nWays",
+        "range": [4, 32],
+        "scale": 4,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nSets",
+        "range": [4, 32],
+        "scale": 4,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nWays",
+        "range": [4, 32],
+        "scale": 4,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nTLBSets",
+        "range": [1, 8],
+        "scale": 1,
+        "exp": 2,
+        "data_type": "Int"
+      },
+      {
+        "var": "dcache_nTLBWays",
+        "range": [1, 8],
+        "scale": 1,
+        "exp": 2,
+        "data_type": "Int"
+      }
+
+    ],
+
+    "constant_params" : {
+
+    },
+
+    "optimisation_objectives" : [
+            {
+              "metric": "mcycles",
+              "benchmark": "cmark",
+              "obj_direct": "minimise",
+              "range": [400000, 450000]
+            }
+          ],
+    
+    "target_device" : "xa7s6cpga196-2I" 
+    
+    
+
+  }
+  

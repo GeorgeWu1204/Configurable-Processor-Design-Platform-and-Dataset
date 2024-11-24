@@ -13,9 +13,9 @@
         "dcache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"}
     },
 
-    "Conditional_Constraints" : {
-
-    },
+    "Conditional_Constraints" : [
+        {"icache_nSets" : [4, 8, 16, 32], "icache_nWays" : [4, 8, 16, 32]}
+    ],
 
     "Performance":{
         "Power" : {
