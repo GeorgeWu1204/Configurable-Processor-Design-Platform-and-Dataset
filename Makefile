@@ -20,5 +20,9 @@ test_rocket_BO:
 	@echo "Running tests for processor design framework for Rocket"
 	@cd src; bash scripts/rocket_test_BO.sh
 
+analyse_rocket:
+	@echo "Analyzing Rocket"
+	@cd src; bash scripts/rocket_analyse_weights.sh
+
 clean:
 	make -C $(SIM_DIR) clean

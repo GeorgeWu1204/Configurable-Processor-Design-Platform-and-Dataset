@@ -1,6 +1,8 @@
 #!/bin/bash
-python3 main.py Sampling create_table<<EOF
+python3 main.py --mode Designing --debug True<<EOF
 RocketChip
+y
+../dataset/example/rocketchip/experiment_1.json
 xa7s6cpga196-2I
 icache_nSets
 n

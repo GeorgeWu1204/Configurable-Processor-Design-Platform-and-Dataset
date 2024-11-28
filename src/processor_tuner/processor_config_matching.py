@@ -115,6 +115,32 @@ class config_matcher:
         return best_config_name
 
 
+
+def analyse_config_weights_for_synthesis(dataset):
+    default_config = dataset.default_params
+    weight = [0 for _ in range(len(default_config))]
+    previous_param_name = None
+    for param in dataset.cpu_info.config_params.params:
+        config_to_test = default_config
+        # Check if involved in conditional constraints
+        # here we assume the nSets and nWays are close to each other in config_params
+        if previous_param_name.split('_')[0] == param.name.split('_')[0] and previous_param_name.split('_')[1] == "nSets":
+            # if changing the nSets, we should ignore nWays, as the size of the cache is depend on nSets * nWays
+            continue
+        previous_param_name = param.name
+
+        rc_results = []
+        for i in [-1,1]:
+            modified_param_val = param.self_range[param.self_range.index(default_config[param.index]) + i]
+            config_to_test[param.index] = modified_param_val
+            print(f"Testing config: {config_to_test}")
+            # dataset.tuner.run_synthesis(config_to_test)
+            # rc_results.append(dataset.tuner.parse_vivado_resource_utilisation_report())
+            print("Utilisation Results")
+
+    
+
+
 if __name__ == '__main__':
     from interface import define_cpu_settings
     cpu_info, fpga_info = define_cpu_settings()

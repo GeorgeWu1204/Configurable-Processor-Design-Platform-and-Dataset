@@ -199,7 +199,7 @@ class Processor_Dataset:
 
     def fetch_single_data_acc_to_def_from_dataset(self, data_to_fetch):
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
-        # Output (Validity of the data, FPGA Deployability, Target Objectives)
+        # Output (Validity of the data, FPGA Deployability, Target Objectives, RC_results)
         results = []
         try:
             conn = sqlite3.connect(self.dataset_directory)
