@@ -2,6 +2,7 @@ import sys
 from interface import define_cpu_settings
 from dataset import Processor_Dataset, create_table_from_json
 from design_methods.design_framework import Design_Framework
+from processor_tuner.processor_config_matching import analyse_config_weights_for_synthesis
 
 import argparse
 
@@ -33,7 +34,10 @@ def main(mode, debug=False, create_table=False):
         print("---------------Designing Mode---------------")
         df = Design_Framework(cpu_info, processor_dataset)
         df.run_optimisation()
-
+    elif mode == "Analyse_Weights":
+        # Analyse Weights Mode: Analyse the weights of the configurations for synthesis
+        print("---------------Analyse Weights Mode---------------")
+        analyse_config_weights_for_synthesis(processor_dataset)
     else:
         print("Invalid Mode")
 

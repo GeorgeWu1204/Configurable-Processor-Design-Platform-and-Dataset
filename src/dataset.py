@@ -190,7 +190,7 @@ class Processor_Dataset:
         return results
 
     def query_dataset(self, data_input):
-        config_to_fetch = self.default_params
+        config_to_fetch = self.default_params.copy()
         print("default_params: ", self.default_params)
         for i in range(len(data_input)):
             config_to_fetch[self.cpu_info.tunable_params_index[i]] = int(data_input[i])

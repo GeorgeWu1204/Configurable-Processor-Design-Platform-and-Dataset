@@ -118,28 +118,44 @@ class config_matcher:
 
 def analyse_config_weights_for_synthesis(dataset):
     default_config = dataset.default_params
+    _, _, _, default_rc = dataset.fetch_single_data_acc_to_def_from_dataset(default_config)
     weight = [0 for _ in range(len(default_config))]
     previous_param_name = None
+    
     for param in dataset.cpu_info.config_params.params:
-        config_to_test = default_config
+        print(f"Analyzing config: {param.name}")
+        config_to_test = default_config.copy()
         # Check if involved in conditional constraints
         # here we assume the nSets and nWays are close to each other in config_params
-        if previous_param_name.split('_')[0] == param.name.split('_')[0] and previous_param_name.split('_')[1] == "nSets":
+        if previous_param_name != None and previous_param_name.split('_')[0] == param.name.split('_')[0] and (previous_param_name.split('_')[1] == "nSets" or previous_param_name.split('_')[1] == "nTLBSets"):
             # if changing the nSets, we should ignore nWays, as the size of the cache is depend on nSets * nWays
+            previous_param_name = param.name
             continue
         previous_param_name = param.name
-
-        rc_results = []
+        rc_weights = []
         for i in [-1,1]:
-            modified_param_val = param.self_range[param.self_range.index(default_config[param.index]) + i]
+            index_of_value = param.self_range.index(default_config[param.index]) + i
+            if index_of_value >= len(param.self_range) or index_of_value < 0:
+                continue
+            modified_param_val = param.self_range[index_of_value]
             config_to_test[param.index] = modified_param_val
             print(f"Testing config: {config_to_test}")
-            # dataset.tuner.run_synthesis(config_to_test)
-            # rc_results.append(dataset.tuner.parse_vivado_resource_utilisation_report())
+            dataset.tuner.modify_config_files(config_to_test)
+            dataset.tuner.run_synthesis(config_to_test)
+            parsed_rc_results = dataset.tuner.parse_vivado_resource_utilisation_report()
+            rc_weights.append(calculate_weight(default_rc, list(parsed_rc_results.values())))
             print("Utilisation Results")
+        weight[param.index] = sum(rc_weights) / len(rc_weights)
+    return weight
+        
 
-    
-
+def calculate_weight(ref_rc_results, new_rc_results):
+    if len(ref_rc_results) != len(new_rc_results):
+        raise ValueError("Resource utilisation results must have the same dimensions.")
+    ref_rc_results = np.array(ref_rc_results, dtype=float)
+    new_rc_results = np.array(new_rc_results, dtype=float)
+    result = np.sum(((ref_rc_results - new_rc_results) ** 2) / (ref_rc_results ** 2))
+    return result
 
 if __name__ == '__main__':
     from interface import define_cpu_settings
