@@ -1,0 +1,180 @@
+
+****** Vivado v2023.2 (64-bit)
+  **** SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+  **** IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+  **** SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source ../../tools/RocketChip/run_RocketChip_synthesis.tcl
+# open_project RocketChip_Prj.xpr
+INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/RocketChip_Prj/RocketChip_Prj.gen/sources_1'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_54.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/BreakpointUnit.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_sbus_i2_o2_a32d64s6k3z4c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLDFromBeat_serial_tl_0_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/AsyncQueueSink_DebugInternalBundle.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SerialTL0ClockSinkDomain.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLInterconnectCoupler_mbus_to_memory_controller_port_named_axi4.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLAToBeat_SerialRAM_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_45.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/AXI4UserYanker.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLFragmenter_PLIC.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ChipyardPRCICtrlClockSinkDomain.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_22.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_2.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ram_2x109.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLROM.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/UARTTx.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/InferredResetSynchronizerPrimitiveShiftReg_d3_i0.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SinkA.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_11.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ClockGroupResetSynchronizer.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_cbus_in_i2_o1_a29d64s7k1z4u.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_33.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DebugTransportModuleJTAG.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue2_TLBundleA_a29d64s7k1z4u.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue2_TLBundleC_a32d64s6k3z3c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/head_2x4.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_10.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DecoupledSerialPhy.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TestHarness.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/JtagBypassChain.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_55.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ram_2x10.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLBFromBeat_SerialRAM_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TileResetSetter.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TileClockGater.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ram_2x110.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_44.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/BundleBridgeNexus_UInt1_1.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLCFromBeat_SerialRAM_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue2_TLBundleA_a32d64s3k3z3c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DigitalTop.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCacheDataArray.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/remote_bitbang.h'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_21.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ChipTop.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ram_2x119.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_1.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/mem.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ListBuffer_PutBufferCEntry_q2_e16.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/JtagTapController.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLUART.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Repeater_TLBundleA_a13d64s7k1z3u.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLSerdesser_SerialRAM.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ResetCatchAndSync_d3.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SinkX.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_32.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ClockCrossingReg_w32.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLBFromBeat_serial_tl_0_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SerialRAM.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DecoupledSerialPhy_TestHarness_UNIQUIFIED.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PhitToFlit_p32_f32.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Frontend.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/CaptureUpdateChain_UInt5_To_UInt5.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLAFromBeat_SerialRAM_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_uart_0.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/RocketTile.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_56.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLFragmenter_ScratchpadBank.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/head_40x6.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rf_31x64.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue2_TLBundleB_a32d64s2k3z4c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ClockCrossingReg_w43.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_20.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_43.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Repeater_TLBundleA_a12d64s7k1z3u.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLInterconnectCoupler_fbus_from_debug_sb.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/GenericDigitalInIOCell.v'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ram_2x120.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/GenericSerializer_TLBeatw88_f32.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/data_33x44.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/FixedClockBroadcast_2.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue2_TLBundleE_a32d64s3k3z3c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLFragmenter_Debug.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SinkC.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue1_RegMapperInput_i9_m8.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_5.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue1_TLBundleD_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_25.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Queue1_BankedStoreInnerAddress.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLDebugModuleInnerAsync.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PMPChecker_s2.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/AsyncQueueSource_DebugInternalBundle.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/UARTRx.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLCToBeat_SerialRAM_a64d64s8k8z8c.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLBuffer_a14d64s7k1z4u.sv'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/mm.h'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLInterconnectCoupler_cbus_to_bootrom.sv'.
+INFO: [Common 17-14] Message 'Project 1-19' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+Scanning sources...
+Finished scanning sources
+open_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1341.758 ; gain = 2.992 ; free physical = 15704 ; free virtual = 25664
+# if { [llength $argv] < 1 } {
+#     puts "No incremental checkpoint identified, starting synthesis from scratch."
+#     # Remove any previous incremental checkpoint setting for a fresh start
+#     set_property incremental_checkpoint {} [get_runs synth_1]
+# } else {
+#     # Retrieve the config name argument
+#     set config_name [lindex $argv 0]
+# 
+#     set enable_incremental_synthesis [lindex $argv 1]
+# 
+#     # Define the path to the DCP file based on the config name
+#     set dcp_path "/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/Rocket_Chip/Synthesis/${config_name}.dcp"
+#     
+#     if { $enable_incremental_synthesis == 0 } {
+#         puts "Error: Incremental synthesis is disabled"
+#         exit 1
+#     } else {
+#         # Check if the specified DCP file exists
+#         if { ![file exists $dcp_path] } {
+#             puts "Error: Checkpoint file $dcp_path not found. Exiting."
+#             exit 1
+#         }
+#         
+#         # Add the DCP file to the project (ensuring no file duplication or conflict)
+#         add_files -fileset utils_1 -norecurse $dcp_path
+#         
+#         # Set incremental synthesis properties
+#         set_property STEPS.SYNTH_DESIGN.ARGS.INCREMENTAL_MODE aggressive [get_runs synth_1]
+#         set_property incremental_checkpoint $dcp_path [get_runs synth_1]
+#     }
+# 
+# }
+No incremental checkpoint identified, starting synthesis from scratch.
+# reset_run synth_1
+# launch_runs synth_1 -jobs 12
+WARNING: [Vivado 12-7122] Auto Incremental Compile:: No reference checkpoint was found in run synth_1. Auto-incremental flow will not be run, the standard flow will be run instead.
+[Fri Nov 29 07:49:35 2024] Launched synth_1...
+Run output will be captured here: /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/RocketChip_Prj/RocketChip_Prj.runs/synth_1/runme.log
+# wait_on_run synth_1
+[Fri Nov 29 07:49:35 2024] Waiting for synth_1 to finish...
+
+*** Running vivado
+    with args -log RocketTile.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source RocketTile.tcl
+
+
+****** Vivado v2023.2 (64-bit)
+  **** SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+  **** IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+  **** SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source RocketTile.tcl -notrace
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1340.785 ; gain = 2.992 ; free physical = 15194 ; free virtual = 25154
+ERROR: [Common 17-69] Command failed: File '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/remote_bitbang.h' does not exist
+INFO: [Common 17-206] Exiting Vivado at Fri Nov 29 07:49:48 2024...
+[Fri Nov 29 07:49:58 2024] synth_1 finished
+ERROR: [Vivado 12-13638] Failed runs(s) : 'synth_1'
+wait_on_runs: Time (s): cpu = 00:00:13 ; elapsed = 00:00:22 . Memory (MB): peak = 1347.695 ; gain = 0.000 ; free physical = 15687 ; free virtual = 25647
+ERROR: [Common 17-39] 'wait_on_runs' failed due to earlier errors.
+
+    while executing
+"wait_on_run synth_1"
+    (file "../../tools/RocketChip/run_RocketChip_synthesis.tcl" line 38)
+INFO: [Common 17-206] Exiting Vivado at Fri Nov 29 07:49:58 2024...

@@ -77,7 +77,11 @@ class General_Chip_Tuner:
         '''Run synthesis using the new parameters.'''
         checkpoint_index = self.processor_config_matcher.match_config(new_config)
         exist_dcp = self.processor_config_matcher.prepare_checkpoint(checkpoint_index)
-        command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name, str(int(exist_dcp))]
+        if exist_dcp == False:
+            command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
+        else:
+            command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name, str(int(exist_dcp))]
+
         try:
             with open(self.processor_synthesis_log, 'w') as f:
                 subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)

@@ -1,5 +1,4 @@
-open_project rocket_chip.xpr
-
+open_project RocketChip_Prj.xpr
 if { [llength $argv] < 1 } {
     puts "No incremental checkpoint identified, starting synthesis from scratch."
     # Remove any previous incremental checkpoint setting for a fresh start
@@ -38,6 +37,7 @@ reset_run synth_1
 launch_runs synth_1 -jobs 12
 wait_on_run synth_1
 open_run synth_1 -name synth_1
-report_utilization -file ../../Syn_Report/rocket_utilization_synth.rpt
-report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 -file ../../Syn_Report/rocket_time_summary.rpt
+report_utilization -file ../../Logs/Syn_Report/RocketChip_utilization_synth.rpt
+report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 -file ../../Logs/Syn_Report/RocketChip_time_summary.rpt
+report_power -file ../../Logs/Syn_Report/RocketChip_power_synth.rpt
 close_project
