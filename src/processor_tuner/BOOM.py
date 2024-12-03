@@ -112,6 +112,15 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             # Optionally, log the error message from the exception
             print(f"Error occurred: {e}")
             return False, None
+    def build_new_processor(self, new_config):
+        try:
+            self.modify_config_files(new_config)
+            run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
+            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Error occurred: {e}")
+            return False
     
     
     

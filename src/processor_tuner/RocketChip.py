@@ -32,8 +32,6 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
 
     def modify_custom_core_internal_config(self, input_vals):
             params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
-            print(params_name)
-            print(input_vals)
             with open(self.core_level_configuration_file, 'r') as file:
                 scala_code = file.read()
             
@@ -145,6 +143,15 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
             # Optionally, log the error message from the exception
             print(f"Error occurred: {e}")
             return False, None
+    def build_new_processor(self, new_config):
+        try:
+            self.modify_config_files(new_config)
+            run_configure_command = ["make", "-j12", "CONFIG=CustomisedRocketConfig"]
+            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Error occurred: {e}")
+            return False
     
 
 
