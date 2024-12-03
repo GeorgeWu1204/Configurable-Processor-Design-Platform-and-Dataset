@@ -21,13 +21,14 @@ class config_param:
             return False
 
 class config_params:
-    def __init__(self, params, parsed_conditional_constraints):
+    def __init__(self, params, parsed_conditional_constraints, loaded_params_weight):
         self.params = params     # self.params = list of config_param variables.
         self.amount = len(self.params)
         self.params_map = {}
         for param in self.params:
             self.params_map[param.name] = param
         self.conditional_constraints = Conditional_Constraints(self.params_map, parsed_conditional_constraints)
+        self.params_weights = loaded_params_weight
 
 
 class classification_metrics:
@@ -265,15 +266,13 @@ def read_cpu_info_from_json(json_file):
         tmp_param = config_param(param, settings["default"], settings["self_range"], param_index, settings["type"])
         tmp_config_params.append(tmp_param)
         param_index += 1
+    
+    ## Configurable Parameter Weight
+    loaded_params_weight = data["Configurable_Params_Weight"]
 
-    # Identify conditional constraints
+    ## Identify conditional constraints
     extracted_conditional_constraints = data["Conditional_Constraints"]
-    if data["Conditional_Constraints"] is not None:
-        #TODO
-        pass
-
-
-    extracted_config_params = config_params(tmp_config_params, extracted_conditional_constraints)
+    extracted_config_params = config_params(tmp_config_params, extracted_conditional_constraints, loaded_params_weight)
 
     ## Build output objective library    
     for classification, settings in data["Performance"].items():

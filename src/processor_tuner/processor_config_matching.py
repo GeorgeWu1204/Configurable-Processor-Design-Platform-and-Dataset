@@ -7,18 +7,19 @@ import subprocess
 
 class match_metrics:
     #TODO Improve better metric for matching configurations, perhaps including some weights.
-    def __init__(self, match_metric):
+    def __init__(self, match_metric, weights):
         self.metrics = ['euclidean', 'manhattan_distance']
+        self.param_weights = np.array(list(weights.values()))
         if match_metric not in self.metrics:
             raise ValueError(f"Invalid metric: {match_metric}. Must be one of {self.metrics}")
         else:
             self.match_metric = match_metric
     
     def euclidean_distance(self, config1, config2):
-        return float(np.sqrt(np.sum((config1 - config2) ** 2)))
+        return float(np.sum(np.multiply(np.sqrt((config1 - config2) ** 2 ), self.param_weights)))
     
     def manhattan_distance(self, config1, config2):
-        return float(np.sum(np.abs(config1 - config2)))
+        return float(np.sum(np.multiply(np.abs(config1 - config2), self.param_weights )))
 
     def calculate_distance(self, config1, config2):
         if self.match_metric == 'euclidean':
@@ -35,7 +36,7 @@ class config_matcher:
         self.synthesis_checkpoint_directory = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Synthesis/'
         self.synthesis_checkpoint_record_history = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Stored_Checkpoint_Record.json'
         self.match_metric = match_metric
-        self.metric_calculator = match_metrics(self.match_metric)
+        self.metric_calculator = match_metrics(self.match_metric, self.cpu_info.config_params.params_weights)
         self.check_point_to_synthesis_name = check_point_to_synthesis_name
     
     def load_json(self):
@@ -145,7 +146,11 @@ def analyse_config_weights_for_synthesis(dataset):
             parsed_rc_results = dataset.tuner.parse_vivado_resource_utilisation_report()
             rc_weights.append(calculate_weight(default_rc, list(parsed_rc_results.values())))
             print("Utilisation Results")
+            print(rc_weights)
         weight[param.index] = sum(rc_weights) / len(rc_weights)
+        print("weight   ", weight[param.index])
+        # TODO take avg
+
     return weight
         
 

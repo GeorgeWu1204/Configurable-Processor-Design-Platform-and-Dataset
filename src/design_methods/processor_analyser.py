@@ -265,7 +265,8 @@ class EL2_Analyser(Processor_Analyser):
             input = recover_single_input_data(sample_inputs[i,:], self.input_normalized_factors, self.input_scales_factors, self.input_offsets, self.input_categorical, self.input_exp)
             sample_input = self.format_and_add_const_to_data(input)
             validity, fpga_deployibility, objective_results, rc_utilisation =  self.proc_dataset.query_dataset(sample_input)
-
+            print("objective values ", objective_results)
+            print("resource utilisation constraints", rc_utilisation)
             for obj_index in range(self.objs_to_optimise_dim):
                 obj = self.objs_to_evaluate[obj_index]
                 results[i][obj_index] = objective_results[obj_index]

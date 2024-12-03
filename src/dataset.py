@@ -199,6 +199,9 @@ class Processor_Dataset:
 
     def fetch_single_data_acc_to_def_from_dataset(self, data_to_fetch):
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
+        # Fake output
+        return True, True, [-1 for i in range(len(self.target_obj_indexes))], [-1 for i in range(len(self.resource_utilisation_indexes))]
+        
         # Output (Validity of the data, FPGA Deployability, Target Objectives, RC_results)
         results = []
         try:

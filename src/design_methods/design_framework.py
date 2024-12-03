@@ -98,7 +98,6 @@ class Design_Framework:
         best_sample_points_per_trial = {trial : {input : 0.0 for input in self.param_space_info.input_names} for trial in range(1, N_TRIALS + 1)}
         #Optimisation Loop
         for trial in range (1, N_TRIALS + 1):
-
             print(f"\nTrial {trial:>2} of {N_TRIALS} ")
             
             (   train_x_ei,
@@ -118,7 +117,7 @@ class Design_Framework:
             mll_ei, model_ei = self.optimisation_model.initialize_model(train_x_ei, train_obj_ei)
             #reset the best observation
             best_sample_point_per_interation, best_observation_per_interation, best_constraint_per_interation, best_obj_score_per_interation = \
-                definitions.extract_best_from_initialisation_results(train_x_ei, exact_obj_ei, obj_score_ei, self.objective_space_info.obj_to_optimise, self.objective_space_info.output_constraints)
+                utils.extract_best_from_initialisation_results(train_x_ei, exact_obj_ei, obj_score_ei, self.objective_space_info.obj_to_optimise, self.objective_space_info.output_constraints)
             print("best_sample_point_per_interation: ", best_sample_point_per_interation)
             print("best_obj_score_per_interation: ", best_obj_score_per_interation)
 
