@@ -1,4 +1,4 @@
-import sys
+import os
 from interface import define_cpu_settings
 from dataset import Processor_Dataset, create_table_from_json
 from design_methods.design_framework import Design_Framework
@@ -10,7 +10,7 @@ def main(mode, debug=False, create_table=False):
     # Define the settings of the CPU
     cpu_info, fpga_info = define_cpu_settings(mode)
 
-    if create_table == True:
+    if create_table == True or not os.path.exists(f'../dataset/PPA/{cpu_info.cpu_name}_PPA.db'):
         create_table_from_json(cpu_info, f'../dataset/PPA/{cpu_info.cpu_name}_PPA.db')
 
     processor_dataset = Processor_Dataset(cpu_info, fpga_info)

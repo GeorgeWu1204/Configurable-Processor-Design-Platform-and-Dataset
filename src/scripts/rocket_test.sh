@@ -1,5 +1,5 @@
 #!/bin/bash
-python3 main.py --mode Designing --debug True<<EOF
+python3 main.py --mode Sampling --debug True<<EOF
 RocketChip
 y
 ../dataset/example/rocketchip/experiment_1.json

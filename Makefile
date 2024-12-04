@@ -12,6 +12,10 @@ test_boom:
 	@echo "Running tests for BOOM"
 	@cd src; bash scripts/boom_test.sh
 
+test_boom_BO:
+	@echo "Running tests for processor design framework for BOOM"
+	@cd src; bash scripts/boom_test_BO.sh
+
 test_rocket:
 	@echo "Running tests for Rocket"
 	@cd src; bash scripts/rocket_test.sh

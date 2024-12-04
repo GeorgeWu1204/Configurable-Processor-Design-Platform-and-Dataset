@@ -82,6 +82,11 @@ The Simulation Results of the benchmarks such as Dhrystone are currently not sup
 ```export RISCV=/home/hw1020/Documents/Installations``` \
 ```git submodule update --init``` \
 ```export RISCV=/home/hw1020/Documents/Installations``` \
+
+During the Synthesis Stage,
+include all the ```*.v``` files in the ```chipyard/sims/verilator/generated-src``` directory
+remove the ```ClockSourceAtFreqMHz.v``` file
+
 Then need to modify according to the issue proposed [GitHub Issue](https://github.com/chipsalliance/rocket-chip/pull/3226)
 
 ## [BOOM](https://github.com/riscv-boom/riscv-boom)
