@@ -1,0 +1,20 @@
+make[1]: Entering directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'
+Running with RISCV=/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/.conda-env/riscv-tools
+if [ "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/spmv.riscv" != "none" ] && [ ! -f "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/spmv.riscv" ]; then printf "\n\nBinary ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/spmv.riscv not found\n\n"; exit 1; fi
+(set -o pipefail &&  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/simulator-chipyard.harness-CustomisedRocketConfig \
+	+permissive \
+	+dramsim +dramsim_ini_dir=/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/generators/testchipip/src/main/resources/dramsim2_ini +max-cycles=10000000     \
+	+verbose \
+	+permissive-off \
+	../../toolchains/riscv-tools/riscv-tests/build/benchmarks/spmv.riscv \
+	 \
+	</dev/null 2> >(spike-dasm > /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedRocketConfig/spmv.out) | tee /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedRocketConfig/spmv.log)
+[UART] UART0 is here (stdin/stdout).
+[2424035000] %Error: TestHarness.sv:99: Assertion failed in TOP.TestDriver.testHarness: Assertion failed: *** FAILED *** (exit code =       1337)
+
+    at SimTSI.scala:21 assert(!error, "*** FAILED *** (exit code = %%d)\n", exit >> 1.U)
+
+%Error: /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TestHarness.sv:99: Verilog $stop
+Aborting...
+make[1]: *** [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/common.mk:316: ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/spmv.riscv.run] Error 255
+make[1]: Leaving directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'

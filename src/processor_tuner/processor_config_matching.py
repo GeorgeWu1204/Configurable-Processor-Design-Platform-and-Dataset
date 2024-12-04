@@ -104,7 +104,7 @@ class config_matcher:
     def match_config(self, config_to_evaluate):
         stored_configs = self.load_json()
         min_distance = float('inf')
-        best_config_name = None
+        best_config_name = 'config_0'
         for key in stored_configs.keys():
             stored_config = stored_configs[key]
             stored_config = np.array([stored_config[param.name] for param in self.cpu_info.config_params.params])
@@ -122,7 +122,6 @@ def analyse_config_weights_for_synthesis(dataset):
     _, _, _, default_rc = dataset.fetch_single_data_acc_to_def_from_dataset(default_config)
     weight = [0 for _ in range(len(default_config))]
     previous_param_name = None
-    
     for param in dataset.cpu_info.config_params.params:
         print(f"Analyzing config: {param.name}")
         config_to_test = default_config.copy()

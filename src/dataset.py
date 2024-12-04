@@ -201,8 +201,8 @@ class Processor_Dataset:
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
         # # Fake output
         # return True, True, [-1 for i in range(len(self.target_obj_indexes))], [-1 for i in range(len(self.resource_utilisation_indexes))]
-        
         # Output (Validity of the data, FPGA Deployability, Target Objectives, RC_results)
+        
         results = []
         try:
             conn = sqlite3.connect(self.dataset_directory)

@@ -9,22 +9,9 @@
 source ../../tools/RocketChip/run_RocketChip_synthesis.tcl
 # open_project RocketChip_Prj.xpr
 INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/RocketChip_Prj/RocketChip_Prj.gen/sources_1'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_sbus_i2_o2_a32d64s6k3z4c.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_2.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_44.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/BundleBridgeNexus_UInt1_1.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_43.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_dcache_tag_array_0.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/IntSyncCrossingSource_n1x1_Registered.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_tag_array_0.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_data_arrays_0_0.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_data_arrays_1_0.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ClockCrossingReg_w15.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_42.sv'.
-CRITICAL WARNING: [Project 1-19] Could not find the file '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/FixedClockBroadcast_4.sv'.
 Scanning sources...
 Finished scanning sources
-open_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1340.789 ; gain = 0.023 ; free physical = 14494 ; free virtual = 25186
+open_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1341.754 ; gain = 2.992 ; free physical = 5413 ; free virtual = 27928
 # if { [llength $argv] < 1 } {
 #     puts "No incremental checkpoint identified, starting synthesis from scratch."
 #     # Remove any previous incremental checkpoint setting for a fresh start
@@ -36,7 +23,7 @@ open_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak 
 #     set enable_incremental_synthesis [lindex $argv 1]
 # 
 #     # Define the path to the DCP file based on the config name
-#     set dcp_path "/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/Rocket_Chip/Synthesis/${config_name}.dcp"
+#     set dcp_path "/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/RocketChip/Synthesis/${config_name}.dcp"
 #     
 #     if { $enable_incremental_synthesis == 0 } {
 #         puts "Error: Incremental synthesis is disabled"
@@ -57,14 +44,12 @@ open_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak 
 #     }
 # 
 # }
-No incremental checkpoint identified, starting synthesis from scratch.
 # reset_run synth_1
 # launch_runs synth_1 -jobs 12
-WARNING: [Vivado 12-7122] Auto Incremental Compile:: No reference checkpoint was found in run synth_1. Auto-incremental flow will not be run, the standard flow will be run instead.
-[Fri Nov 29 18:08:33 2024] Launched synth_1...
+[Wed Dec  4 16:56:22 2024] Launched synth_1...
 Run output will be captured here: /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/RocketChip_Prj/RocketChip_Prj.runs/synth_1/runme.log
 # wait_on_run synth_1
-[Fri Nov 29 18:08:33 2024] Waiting for synth_1 to finish...
+[Wed Dec  4 16:56:22 2024] Waiting for synth_1 to finish...
 
 *** Running vivado
     with args -log RocketTile.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source RocketTile.tcl
@@ -78,15 +63,960 @@ Run output will be captured here: /home/hw1020/Documents/Configurable-Processor-
     ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source RocketTile.tcl -notrace
-create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1341.789 ; gain = 2.992 ; free physical = 14099 ; free virtual = 24792
-ERROR: [Common 17-69] Command failed: File '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_sbus_i2_o2_a32d64s6k3z4c.sv' does not exist
-INFO: [Common 17-206] Exiting Vivado at Fri Nov 29 18:08:45 2024...
-[Fri Nov 29 18:08:55 2024] synth_1 finished
-ERROR: [Vivado 12-13638] Failed runs(s) : 'synth_1'
-wait_on_runs: Time (s): cpu = 00:00:13 ; elapsed = 00:00:22 . Memory (MB): peak = 1347.727 ; gain = 0.000 ; free physical = 14625 ; free virtual = 25317
-ERROR: [Common 17-39] 'wait_on_runs' failed due to earlier errors.
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1339.773 ; gain = 44.836 ; free physical = 4925 ; free virtual = 27438
+Command: read_checkpoint -incremental /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/RocketChip/Synthesis/RocketTile.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/RocketChip/Synthesis/RocketTile.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top RocketTile -part xa7s6cpga196-2I -incremental_mode aggressive
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xa7s6'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xa7s6'
+INFO: [Vivado_Tcl 4-1810] synth_design options have changed between reference and incremental; A full resynthesis will be run
+INFO: [Device 21-403] Loading part xa7s6cpga196-2I
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 70556
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2051.395 ; gain = 404.715 ; free physical = 3922 ; free virtual = 26435
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'RocketTile' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/RocketTile.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_MasterXbar_RocketTile_i2_o1_a32d64s2k3z4c' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_MasterXbar_RocketTile_i2_o1_a32d64s2k3z4c.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_MasterXbar_RocketTile_i2_o1_a32d64s2k3z4c.sv:228]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_38' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_38.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'plusarg_reader' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/plusarg_reader.v:7]
+	Parameter FORMAT bound to: tilelink_timeout=%d - type: string 
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter DEFAULT bound to: 32'b00000000000000000000000000000000 
+INFO: [Synth 8-6155] done synthesizing module 'plusarg_reader' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/plusarg_reader.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_38' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_38.sv:64]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_MasterXbar_RocketTile_i2_o1_a32d64s2k3z4c.sv:268]
+INFO: [Synth 8-6157] synthesizing module 'TLMonitor_39' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_39.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLMonitor_39' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLMonitor_39.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_MasterXbar_RocketTile_i2_o1_a32d64s2k3z4c' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TLXbar_MasterXbar_RocketTile_i2_o1_a32d64s2k3z4c.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'IntXbar_i3_o1' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/IntXbar_i3_o1.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'IntXbar_i3_o1' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/IntXbar_i3_o1.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'DCache' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'PMPChecker_s3' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PMPChecker_s3.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'PMPChecker_s3' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PMPChecker_s3.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'PMAChecker' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PMAChecker.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'PMAChecker' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PMAChecker.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1133]
+INFO: [Synth 8-6157] synthesizing module 'OptimizationBarrier_TLBEntryData' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/OptimizationBarrier_TLBEntryData.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'OptimizationBarrier_TLBEntryData' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/OptimizationBarrier_TLBEntryData.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1167]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1201]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1235]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1269]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1303]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1337]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1348]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1382]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1416]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1450]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:1484]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_dcache_tag_array_0' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_dcache_tag_array_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_dcache_tag_array_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:427]
+INFO: [Synth 8-6157] synthesizing module 'split_rockettile_dcache_tag_array_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1005]
+INFO: [Synth 8-6155] done synthesizing module 'split_rockettile_dcache_tag_array_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1005]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_dcache_tag_array_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:427]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_dcache_tag_array_0' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_dcache_tag_array_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'DCacheDataArray' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCacheDataArray.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_dcache_data_arrays_0' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_dcache_data_arrays_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_dcache_data_arrays_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:229]
+INFO: [Synth 8-6157] synthesizing module 'split_rockettile_dcache_data_arrays_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:908]
+INFO: [Synth 8-6155] done synthesizing module 'split_rockettile_dcache_data_arrays_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:908]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_dcache_data_arrays_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:229]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_dcache_data_arrays_0' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_dcache_data_arrays_0.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'DCacheDataArray' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCacheDataArray.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AMOALU' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/AMOALU.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'AMOALU' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/AMOALU.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'DCache' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Frontend' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Frontend.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'ICache' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ICache.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_icache_tag_array_0' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_tag_array_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_icache_tag_array_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:457]
+INFO: [Synth 8-6157] synthesizing module 'split_rockettile_icache_tag_array_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1101]
+INFO: [Synth 8-6155] done synthesizing module 'split_rockettile_icache_tag_array_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1101]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_icache_tag_array_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:457]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_icache_tag_array_0' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_tag_array_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_icache_data_arrays_0_0' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_data_arrays_0_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_icache_data_arrays_0_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:487]
+INFO: [Synth 8-6157] synthesizing module 'split_rockettile_icache_data_arrays_0_0_ext' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1197]
+INFO: [Synth 8-6155] done synthesizing module 'split_rockettile_icache_data_arrays_0_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1197]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_icache_data_arrays_0_0_ext' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:487]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_icache_data_arrays_0_0' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_data_arrays_0_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rockettile_icache_data_arrays_1_0' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_data_arrays_1_0.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'rockettile_icache_data_arrays_1_0' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rockettile_icache_data_arrays_1_0.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ICache' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ICache.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ShiftQueue' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ShiftQueue.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'ShiftQueue' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ShiftQueue.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ITLB' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'PMPChecker_s2' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PMPChecker_s2.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'PMPChecker_s2' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PMPChecker_s2.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:111]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:145]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:179]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:213]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:247]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:281]
+INFO: [Synth 8-6155] done synthesizing module 'ITLB' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ITLB.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'Frontend' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Frontend.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'HellaCacheArbiter' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/HellaCacheArbiter.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'HellaCacheArbiter' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/HellaCacheArbiter.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'PTW' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PTW.sv:20]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PTW.sv:177]
+INFO: [Synth 8-6157] synthesizing module 'Arbiter2_Valid_PTWReq' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Arbiter2_Valid_PTWReq.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'Arbiter2_Valid_PTWReq' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Arbiter2_Valid_PTWReq.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'PTW' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PTW.sv:20]
+INFO: [Synth 8-6157] synthesizing module 'Rocket' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:86]
+INFO: [Synth 8-6157] synthesizing module 'IBuf' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/IBuf.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'RVCExpander' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/RVCExpander.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'RVCExpander' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/RVCExpander.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'IBuf' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/IBuf.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'rf_31x64' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rf_31x64.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'rf_31x64' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/rf_31x64.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'CSRFile' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/CSRFile.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'CSRFile' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/CSRFile.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'BreakpointUnit' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/BreakpointUnit.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'BreakpointUnit' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/BreakpointUnit.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'ALU' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ALU.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ALU' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ALU.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'MulDiv' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/MulDiv.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'MulDiv' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/MulDiv.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'Arbiter3_LLWB' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Arbiter3_LLWB.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'Arbiter3_LLWB' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Arbiter3_LLWB.sv:2]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:1102]
+INFO: [Synth 8-6157] synthesizing module 'PlusArgTimeout' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PlusArgTimeout.sv:20]
+INFO: [Synth 8-6157] synthesizing module 'plusarg_reader__parameterized0' [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/plusarg_reader.v:7]
+	Parameter FORMAT bound to: max_core_cycles=%d - type: string 
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter DEFAULT bound to: 32'b00000000000000000000000000000000 
+INFO: [Synth 8-6155] done synthesizing module 'plusarg_reader__parameterized0' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/plusarg_reader.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'PlusArgTimeout' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/PlusArgTimeout.sv:20]
+INFO: [Synth 8-6155] done synthesizing module 'Rocket' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:86]
+INFO: [Synth 8-6155] done synthesizing module 'RocketTile' (0#1) [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/RocketTile.sv:46]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1030]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:934]
+WARNING: [Synth 8-6014] Unused sequential element s2_vaddr_r_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:918]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1126]
+WARNING: [Synth 8-6014] Unused sequential element ram_RW_0_r_en_pipe_0_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/chipyard.harness.TestHarness.CustomisedRocketConfig.top.mems.v:1222]
+WARNING: [Synth 8-6014] Unused sequential element ex_ctrl_rxs1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:638]
+WARNING: [Synth 8-6014] Unused sequential element ex_ctrl_rfs1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:663]
+WARNING: [Synth 8-6014] Unused sequential element ex_ctrl_rfs2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:664]
+WARNING: [Synth 8-6014] Unused sequential element ex_ctrl_wfd_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:665]
+WARNING: [Synth 8-6014] Unused sequential element mem_ctrl_rxs2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:675]
+WARNING: [Synth 8-6014] Unused sequential element mem_ctrl_rxs1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:676]
+WARNING: [Synth 8-6014] Unused sequential element mem_ctrl_rfs1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:678]
+WARNING: [Synth 8-6014] Unused sequential element mem_ctrl_rfs2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:679]
+WARNING: [Synth 8-6014] Unused sequential element mem_ctrl_wfd_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:680]
+WARNING: [Synth 8-6014] Unused sequential element wb_ctrl_rxs2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:690]
+WARNING: [Synth 8-6014] Unused sequential element wb_ctrl_rxs1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:691]
+WARNING: [Synth 8-6014] Unused sequential element wb_ctrl_rfs1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:693]
+WARNING: [Synth 8-6014] Unused sequential element wb_ctrl_rfs2_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:694]
+WARNING: [Synth 8-6014] Unused sequential element wb_ctrl_wfd_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:695]
+WARNING: [Synth 8-6014] Unused sequential element rocc_blocked_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:756]
+WARNING: [Synth 8-6014] Unused sequential element coreMonitorBundle_rd0val_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:757]
+WARNING: [Synth 8-6014] Unused sequential element coreMonitorBundle_rd0val_REG_1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:758]
+WARNING: [Synth 8-6014] Unused sequential element coreMonitorBundle_rd1val_REG_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:759]
+WARNING: [Synth 8-6014] Unused sequential element coreMonitorBundle_rd1val_REG_1_reg was removed.  [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:760]
+WARNING: [Synth 8-7129] Port clock in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port reset in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[31] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[30] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[29] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[28] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[27] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[26] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[25] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[24] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[23] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[22] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[21] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[20] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[19] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[18] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[17] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[16] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[15] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[14] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[13] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[12] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[11] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[10] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[9] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[8] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[7] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[6] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[5] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[4] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[3] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[2] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[1] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_count[0] in module PlusArgTimeout is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_fn[3] in module MulDiv is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[19] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[18] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[17] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[16] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[15] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[14] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[13] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[12] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[11] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[10] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[9] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[8] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[7] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[6] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[5] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[4] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[3] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[2] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[1] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_decode_0_inst[0] in module CSRFile is either unconnected or has no load
+WARNING: [Synth 8-7129] Port R0_en in module rf_31x64 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port R0_clk in module rf_31x64 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port R1_en in module rf_31x64 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port R1_clk in module rf_31x64 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_0_bits_bits_need_gpa in module Arbiter2_Valid_PTWReq is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_in_0_bits_bits_stage2 in module Arbiter2_Valid_PTWReq is either unconnected or has no load
+WARNING: [Synth 8-7129] Port clock in module PTW is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[11] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[10] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[9] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[8] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[7] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[6] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[5] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[4] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[3] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[2] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[1] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_paddr[0] in module PMAChecker is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_prv[0] in module PMPChecker_s2 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port auto_master_out_d_bits_opcode[2] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port auto_master_out_d_bits_opcode[1] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[32] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[31] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[30] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[29] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[28] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[27] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[26] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[25] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[24] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[23] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[22] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[21] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[20] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[19] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[18] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[17] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[16] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[15] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[14] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[13] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[12] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[1] in module ICache is either unconnected or has no load
+WARNING: [Synth 8-7129] Port io_req_bits_addr[0] in module ICache is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2214.332 ; gain = 567.652 ; free physical = 3733 ; free virtual = 26248
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2232.145 ; gain = 585.465 ; free physical = 3733 ; free virtual = 26248
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2232.145 ; gain = 585.465 ; free physical = 3733 ; free virtual = 26248
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00.11 ; elapsed = 00:00:00.11 . Memory (MB): peak = 2232.145 ; gain = 0.000 ; free physical = 3733 ; free virtual = 26248
+INFO: [Project 1-570] Preparing netlist for logic optimization
 
-    while executing
-"wait_on_run synth_1"
-    (file "../../tools/RocketChip/run_RocketChip_synthesis.tcl" line 38)
-INFO: [Common 17-206] Exiting Vivado at Fri Nov 29 18:08:55 2024...
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/RocketChip/Rocket_Chip_Time_Constraints.xdc]
+Finished Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/RocketChip/Rocket_Chip_Time_Constraints.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2375.895 ; gain = 0.000 ; free physical = 3731 ; free virtual = 26247
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.05 . Memory (MB): peak = 2375.930 ; gain = 0.000 ; free physical = 3731 ; free virtual = 26246
+INFO: [Designutils 20-5008] Incremental synthesis strategy aggressive
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2375.930 ; gain = 729.250 ; free physical = 3716 ; free virtual = 26232
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xa7s6cpga196-2I
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2375.930 ; gain = 729.250 ; free physical = 3716 ; free virtual = 26232
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2375.930 ; gain = 729.250 ; free physical = 3716 ; free virtual = 26232
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3936] Found unconnected internal register 'pstore2_addr_reg' and it is trimmed from '34' to '12' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:432]
+WARNING: [Synth 8-3936] Found unconnected internal register 'pstore1_addr_reg' and it is trimmed from '34' to '12' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:432]
+WARNING: [Synth 8-3936] Found unconnected internal register 'release_ack_addr_reg' and it is trimmed from '32' to '21' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/DCache.sv:582]
+WARNING: [Synth 8-3936] Found unconnected internal register 'wb_reg_raw_inst_reg' and it is trimmed from '32' to '16' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:705]
+WARNING: [Synth 8-3936] Found unconnected internal register 'mem_reg_raw_inst_reg' and it is trimmed from '32' to '16' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:705]
+WARNING: [Synth 8-3936] Found unconnected internal register 'ex_reg_raw_inst_reg' and it is trimmed from '32' to '16' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/Rocket.sv:715]
+WARNING: [Synth 8-6430] The Block RAM "split_rockettile_dcache_tag_array_0_ext:/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+WARNING: [Synth 8-6430] The Block RAM "split_rockettile_dcache_data_arrays_0_ext:/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+WARNING: [Synth 8-6430] The Block RAM "split_rockettile_icache_tag_array_0_ext:/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+WARNING: [Synth 8-6430] The Block RAM "split_rockettile_icache_data_arrays_0_0_ext:/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 2375.930 ; gain = 729.250 ; free physical = 3719 ; free virtual = 26236
+---------------------------------------------------------------------------------
+INFO: [Synth 8-223] decloning instance 'tlMasterXbar/monitor/plusarg_reader' (plusarg_reader) to 'tlMasterXbar/monitor/plusarg_reader_1'
+INFO: [Synth 8-223] decloning instance 'tlMasterXbar/monitor_1/plusarg_reader' (plusarg_reader) to 'tlMasterXbar/monitor_1/plusarg_reader_1'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_pma' (PMAChecker) to 'dcache/pma_checker_pma'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/tlb_entries_barrier_1'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/tlb_entries_barrier_2'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/tlb_entries_barrier_3'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/tlb_entries_barrier_4'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/tlb_entries_barrier_5'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/pma_checker_entries_barrier'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/pma_checker_entries_barrier_1'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/pma_checker_entries_barrier_2'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/pma_checker_entries_barrier_3'
+INFO: [Synth 8-223] decloning instance 'dcache/tlb_entries_barrier' (OptimizationBarrier_TLBEntryData) to 'dcache/pma_checker_entries_barrier_4'
+INFO: [Synth 8-223] decloning instance 'frontend/tlb/entries_barrier' (OptimizationBarrier_TLBEntryData) to 'frontend/tlb/entries_barrier_1'
+INFO: [Synth 8-223] decloning instance 'frontend/tlb/entries_barrier' (OptimizationBarrier_TLBEntryData) to 'frontend/tlb/entries_barrier_2'
+INFO: [Synth 8-223] decloning instance 'frontend/tlb/entries_barrier' (OptimizationBarrier_TLBEntryData) to 'frontend/tlb/entries_barrier_3'
+INFO: [Synth 8-223] decloning instance 'frontend/tlb/entries_barrier' (OptimizationBarrier_TLBEntryData) to 'frontend/tlb/entries_barrier_4'
+INFO: [Synth 8-223] decloning instance 'frontend/tlb/entries_barrier' (OptimizationBarrier_TLBEntryData) to 'frontend/tlb/entries_barrier_5'
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   66 Bit       Adders := 1     
+	   3 Input   65 Bit       Adders := 1     
+	   2 Input   64 Bit       Adders := 1     
+	   3 Input   64 Bit       Adders := 1     
+	   2 Input   58 Bit       Adders := 2     
+	   2 Input   34 Bit       Adders := 3     
+	   2 Input   30 Bit       Adders := 8     
+	   2 Input   10 Bit       Adders := 1     
+	   3 Input    9 Bit       Adders := 1     
+	   2 Input    9 Bit       Adders := 6     
+	   2 Input    7 Bit       Adders := 5     
+	   2 Input    4 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 1     
+	   2 Input    2 Bit       Adders := 5     
+	   3 Input    2 Bit       Adders := 3     
+	   4 Input    2 Bit       Adders := 1     
+	   3 Input    1 Bit       Adders := 1     
++---XORs : 
+	   2 Input     64 Bit         XORs := 3     
+	   2 Input     32 Bit         XORs := 8     
+	   2 Input     29 Bit         XORs := 8     
+	   2 Input     17 Bit         XORs := 2     
+	   2 Input     15 Bit         XORs := 2     
+	   2 Input     14 Bit         XORs := 2     
+	   2 Input     12 Bit         XORs := 2     
+	   2 Input     10 Bit         XORs := 2     
+	   2 Input      9 Bit         XORs := 4     
+	   2 Input      4 Bit         XORs := 4     
+	   2 Input      3 Bit         XORs := 8     
+	   2 Input      1 Bit         XORs := 4     
++---Registers : 
+	              130 Bit    Registers := 1     
+	               65 Bit    Registers := 1     
+	               64 Bit    Registers := 14    
+	               62 Bit    Registers := 2     
+	               58 Bit    Registers := 2     
+	               34 Bit    Registers := 18    
+	               33 Bit    Registers := 1     
+	               32 Bit    Registers := 13    
+	               30 Bit    Registers := 8     
+	               28 Bit    Registers := 1     
+	               22 Bit    Registers := 1     
+	               21 Bit    Registers := 1     
+	               16 Bit    Registers := 5     
+	               12 Bit    Registers := 2     
+	                9 Bit    Registers := 15    
+	                8 Bit    Registers := 10    
+	                7 Bit    Registers := 2     
+	                6 Bit    Registers := 8     
+	                5 Bit    Registers := 5     
+	                4 Bit    Registers := 3     
+	                3 Bit    Registers := 8     
+	                2 Bit    Registers := 24    
+	                1 Bit    Registers := 198   
++---Multipliers : 
+	              66x66  Multipliers := 1     
++---RAMs : 
+	              16K Bit	(512 X 32 bit)          RAMs := 2     
+	               4K Bit	(512 X 8 bit)          RAMs := 8     
+	               1K Bit	(64 X 22 bit)          RAMs := 1     
+	               1K Bit	(64 X 21 bit)          RAMs := 1     
++---Muxes : 
+	   2 Input  130 Bit        Muxes := 3     
+	   2 Input   64 Bit        Muxes := 52    
+	   4 Input   64 Bit        Muxes := 4     
+	   3 Input   64 Bit        Muxes := 1     
+	   2 Input   62 Bit        Muxes := 1     
+	   2 Input   58 Bit        Muxes := 2     
+	   2 Input   56 Bit        Muxes := 1     
+	   2 Input   48 Bit        Muxes := 3     
+	   3 Input   34 Bit        Muxes := 1     
+	   2 Input   34 Bit        Muxes := 19    
+	   2 Input   33 Bit        Muxes := 2     
+	   2 Input   32 Bit        Muxes := 28    
+	   2 Input   30 Bit        Muxes := 9     
+	   2 Input   29 Bit        Muxes := 1     
+	   2 Input   26 Bit        Muxes := 1     
+	   2 Input   25 Bit        Muxes := 3     
+	   2 Input   22 Bit        Muxes := 4     
+	   2 Input   20 Bit        Muxes := 2     
+	   2 Input   16 Bit        Muxes := 4     
+	   2 Input   12 Bit        Muxes := 5     
+	   2 Input   11 Bit        Muxes := 1     
+	   2 Input    9 Bit        Muxes := 8     
+	   2 Input    8 Bit        Muxes := 10    
+	  10 Input    8 Bit        Muxes := 1     
+	   6 Input    7 Bit        Muxes := 1     
+	   2 Input    7 Bit        Muxes := 5     
+	   3 Input    7 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 7     
+	   2 Input    5 Bit        Muxes := 14    
+	   5 Input    5 Bit        Muxes := 1     
+	   6 Input    5 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 19    
+	   4 Input    4 Bit        Muxes := 1     
+	   3 Input    4 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 18    
+	   5 Input    3 Bit        Muxes := 1     
+	   8 Input    3 Bit        Muxes := 1     
+	  32 Input    3 Bit        Muxes := 2     
+	   4 Input    3 Bit        Muxes := 2     
+	   6 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 28    
+	  16 Input    2 Bit        Muxes := 1     
+	   5 Input    2 Bit        Muxes := 1     
+	   3 Input    2 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 134   
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 10 (col length:20)
+BRAMs: 10 (col length: RAMB18 20 RAMB36 10)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP _prod_T_40, operation Mode is: A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+WARNING: [Synth 8-3917] design RocketTile has port auto_buffer_out_c_bits_source[1] driven by constant 0
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_tag_array_0/rockettile_dcache_tag_array_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_tag_array_0/rockettile_dcache_tag_array_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/rockettile_dcache_tag_array_0/rockettile_dcache_tag_array_0_ext/mem_0_0/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_0/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_1/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_1/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_1/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_2/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_2/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_2/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_3/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_3/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_3/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_4/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_4/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_4/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_5/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_5/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_5/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_6/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_6/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_6/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_7/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_7/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_7/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_tag_array_0/rockettile_icache_tag_array_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_tag_array_0/rockettile_icache_tag_array_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "RocketTile/frontend/icache/rockettile_icache_tag_array_0/rockettile_icache_tag_array_0_ext/mem_0_0/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_data_arrays_0_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_data_arrays_0_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "RocketTile/frontend/icache/rockettile_icache_data_arrays_0_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_data_arrays_1_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_data_arrays_1_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+WARNING: [Synth 8-6430] The Block RAM "RocketTile/frontend/icache/rockettile_icache_data_arrays_1_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_tag_array_0/rockettile_dcache_tag_array_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_1/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_2/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_3/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_4/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_5/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_6/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_7/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_tag_array_0/rockettile_icache_tag_array_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_data_arrays_0_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM frontend/icache/rockettile_icache_data_arrays_1_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:19 ; elapsed = 00:01:19 . Memory (MB): peak = 2375.930 ; gain = 729.250 ; free physical = 3684 ; free virtual = 26215
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3323] Resources of type DSP have been overutilized. Used = 16, Available = 10. Use report_utilization command for details.
+ Sort Area is  _prod_T_40_0 : 0 0 : 3137 12586 : Used 1 time 0
+ Sort Area is  _prod_T_40_0 : 0 1 : 3156 12586 : Used 1 time 0
+ Sort Area is  _prod_T_40_0 : 0 2 : 3137 12586 : Used 1 time 0
+ Sort Area is  _prod_T_40_0 : 0 3 : 3156 12586 : Used 1 time 0
+ Sort Area is  _prod_T_40_4 : 0 0 : 3137 12223 : Used 1 time 0
+ Sort Area is  _prod_T_40_4 : 0 1 : 3137 12223 : Used 1 time 0
+ Sort Area is  _prod_T_40_4 : 0 2 : 2812 12223 : Used 1 time 0
+ Sort Area is  _prod_T_40_4 : 0 3 : 3137 12223 : Used 1 time 0
+ Sort Area is  _prod_T_40_6 : 0 0 : 3137 11879 : Used 1 time 0
+ Sort Area is  _prod_T_40_6 : 0 1 : 2793 11879 : Used 1 time 0
+ Sort Area is  _prod_T_40_6 : 0 2 : 2812 11879 : Used 1 time 0
+ Sort Area is  _prod_T_40_6 : 0 3 : 3137 11879 : Used 1 time 0
+ Sort Area is  _prod_T_40_8 : 0 0 : 2793 11089 : Used 1 time 0
+ Sort Area is  _prod_T_40_8 : 0 1 : 2812 11089 : Used 1 time 0
+ Sort Area is  _prod_T_40_8 : 0 2 : 2793 11089 : Used 1 time 0
+ Sort Area is  _prod_T_40_8 : 0 3 : 2691 11089 : Used 1 time 0
+ DSP resource Status: _prod_T_40_6 0 11879 3137: Used 1 time : Accepted (9 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_6 1 11879 2793: Used 1 time : Accepted (10 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_4 0 12223 3137: Used 1 time : Accepted (5 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_4 1 12223 3137: Used 1 time : Accepted (6 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_4 2 12223 2812: Used 1 time : Accepted (7 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_4 3 12223 3137: Used 1 time : Accepted (8 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_0 0 12586 3137: Used 1 time : Accepted (1 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_0 1 12586 3156: Used 1 time : Accepted (2 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_0 2 12586 3137: Used 1 time : Accepted (3 < 10) uniquify 0 
+ DSP resource Status: _prod_T_40_0 3 12586 3156: Used 1 time : Accepted (4 < 10) uniquify 0 
+WARNING: [Synth 8-3936] Found unconnected internal register '_prod_T_40' and it is trimmed from '16' to '15' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/MulDiv.sv:76]
+WARNING: [Synth 8-3936] Found unconnected internal register '_prod_T_40' and it is trimmed from '16' to '15' bits. [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/MulDiv.sv:76]
+DSP Debug: swapped A/B pins for adder 0x3ce1bce0
+DSP Debug: swapped A/B pins for adder 0x2c96c3c0
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): C+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): PCIN+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: Generating DSP _prod_T_40, operation Mode is (post resource management): (PCIN>>17)+A2*B2.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: register _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+DSP Report: operator _prod_T_40 is absorbed into DSP _prod_T_40.
+WARNING: [Synth 8-5835] Resources of type BRAM have been overutilized. Used = 12, Available = 10. Will try to implement using LUT-RAM. 
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping Report (see note below)
++------------+---------------------------------------------------------------------------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object                                                                                              | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+---------------------------------------------------------------------------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_1/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_2/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_3/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_4/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_5/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_6/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_7/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|RocketTile  | frontend/icache/rockettile_icache_tag_array_0/rockettile_icache_tag_array_0_ext/mem_0_0/ram_reg         | 64 x 21(READ_FIRST)    | W |   | 64 x 21(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|RocketTile  | frontend/icache/rockettile_icache_data_arrays_0_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg | 512 x 32(READ_FIRST)   | W |   | 512 x 32(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|RocketTile  | frontend/icache/rockettile_icache_data_arrays_1_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg | 512 x 32(READ_FIRST)   | W |   | 512 x 32(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
++------------+---------------------------------------------------------------------------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+
+Distributed RAM: Preliminary Mapping Report (see note below)
++------------+-------------------------------------------------------------------------------------+-----------+----------------------+--------------+
+|Module Name | RTL Object                                                                          | Inference | Size (Depth x Width) | Primitives   | 
++------------+-------------------------------------------------------------------------------------+-----------+----------------------+--------------+
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_0/ram_reg | Implied   | 512 x 8              | RAM64M x 24  | 
+|dcache      | rockettile_dcache_tag_array_0/rockettile_dcache_tag_array_0_ext/mem_0_0/ram_reg     | Implied   | 64 x 22              | RAM64M x 8   | 
+|core        | rf_ext/Memory_reg                                                                   | Implied   | 32 x 64              | RAM32M x 22  | 
++------------+-------------------------------------------------------------------------------------+-----------+----------------------+--------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping      | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|MulDiv      | A2*B2            | 18     | 16     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | (PCIN>>17)+A2*B2 | 18     | 16     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A2*B2       | 18     | 16     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | (PCIN>>17)+A2*B2 | 16     | 16     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A2*B2       | 18     | 16     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | (PCIN>>17)+A2*B2 | 18     | 16     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A2*B2       | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A2*B2       | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | (PCIN>>17)+A2*B2 | 18     | 16     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A2*B2       | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | (PCIN>>17)+A2*B2 | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A2*B2       | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | (PCIN>>17)+A2*B2 | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:24 ; elapsed = 00:01:25 . Memory (MB): peak = 2375.930 ; gain = 729.250 ; free physical = 3683 ; free virtual = 26214
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:01:27 ; elapsed = 00:01:28 . Memory (MB): peak = 2375.930 ; gain = 729.250 ; free physical = 3683 ; free virtual = 26214
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping Report
++------------+---------------------------------------------------------------------------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object                                                                                              | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+---------------------------------------------------------------------------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_1/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_2/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_3/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_4/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_5/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_6/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_7/ram_reg                     | 512 x 8(READ_FIRST)    | W |   | 512 x 8(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|RocketTile  | frontend/icache/rockettile_icache_tag_array_0/rockettile_icache_tag_array_0_ext/mem_0_0/ram_reg         | 64 x 21(READ_FIRST)    | W |   | 64 x 21(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|RocketTile  | frontend/icache/rockettile_icache_data_arrays_0_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg | 512 x 32(READ_FIRST)   | W |   | 512 x 32(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|RocketTile  | frontend/icache/rockettile_icache_data_arrays_1_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg | 512 x 32(READ_FIRST)   | W |   | 512 x 32(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
++------------+---------------------------------------------------------------------------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+
+Distributed RAM: Final Mapping Report
++------------+-------------------------------------------------------------------------------------+-----------+----------------------+--------------+
+|Module Name | RTL Object                                                                          | Inference | Size (Depth x Width) | Primitives   | 
++------------+-------------------------------------------------------------------------------------+-----------+----------------------+--------------+
+|dcache/data | rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_0/ram_reg | Implied   | 512 x 8              | RAM64M x 24  | 
+|dcache      | rockettile_dcache_tag_array_0/rockettile_dcache_tag_array_0_ext/mem_0_0/ram_reg     | Implied   | 64 x 22              | RAM64M x 8   | 
+|core        | rf_ext/Memory_reg                                                                   | Implied   | 32 x 64              | RAM32M x 22  | 
++------------+-------------------------------------------------------------------------------------+-----------+----------------------+--------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_1/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_2/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_3/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_4/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_5/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_6/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance dcache/data/rockettile_dcache_data_arrays_0/rockettile_dcache_data_arrays_0_ext/mem_0_7/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance frontend/icache/rockettile_icache_tag_array_0/rockettile_icache_tag_array_0_ext/mem_0_0/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance frontend/icache/rockettile_icache_data_arrays_0_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance frontend/icache/rockettile_icache_data_arrays_1_0/rockettile_icache_data_arrays_0_0_ext/mem_0_0/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:01:31 ; elapsed = 00:01:32 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3574 ; free virtual = 26105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:01:35 ; elapsed = 00:01:36 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:35 ; elapsed = 00:01:36 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:36 ; elapsed = 00:01:37 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:36 ; elapsed = 00:01:37 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:36 ; elapsed = 00:01:37 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:36 ; elapsed = 00:01:37 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|MulDiv      | A'*B'          | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | C+A'*B'        | 15     | 15     | 48     | -      | 15     | 1    | 1    | 1    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A'*B'     | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN>>17+A'*B' | 15     | 15     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A'*B'     | 15     | 15     | -      | -      | 15     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | A'*B'          | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN>>17+A'*B' | 17     | 17     | -      | -      | 0      | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN+A'*B'     | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|MulDiv      | PCIN>>17+A'*B' | 17     | 17     | -      | -      | 32     | 1    | 1    | -    | -    | -     | 0    | 0    | 
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     1|
+|2     |CARRY4   |   355|
+|3     |DSP48E1  |     9|
+|5     |LUT1     |    74|
+|6     |LUT2     |   809|
+|7     |LUT3     |  1258|
+|8     |LUT4     |  1739|
+|9     |LUT5     |  1313|
+|10    |LUT6     |  2440|
+|11    |MUXF7    |    96|
+|12    |MUXF8    |     2|
+|13    |RAM32M   |    22|
+|14    |RAM64M   |    31|
+|15    |RAM64X1D |     1|
+|16    |RAMB18E1 |    10|
+|18    |FDRE     |  2711|
+|19    |FDSE     |     9|
+|20    |IBUF     |   132|
+|21    |OBUF     |   233|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:36 ; elapsed = 00:01:37 . Memory (MB): peak = 2412.879 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 66 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:33 ; elapsed = 00:01:35 . Memory (MB): peak = 2412.879 ; gain = 622.414 ; free physical = 3573 ; free virtual = 26104
+Synthesis Optimization Complete : Time (s): cpu = 00:01:36 ; elapsed = 00:01:37 . Memory (MB): peak = 2412.887 ; gain = 766.199 ; free physical = 3573 ; free virtual = 26104
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.08 . Memory (MB): peak = 2412.887 ; gain = 0.000 ; free physical = 3872 ; free virtual = 26404
+INFO: [Netlist 29-17] Analyzing 526 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2444.895 ; gain = 0.000 ; free physical = 3873 ; free virtual = 26404
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 54 instances were transformed.
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 22 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 31 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 1 instance 
+
+Synth Design complete | Checksum: dba8df7d
+INFO: [Common 17-83] Releasing license: Synthesis
+139 Infos, 174 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:44 ; elapsed = 00:01:41 . Memory (MB): peak = 2444.930 ; gain = 1099.219 ; free physical = 3873 ; free virtual = 26404
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 2072.787; main = 1735.431; forked = 386.414
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3431.230; main = 2444.898; forked = 1021.348
+Write ShapeDB Complete: Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2468.906 ; gain = 0.000 ; free physical = 3871 ; free virtual = 26403
+INFO: [Common 17-1381] The checkpoint '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/RocketChip_Prj/RocketChip_Prj.runs/synth_1/RocketTile.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file RocketTile_utilization_synth.rpt -pb RocketTile_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed Dec  4 16:58:17 2024...
+[Wed Dec  4 16:58:27 2024] synth_1 finished
+wait_on_runs: Time (s): cpu = 00:01:57 ; elapsed = 00:02:05 . Memory (MB): peak = 1389.777 ; gain = 0.000 ; free physical = 5398 ; free virtual = 27913
+# open_run synth_1 -name synth_1
+Design is defaulting to impl run constrset: constrs_1
+Design is defaulting to synth run part: xa7s6cpga196-2I
+INFO: [Device 21-403] Loading part xa7s6cpga196-2I
+Netlist sorting complete. Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.06 . Memory (MB): peak = 1682.645 ; gain = 0.000 ; free physical = 5102 ; free virtual = 27617
+INFO: [Netlist 29-17] Analyzing 526 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2023.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/RocketChip/Rocket_Chip_Time_Constraints.xdc]
+Finished Parsing XDC File [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/RocketChip/Rocket_Chip_Time_Constraints.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1821.062 ; gain = 0.000 ; free physical = 4995 ; free virtual = 27510
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 54 instances were transformed.
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 22 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 31 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 1 instance 
+
+# report_utilization -file ../../Logs/Syn_Report/RocketChip_utilization_synth.rpt
+# report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 -file ../../Logs/Syn_Report/RocketChip_timing_synth.rpt
+WARNING: [Common 17-708] report_timing_summary: The '-name' option will be ignored because it is only relevant in GUI mode.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2I, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+report_timing_summary: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 2295.902 ; gain = 474.805 ; free physical = 4625 ; free virtual = 27140
+# report_power -file ../../Logs/Syn_Report/RocketChip_power_synth.rpt
+Command: report_power -file ../../Logs/Syn_Report/RocketChip_power_synth.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+0 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+# close_project
+INFO: [Common 17-206] Exiting Vivado at Wed Dec  4 16:58:40 2024...
