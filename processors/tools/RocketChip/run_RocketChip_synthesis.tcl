@@ -7,7 +7,7 @@ if { [llength $argv] < 1 } {
     # Retrieve the config name argument
     set config_name [lindex $argv 0]
 
-    set enable_incremental_synthesis [lindex $argv 1]
+    set enable_incremental_synthesis 1
 
     # Define the path to the DCP file based on the config name
     set dcp_path "/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/RocketChip/Synthesis/${config_name}.dcp"

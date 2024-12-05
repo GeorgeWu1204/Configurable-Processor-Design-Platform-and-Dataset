@@ -2,6 +2,7 @@ SHELL := /bin/bash
 
 CHIPYARD_DIR :=./processors/chipyard
 SIM_DIR :=./processors/chipyard/sims/verilator
+VIVADO_DIR :=./processors/Vivado_Prj
 
 initial:
 	@echo "Sourcing env.sh from $(CHIPYARD_DIR)"
@@ -30,3 +31,10 @@ analyse_rocket:
 
 clean:
 	make -C $(SIM_DIR) clean
+
+clean_vivado_log:
+	@echo "Cleaning up .jou and .log files in $(VIVADO_DIR)"
+	@find $(VIVADO_DIR) -type f \( -name '*.jou' -o -name '*.log' -o -name '*.str' \) -exec rm -f {} +
+	@echo "Cleanup complete."
+
+.PHONY: clean clean_vivado_log test_boom test_rocket test_boom_BO test_rocket_BO analyse_rocket

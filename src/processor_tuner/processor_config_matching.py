@@ -86,6 +86,7 @@ class config_matcher:
                 return True
             except subprocess.CalledProcessError as e:
                 Exception(f"Error: {e}")
+                return False
 
 
     def rename_and_store_checkpoint(self, new_checkpoint_name):

@@ -1,2 +1,2 @@
-create_project RocketChip_Prj /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/RocketChip_Prj -part xa7s6cpga196-2I
+create_project RocketChip_Prj /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/Vivado_Prj/RocketChip_Prj -part xczu19eg-ffvc1760-2-i
 set_property is_enabled false [get_files  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ClockSourceAtFreqMHz.v]

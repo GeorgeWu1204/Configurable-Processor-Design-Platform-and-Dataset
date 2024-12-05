@@ -80,13 +80,17 @@ class General_Chip_Tuner:
         if exist_dcp == False:
             command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
         else:
-            command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name, str(int(exist_dcp))]
+            command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name]
 
         try:
             with open(self.processor_synthesis_log, 'w') as f:
-                subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
-            self.processor_config_matcher.store_checkpoint(new_config)
-            self.processor_config_matcher.rename_and_store_checkpoint(checkpoint_index)
+                result = subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
+            if result.returncode == 0:
+                self.processor_config_matcher.store_checkpoint(new_config)
+                self.processor_config_matcher.rename_and_store_checkpoint(checkpoint_index)
+            else:
+                print("Error: Vivado synthesis failed.")
+                quit()
             return True
         except subprocess.CalledProcessError as e:
             print(f"Error executing Vivado: {e}")

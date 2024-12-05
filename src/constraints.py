@@ -47,7 +47,7 @@ class target_fpga_info:
                 self.FFs = device["FlipFlops"]
                 self.BRAM = device["Block RAMs"]
                 self.DSP = device["DSPs"]
-        print(f"LUts: {self.LUTs}, FFs: {self.FFs}, BRAM: {self.BRAM}, DSP: {self.DSP}")
+        print(f"LUTs: {self.LUTs}, FFs: {self.FFs}, BRAM: {self.BRAM}, DSP: {self.DSP}")
         self.rc_data_indexes_in_dataset = None
     
     def update_rc_data_indexes(self, indexes):
