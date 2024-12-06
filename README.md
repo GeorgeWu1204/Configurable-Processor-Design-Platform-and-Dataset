@@ -1,26 +1,24 @@
 # Configurable-Processor-Design-Platform-and-Dataset
 
-This repositry contains the design framework and dataset for configurable RISC-V processors.
-
-- The dataset is able to automatically collect the benchmark performance, power and resource utilisation for the selected combinations of the RISC-V processors.
-- The dataset records the results obtained by the platform.
+This repositry contains the design framework for configurable RISC-V soft processors.
 
 ## Supported RISC-V processors
 
 - Berkley Out of Order Machine (BOOM)
 - RocketChip
-- Ibex
-- Scarv
+- EL2 VeeR
 
 ## Supported Functionality
 
-### Design Framework
+### Algorithm
 
 - A design framework based on Bayesian Optimisation that can automatically explore the design space of the customised processor.
 
 
 ### Dataset
 
+- The dataset is able to automatically collect the benchmark performance, power and resource utilisation for the selected combinations of the RISC-V processors.
+- The dataset records the results obtained by the platform.
 - An interface that allows easy access to the dataset via scripts or Python. It supports various combinations and numbers of parameters as input to query the dataset.
 - The dataset can automatically detect whether the parameters meet the specified constraints, both inherent constraints and conditional constraints among the parameters.
 - The dataset can consider the target fpga device and therefore is able to tell whether the customised processor can be implemented on the target device.

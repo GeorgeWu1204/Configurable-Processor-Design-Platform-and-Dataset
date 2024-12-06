@@ -32,6 +32,17 @@ if { [llength $argv] < 1 } {
 
 }
 
+# Clear All the Generated Files
+remove_files [get_files *]
+# Add the Verilog files
+add_files [glob /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/*]
+# Disable the unnecessary files
+set_property is_enabled false [get_files  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/ClockSourceAtFreqMHz.v]
+set_property is_enabled false [get_files  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SimTSI.v]
+set_property is_enabled false [get_files  {/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SimUART.v /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SimJTAG.v /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/SimDRAM.v}]
+set_property is_enabled false [get_files  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TestDriver.v]
+# Set Clock Constraints
+add_files -fileset constrs_1 -norecurse /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/RocketChip/Rocket_Chip_Time_Constraints.xdc
 
 reset_run synth_1
 launch_runs synth_1 -jobs 12

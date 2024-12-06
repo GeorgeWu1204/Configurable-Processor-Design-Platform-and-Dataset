@@ -142,6 +142,7 @@ def analyse_config_weights_for_synthesis(dataset):
             config_to_test[param.index] = int(modified_param_val)
             print(f"Testing config: {config_to_test}")
             dataset.tuner.build_new_processor(config_to_test)
+            quit()
             dataset.tuner.run_synthesis(config_to_test)
             parsed_rc_results = dataset.tuner.parse_vivado_resource_utilisation_report()
             rc_weights.append(calculate_weight(default_rc, list(parsed_rc_results.values())))
