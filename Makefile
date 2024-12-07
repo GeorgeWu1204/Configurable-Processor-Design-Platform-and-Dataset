@@ -11,23 +11,23 @@ initial:
 
 test_boom:
 	@echo "Running tests for BOOM"
-	@cd src; bash scripts/boom_test.sh
+	@cd src; bash ../experiments/scripts/boom_test.sh
 
 test_boom_BO:
 	@echo "Running tests for processor design framework for BOOM"
-	@cd src; bash scripts/boom_test_BO.sh
+	@cd src; bash ../experiments/scripts/boom_test_BO.sh
 
 test_rocket:
 	@echo "Running tests for Rocket"
-	@cd src; bash scripts/rocket_test.sh
+	@cd src; bash ../experiments/scripts/rocket_test.sh
 
 test_rocket_BO:
 	@echo "Running tests for processor design framework for Rocket"
-	@cd src; bash scripts/rocket_test_BO.sh
+	@cd src; bash ../experiments/scripts/rocket_test_BO.sh
 
 analyse_rocket:
 	@echo "Analyzing Rocket"
-	@cd src; bash scripts/rocket_analyse_weights.sh
+	@cd src; bash ../experiments/scripts/rocket_analyse_weights.sh
 
 clean:
 	make -C $(SIM_DIR) clean
