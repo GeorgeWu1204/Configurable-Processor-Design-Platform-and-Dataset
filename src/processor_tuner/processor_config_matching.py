@@ -71,6 +71,7 @@ class config_matcher:
         with open(self.synthesis_checkpoint_record_history, 'w') as f:
             json.dump(stored_configs, f, indent=4)
             f.write('\n')
+        self.rename_and_store_checkpoint(config_key)
     
     def prepare_checkpoint(self, checkpoint_config_index):
         if checkpoint_config_index is None:
@@ -120,6 +121,11 @@ class config_matcher:
 
 def analyse_config_weights_for_synthesis(dataset):
     default_config = dataset.default_params
+    print("Default Config", default_config)
+    #Test
+    dataset.tuner.build_new_processor(default_config)
+
+
     _, _, _, default_rc = dataset.fetch_single_data_acc_to_def_from_dataset(default_config)
     print("Default Utilisation Results", default_rc)
     weight = [0 for _ in range(len(default_config))]

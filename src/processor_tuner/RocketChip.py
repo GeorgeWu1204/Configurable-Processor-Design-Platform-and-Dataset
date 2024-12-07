@@ -16,22 +16,43 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         self.processor_config_matcher = config_matcher(cpu_info, self.top_level_design_name)
 
 
-    def modify_custom_cpu(self, n):
+    def modify_cpu_config(self, num_cores, customised_configs):
         with open(self.cpu_level_config_file, 'r') as file:
             lines = file.readlines()
         pattern = re.compile(r'new freechips\.rocketchip\.rocket\.WithCustomisedCore\(\d+\)')
+        assert len(customised_configs) == 3 # FPU, MulDiv, Btb
         for i, line in enumerate(lines):
             if 'class CustomisedRocketConfig' in line:
                 for j in range(i+1, len(lines)):
                     if pattern.search(lines[j]):
-                        lines[j] = pattern.sub(f'new freechips.rocketchip.rocket.WithCustomisedCore({n})', lines[j])
+                        lines[j] = pattern.sub(f'new freechips.rocketchip.rocket.WithCustomisedCore({num_cores})', lines[j])
+                        # Remove Previous Customised Configurations
+                        for m in range(j+1, len(lines)):
+                            # Ugly way to remove the previous customised configurations, can be improved
+                            pattern_to_delete = r'new freechips\.rocketchip\.rocket\.\w+\s*\+\+'
+                            if re.search(pattern_to_delete, lines[j + 1]):
+                                print("Deleting: ", lines[j + 1])
+                                lines.pop(j + 1)
+                            else:
+                                break
+                        # Add New Customised Configurations
+                        index = 0
+                        if customised_configs[0] != "DefaultFPU":
+                            index += 1
+                            lines.insert(j + index, f'  new freechips.rocketchip.rocket.{customised_configs[0]} ++\n')
+                        if customised_configs[1] != "DefaultMulDiv":
+                            index += 1
+                            lines.insert(j + index, f'  new freechips.rocketchip.rocket.{customised_configs[1]} ++\n')
+                        if customised_configs[2] != "WithDefaultBtb":
+                            index += 1
+                            lines.insert(j + index, f'  new freechips.rocketchip.rocket.{customised_configs[2]} ++\n')
                         break
                 break
         with open(self.cpu_level_config_file, 'w') as file:
             file.writelines(lines)
 
-    def modify_custom_core_internal_config(self, input_vals):
-            params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
+    def modify_peripheral_config(self, input_vals):
+            params_name = list(self.cpu_info.config_params.params_map.keys())[-len(input_vals):]
             with open(self.core_level_configuration_file, 'r') as file:
                 scala_code = file.read()
             
@@ -39,21 +60,29 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
             class_pattern = re.compile(
                     r'class\s+WithCustomisedCore\(\s*n:\s*Int,\s*crossing:\s*RocketCrossingParams\s*=\s*RocketCrossingParams\(\s*\),\s*\)\s*extends\s*Config\(\(site,\s*here,\s*up\)\s*=>\s*{\s*(.*?)\s*}\)',
                     re.DOTALL)
+            core_pattern = re.compile(r"(core = RocketCoreParams\()(useVM = )(true|false)(, useAtomics = )(true|false)(, useCompressed = )(true|false)(, useVector = )(true|false)(\))")
 
             match = class_pattern.search(scala_code)
 
             if match:
-                print("WithCustomisedCore class definition found.")
                 config_body = match.group(1)  # Corrected to match the single capture group
                 for var_name, var_val in zip(params_name, input_vals):
                     print(var_name, var_val)
-                    class_name, sub_name = var_name.split('_')
+                    if '_' not in var_name:
+                        class_name = 'core'
+                    else:
+                        class_name, sub_name = var_name.split('_')
+                    modify_core = False
+                    cache_match = None
+                    # Cache Configuration
                     if class_name == 'icache':
                         pattern = re.compile(rf'icache\s*=\s*Some\(ICacheParams\((.*?)\)\)', re.DOTALL)
                         cache_match = pattern.search(config_body)
                     elif class_name == 'dcache':
                         pattern = re.compile(rf'dcache\s*=\s*Some\(DCacheParams\((.*?)\)\)', re.DOTALL)
                         cache_match = pattern.search(config_body)
+                    else:
+                        modify_core = True
                     if cache_match:
                         params = cache_match.group(1)
                         sub_pattern = re.compile(rf'{sub_name}\s*=\s*\d+')
@@ -63,9 +92,19 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
                             config_body = config_body.replace(cache_match.group(0), new_cache_body)
                         else:
                             print(f"{sub_name} not found in {class_name} parameters.")
-                    else:
-                        print(f"{class_name} class not found in the body.")
-                
+                    # Extension Enable
+                    if modify_core:
+                        core_match = core_pattern.search(config_body)
+                        if core_match:
+                            core_params = core_match.group(0)
+                            sub_pattern = re.compile(rf'{var_name} = (true|false)')
+                            if sub_pattern.search(core_params):
+                                new_params = sub_pattern.sub(f'{var_name} = {var_val}', core_params)
+                                config_body = config_body.replace(core_params, new_params)
+                            else:
+                                print(f"{var_name} not found in core parameters.")
+
+
                 # Rewrite the modified block back into the scala_code
                 scala_code = class_pattern.sub(f'class WithCustomisedCore(\n  n: Int,\n  crossing: RocketCrossingParams = RocketCrossingParams(),\n) extends Config((site, here, up) => {{\n{config_body}}})', scala_code)
 
@@ -74,11 +113,12 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
             else:
                 print("WithCustomisedCore class definition not found.")
 
+
     def modify_config_files(self, input_vals):
         # CPU's overall configuration, Only modify the number of Cores
-        self.modify_custom_cpu(input_vals[0])
+        self.modify_cpu_config(input_vals[0], input_vals[1:4])
         # Core's internal configuration
-        self.modify_custom_core_internal_config(input_vals[1:])
+        self.modify_peripheral_config(input_vals[4:])
 
     def extract_mcycle_minstret(self):
         # Initialize variables to store mcycle and minstret
@@ -146,6 +186,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
     def build_new_processor(self, new_config):
         try:
             self.modify_config_files(new_config)
+            quit()
             run_configure_command = ["make", "-j12", "CONFIG=CustomisedRocketConfig"]
             subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             return True
@@ -158,7 +199,3 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
 
 if __name__ == '__main__':
     pass
-    # from interface import define_cpu_settings
-    # cpu_info, fpga_info = define_cpu_settings()
-    # rocket_chip_tuner = Rocket_Chip_Tuner(cpu_info)
-    # rocket_chip_tuner.modify_custom_cpu(3)

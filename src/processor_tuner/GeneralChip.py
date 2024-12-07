@@ -87,7 +87,6 @@ class General_Chip_Tuner:
                 result = subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
             if result.returncode == 0:
                 self.processor_config_matcher.store_checkpoint(new_config)
-                self.processor_config_matcher.rename_and_store_checkpoint(checkpoint_index)
             else:
                 print("Error: Vivado synthesis failed.")
                 quit()
