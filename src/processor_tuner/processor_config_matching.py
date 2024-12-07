@@ -23,9 +23,9 @@ class match_metrics:
 
     def calculate_distance(self, config1, config2):
         if self.match_metric == 'euclidean':
-            return self.euclidean_distance(config1, config2)
+            return self.euclidean_distance(np.log2(config1), np.log2(config2))
         elif self.match_metric == 'manhattan_distance':
-            return self.manhattan_distance(config1, config2)
+            return self.manhattan_distance(np.log2(config1), np.log2(config2))
         else:
             raise ValueError(f"Invalid metric: {self.match_metric}. Must be one of {self.metrics}")
         
@@ -121,6 +121,7 @@ class config_matcher:
 def analyse_config_weights_for_synthesis(dataset):
     default_config = dataset.default_params
     _, _, _, default_rc = dataset.fetch_single_data_acc_to_def_from_dataset(default_config)
+    print("Default Utilisation Results", default_rc)
     weight = [0 for _ in range(len(default_config))]
     previous_param_name = None
     for param in dataset.cpu_info.config_params.params:
@@ -142,20 +143,19 @@ def analyse_config_weights_for_synthesis(dataset):
             config_to_test[param.index] = int(modified_param_val)
             print(f"Testing config: {config_to_test}")
             dataset.tuner.build_new_processor(config_to_test)
-            quit()
             dataset.tuner.run_synthesis(config_to_test)
             parsed_rc_results = dataset.tuner.parse_vivado_resource_utilisation_report()
+            print(parsed_rc_results)
             rc_weights.append(calculate_weight(default_rc, list(parsed_rc_results.values())))
             print("Utilisation Results")
             print(rc_weights)
         weight[param.index] = sum(rc_weights) / len(rc_weights)
         print("weight   ", weight[param.index])
-        # TODO take avg
-
     return weight
         
 
 def calculate_weight(ref_rc_results, new_rc_results):
+    # Note: This weight assumes the configuration parameters are converted to log.
     if len(ref_rc_results) != len(new_rc_results):
         raise ValueError("Resource utilisation results must have the same dimensions.")
     ref_rc_results = np.array(ref_rc_results, dtype=float)

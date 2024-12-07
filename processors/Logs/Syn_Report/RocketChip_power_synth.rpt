@@ -1,10 +1,10 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date             : Thu Dec  5 15:01:23 2024
+| Date             : Sat Dec  7 02:03:26 2024
 | Host             : Precision-Tower-5810 running 64-bit Ubuntu 22.04.4 LTS
 | Command          : report_power -file ../../Logs/Syn_Report/RocketChip_power_synth.rpt
-| Design           : RocketTile
+| Design           : DigitalTop
 | Device           : xczu19eg-ffvc1760-2-i
 | Design State     : synthesized
 | Grade            : industrial
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.226        |
+| Total On-Chip Power (W)  | 1.373        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.120        |
-| Device Static (W)        | 1.106        |
+| Dynamic (W)              | 0.266        |
+| Device Static (W)        | 1.108        |
 | Effective TJA (C/W)      | 0.7          |
-| Max Ambient (C)          | 99.1         |
-| Junction Temperature (C) | 25.9         |
+| Max Ambient (C)          | 99.0         |
+| Junction Temperature (C) | 26.0         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,20 +52,22 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.005 |        3 |       --- |             --- |
-| CLB Logic                |     0.012 |    10847 |       --- |             --- |
-|   LUT as Logic           |     0.011 |     6077 |    522720 |            1.16 |
-|   LUT as Distributed RAM |     0.001 |      130 |    161280 |            0.08 |
-|   CARRY8                 |    <0.001 |      186 |     65340 |            0.28 |
-|   Register               |    <0.001 |     2719 |   1045440 |            0.26 |
-|   Others                 |     0.000 |       57 |       --- |             --- |
-|   F7/F8 Muxes            |     0.000 |       97 |    522720 |            0.02 |
-| Signals                  |     0.009 |     9405 |       --- |             --- |
-| Block RAM                |     0.004 |        5 |       984 |            0.51 |
+| Clocks                   |     0.020 |        3 |       --- |             --- |
+| CLB Logic                |     0.050 |    37935 |       --- |             --- |
+|   LUT as Logic           |     0.032 |    18853 |    522720 |            3.61 |
+|   LUT as Distributed RAM |     0.017 |     1802 |    161280 |            1.12 |
+|   Register               |    <0.001 |    10418 |   1045440 |            1.00 |
+|   CARRY8                 |    <0.001 |      229 |     65340 |            0.35 |
+|   LUT as Shift Register  |    <0.001 |        1 |    161280 |           <0.01 |
+|   BUFG                   |    <0.001 |        3 |        88 |            3.41 |
+|   Others                 |     0.000 |      588 |       --- |             --- |
+|   F7/F8 Muxes            |     0.000 |      474 |    522720 |            0.09 |
+| Signals                  |     0.037 |    32366 |       --- |             --- |
+| Block RAM                |     0.043 |      139 |       984 |           14.13 |
 | DSPs                     |     0.003 |       10 |      1968 |            0.51 |
-| I/O                      |     0.086 |      365 |       512 |           71.29 |
-| Static Power             |     1.106 |          |           |                 |
-| Total                    |     1.226 |          |           |                 |
+| I/O                      |     0.112 |      370 |       512 |           72.27 |
+| Static Power             |     1.108 |          |           |                 |
+| Total                    |     1.373 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -75,14 +77,14 @@ Table of Contents
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source          | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint          |       0.850 |     0.338 |       0.039 |      0.299 |       NA    | Unspecified | NA         |
-| Vccint_io       |       0.850 |     0.097 |       0.001 |      0.096 |       NA    | Unspecified | NA         |
-| Vccbram         |       0.850 |     0.004 |       0.000 |      0.004 |       NA    | Unspecified | NA         |
+| Vccint          |       0.850 |     0.479 |       0.178 |      0.301 |       NA    | Unspecified | NA         |
+| Vccint_io       |       0.850 |     0.098 |       0.002 |      0.096 |       NA    | Unspecified | NA         |
+| Vccbram         |       0.850 |     0.007 |       0.003 |      0.004 |       NA    | Unspecified | NA         |
 | Vccaux          |       1.800 |     0.338 |       0.000 |      0.338 |       NA    | Unspecified | NA         |
-| Vccaux_io       |       1.800 |     0.112 |       0.039 |      0.073 |       NA    | Unspecified | NA         |
+| Vccaux_io       |       1.800 |     0.116 |       0.043 |      0.073 |       NA    | Unspecified | NA         |
 | Vcco33          |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25          |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vcco18          |       1.800 |     0.008 |       0.008 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco18          |       1.800 |     0.018 |       0.018 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15          |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135         |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12          |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -115,17 +117,17 @@ Table of Contents
 1.3 Confidence Level
 --------------------
 
-+-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| User Input Data             | Confidence | Details                                                | Action                                                                                                     |
-+-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| Design implementation state | Low        | Design is synthesized                                  | Accuracy of the tool is not optimal until design is fully placed and routed                                |
-| Clock nodes activity        | High       | User specified more than 95% of clocks                 |                                                                                                            |
-| I/O nodes activity          | Low        | More than 75% of inputs are missing user specification | Provide missing input activity with simulation results or by editing the "By Resource Type -> I/Os" view   |
-| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes         | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views |
-| Device models               | High       | Device models are Production                           |                                                                                                            |
-|                             |            |                                                        |                                                                                                            |
-| Overall confidence level    | Low        |                                                        |                                                                                                            |
-+-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
++-----------------------------+------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| User Input Data             | Confidence | Details                                                | Action                                                                                                             |
++-----------------------------+------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| Design implementation state | Low        | Design is synthesized                                  | Accuracy of the tool is not optimal until design is fully placed and routed                                        |
+| Clock nodes activity        | Medium     | More than 5% of clocks are missing user specification  | Provide missing clock activity with a constraint file, simulation results or by editing the "By Clock Domain" view |
+| I/O nodes activity          | Low        | More than 75% of inputs are missing user specification | Provide missing input activity with simulation results or by editing the "By Resource Type -> I/Os" view           |
+| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes         | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views         |
+| Device models               | High       | Device models are Production                           |                                                                                                                    |
+|                             |            |                                                        |                                                                                                                    |
+| Overall confidence level    | Low        |                                                        |                                                                                                                    |
++-----------------------------+------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
 
 
 2. Settings
@@ -149,11 +151,11 @@ Table of Contents
 2.2 Clock Constraints
 ---------------------
 
-+-------+--------+-----------------+
-| Clock | Domain | Constraint (ns) |
-+-------+--------+-----------------+
-| clock | clock  |            20.0 |
-+-------+--------+-----------------+
++-------+-----------------------------------------------------------------------------------+-----------------+
+| Clock | Domain                                                                            | Constraint (ns) |
++-------+-----------------------------------------------------------------------------------+-----------------+
+| clock | auto_chipyard_prcictrl_domain_reset_setter_clock_in_member_allClocks_uncore_clock |            20.0 |
++-------+-----------------------------------------------------------------------------------+-----------------+
 
 
 3. Detailed Reports
@@ -162,21 +164,55 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+-----------------------------------------+-----------+
-| Name                                    | Power (W) |
-+-----------------------------------------+-----------+
-| RocketTile                              |     0.120 |
-|   core                                  |     0.017 |
-|     csr                                 |     0.004 |
-|     div                                 |     0.007 |
-|     rf_ext                              |     0.001 |
-|   dcache                                |     0.006 |
-|     data                                |     0.003 |
-|       rockettile_dcache_data_arrays_0   |     0.003 |
-|   frontend                              |     0.010 |
-|     fq                                  |     0.006 |
-|     icache                              |     0.003 |
-|       rockettile_icache_data_arrays_1_0 |     0.001 |
-+-----------------------------------------+-----------+
++--------------------------------------------+-----------+
+| Name                                       | Power (W) |
++--------------------------------------------+-----------+
+| DigitalTop                                 |     0.266 |
+|   bank                                     |     0.012 |
+|     buffer                                 |     0.003 |
+|       nodeIn_d_q                           |     0.001 |
+|       nodeOut_a_q                          |     0.001 |
+|     ram                                    |     0.009 |
+|       mem                                  |     0.008 |
+|   cbus                                     |     0.008 |
+|     atomics                                |     0.001 |
+|     buffer                                 |     0.002 |
+|       nodeIn_d_q                           |     0.001 |
+|       nodeOut_a_q                          |     0.001 |
+|     coupler_to_debug                       |     0.002 |
+|       fragmenter                           |     0.002 |
+|   coh_wrapper                              |     0.072 |
+|     cork                                   |     0.001 |
+|     l2                                     |     0.069 |
+|       inclusive_cache_bank_sched           |     0.068 |
+|   fbus                                     |     0.004 |
+|     buffer                                 |     0.002 |
+|     coupler_from_port_named_serial_tl_0_in |     0.002 |
+|       buffer                               |     0.002 |
+|   mbus                                     |     0.003 |
+|     buffer_1                               |     0.002 |
+|       nodeIn_d_q                           |     0.001 |
+|       nodeOut_a_q                          |     0.001 |
+|   pbus                                     |     0.006 |
+|     buffer                                 |     0.002 |
+|       nodeIn_d_q                           |     0.001 |
+|       nodeOut_a_q                          |     0.001 |
+|     buffer_1                               |     0.002 |
+|       nodeIn_d_q                           |     0.001 |
+|   sbus                                     |     0.001 |
+|     system_bus_xbar                        |     0.001 |
+|   serial_tl_domain                         |     0.006 |
+|     phy                                    |     0.004 |
+|     serdesser                              |     0.001 |
+|   tile_prci_domain                         |     0.036 |
+|     buffer                                 |     0.002 |
+|     element_reset_domain_rockettile        |     0.033 |
+|       core                                 |     0.016 |
+|       dcache                               |     0.006 |
+|       frontend                             |     0.010 |
+|   tlDM                                     |     0.003 |
+|     dmInner                                |     0.002 |
+|       dmInner                              |     0.001 |
++--------------------------------------------+-----------+
 
 

@@ -12,7 +12,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         self.generation_path = '../processors/chipyard/sims/verilator'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/RocketConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/rocket-chip/src/main/scala/rocket/Configs.scala'
-        self.top_level_design_name = "RocketTile"
+        self.top_level_design_name = "DigitalTop"
         self.processor_config_matcher = config_matcher(cpu_info, self.top_level_design_name)
 
 

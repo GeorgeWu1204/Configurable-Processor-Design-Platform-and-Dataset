@@ -43,6 +43,8 @@ set_property is_enabled false [get_files  {/home/hw1020/Documents/Configurable-P
 set_property is_enabled false [get_files  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TestDriver.v]
 # Set Clock Constraints
 add_files -fileset constrs_1 -norecurse /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/RocketChip/Rocket_Chip_Time_Constraints.xdc
+# Set the Top Module
+set_property top DigitalTop [current_fileset]
 
 reset_run synth_1
 launch_runs synth_1 -jobs 12

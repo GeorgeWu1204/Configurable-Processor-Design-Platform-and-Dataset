@@ -269,39 +269,26 @@ class Processor_Dataset:
         print(self.resource_utilisation_indexes)
         print("Objective Indexes")
         print(self.target_obj_indexes)
-
+    
+    def debug_visualise_db(self):
+        try:
+            conn = sqlite3.connect(self.dataset_directory)
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT * FROM {self.dataset_name}")
+            rows = cursor.fetchall()
+            # Fetch column names
+            column_names = [description[0] for description in cursor.description]
+            
+            # Display column names and rows
+            print(f"\nContents of table: {self.dataset_name}")
+            print(" | ".join(column_names))
+            print("-" * 50)
+            for row in rows:
+                for i in range(len(row)):
+                    print(row[i], end="    |   ")
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
 
 
 if __name__ == '__main__':
     pass
-    # def fetch_single_data_as_dict_from_dataset(self, data_input):
-    #     """Fetch data based on certain input values and return it as a list of dictionaries."""
-    #     data_to_fetch = self.default_params
-    #     results = []
-    #     for i in range(len(data_input)):
-    #         data_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
-    #     try:
-    #         conn = sqlite3.connect(self.dataset_directory)
-    #         # Create a cursor object and execute the SQL command
-    #         cursor = conn.cursor()
-    #         cursor.execute(self.fetch_command, data_to_fetch)
-    #         # Fetch all results from the cursor
-    #         columns = [column[0] for column in cursor.description]
-    #         rows = cursor.fetchall()
-    #         # Convert each row into a dictionary
-    #         for row in rows:
-    #             results.append(dict(zip(columns, row)))
-
-    #     except sqlite3.Error as e:
-    #         print(f"An error occurred: {e}")
-
-    #     return results
-    # create_database('processors.db')
-    # create_table_from_json('../dataset/constraints/RocketChip_Config.json', 'RocketChip_PPA', '../dataset/PPA/RocketChip_PPA.db')
-    # conn = sqlite3.connect('../dataset/PPA/RocketChip_PPA.db')
-    # data_values = ['RocketChip', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    # columns = 'CPU_Name, icache_nSets, icache_nWays, dcache_nSets, dcache_nWays, nTLBSets, nTLBWays, Power_Dynamic, Power_Static, Resource_Utilisation_LUTs, Resource_Utilisation_FFs, Resource_Utilisation_BRAM, Resource_Utilisation_DSP, Benchmark_Dhrystone, Benchmark_CoreMark, Benchmark_Whetstone'
-    # # Call the function to insert data
-    # insert_data(conn, 'RocketChip_PPA', columns, data_values)
-    # cpu_info = read_from_json('../dataset/constraints/RocketChip_Config.json')
-    # create_table_from_json(cpu_info, '../dataset/PPA/RocketChip_PPA.db')

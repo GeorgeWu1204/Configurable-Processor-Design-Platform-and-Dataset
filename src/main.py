@@ -24,6 +24,7 @@ def main(mode, debug=False, create_table=False):
         # Sampling Mode: Automatically exploring the design space
         print("---------------Sampling Mode---------------")
         processor_dataset.design_space_exploration()
+
     elif mode == "Querying":
         # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
         print("---------------Querying Mode---------------")
@@ -34,10 +35,17 @@ def main(mode, debug=False, create_table=False):
         print("---------------Designing Mode---------------")
         df = Design_Framework(cpu_info, processor_dataset)
         df.run_optimisation()
+
     elif mode == "Analyse_Weights":
         # Analyse Weights Mode: Analyse the weights of the configurations for synthesis
         print("---------------Analyse Weights Mode---------------")
         analyse_config_weights_for_synthesis(processor_dataset)
+
+    elif mode == "View_Dataset":
+        # View Dataset Mode: View the dataset
+        print("---------------View Dataset Mode---------------")
+        processor_dataset.debug_visualise_db()
+
     else:
         print("Invalid Mode")
 
