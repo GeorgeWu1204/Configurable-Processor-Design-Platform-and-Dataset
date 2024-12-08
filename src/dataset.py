@@ -11,17 +11,20 @@ def create_table_from_json(cpu_info, dataset_direct):
 
     # Add Configurable Parameters to the table
     for param in cpu_info.config_params.params:
-        sql_command += f"    {param.name} INTEGER,\n"
+        if param.param_type == "int":
+            sql_command += f"    {param.name} INTEGER,\n"
+        elif param.param_type == "categorical":
+            sql_command += f"    {param.name} TEXT,\n"
     # Output Params
     ## 1. Power
     for metric in cpu_info.supported_output_objs.power.metrics:
-        sql_command += f"    Power_{metric} INTEGER,\n"
+        sql_command += f"    Power_{metric} FLOAT,\n"
     ## 2. Resource_Utilisation
     for metric in cpu_info.supported_output_objs.resource.metrics:
-        sql_command += f"    Resource_Utilisation_{metric} INTEGER,\n"
+        sql_command += f"    Resource_Utilisation_{metric} FLOAT,\n"
     ## 3. Timing
     for metric in cpu_info.supported_output_objs.timing.metrics:
-        sql_command += f"    Timing_{metric} INTEGER,\n"
+        sql_command += f"    Timing_{metric} FLOAT,\n"
     ## 4. Benchmark Performance
     for metric in cpu_info.supported_output_objs.benchmark.metrics:
         tmp_benchmark_metric = metric.replace("-", "_")
@@ -208,6 +211,7 @@ class Processor_Dataset:
             conn = sqlite3.connect(self.dataset_directory)
             # Create a cursor object and execute the SQL command
             cursor = conn.cursor()
+            print(self.fetch_command)
             cursor.execute(self.fetch_command, data_to_fetch)
             # Fetch all results from the cursor
             rows = cursor.fetchall()
@@ -230,7 +234,8 @@ class Processor_Dataset:
             
         except sqlite3.Error as e:
             Exception(f"An error occurred: {e}")
-            return False, False, None
+            quit()
+            return False, False, None, None
     
 
     def design_space_exploration(self):

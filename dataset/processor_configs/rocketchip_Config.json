@@ -4,7 +4,7 @@
     "Configurable_Params": {
         "Core_Num": {"self_range": [1, 2, 4], "default": 1, "type": "int"},
         "fpu_config": {"self_range": ["WithoutFPU", "WithFP16", "WithFPUWithoutDivSqrt", "DefaultFPU"], "default": "DefaultFPU", "type": "categorical"},
-        "mul-div_config": {"self_range": ["WithFastMulDiv", "WithCustomFastMulDiv", "WithoutMulDiv", "DefaultMulDiv"], "default": "DefaultMulDiv", "type": "categorical"},
+        "mul_div_config": {"self_range": ["WithFastMulDiv", "WithCustomFastMulDiv", "WithoutMulDiv", "DefaultMulDiv"], "default": "DefaultMulDiv", "type": "categorical"},
         "btb_config": {"self_range": ["WithDefaultBtb", "WithNoBtb"], "default": "WithDefaultBtb", "type": "categorical"},
         "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 64, "type": "int"},
         "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 1, "type": "int"},
@@ -16,8 +16,7 @@
         "dcache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"},
         "useVM": {"self_range": ["true", "false"], "default": "true", "type": "categorical"},
         "useAtomics": {"self_range": ["true", "false"], "default": "true", "type": "categorical"},
-        "useCompressed": {"self_range": ["true", "false"], "default": "true", "type": "categorical"},
-        "useVector": {"self_range": ["true", "false"], "default": "true", "type": "categorical"}
+        "useCompressed": {"self_range": ["true", "false"], "default": "true", "type": "categorical"}
     },
 
     "Configurable_Params_Weight" : {

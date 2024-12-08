@@ -7,13 +7,17 @@ import subprocess
 
 class match_metrics:
     #TODO Improve better metric for matching configurations, perhaps including some weights.
-    def __init__(self, match_metric, weights):
+    def __init__(self, match_metric, weights, integer_params_index):
         self.metrics = ['euclidean', 'manhattan_distance']
         self.param_weights = np.array(list(weights.values()))
         if match_metric not in self.metrics:
             raise ValueError(f"Invalid metric: {match_metric}. Must be one of {self.metrics}")
         else:
             self.match_metric = match_metric
+        self.integer_params_index = integer_params_index
+    
+    def convert_for_metric(self, config):
+        return np.log2(config[self.integer_params_index])
     
     def euclidean_distance(self, config1, config2):
         return float(np.sum(np.multiply(np.sqrt((config1 - config2) ** 2 ), self.param_weights)))
@@ -22,10 +26,12 @@ class match_metrics:
         return float(np.sum(np.multiply(np.abs(config1 - config2), self.param_weights )))
 
     def calculate_distance(self, config1, config2):
+        converted_config1 = self.convert_for_metric(config1)
+        converted_config2 = self.convert_for_metric(config2)
         if self.match_metric == 'euclidean':
-            return self.euclidean_distance(np.log2(config1), np.log2(config2))
+            return self.euclidean_distance(converted_config1, converted_config2)
         elif self.match_metric == 'manhattan_distance':
-            return self.manhattan_distance(np.log2(config1), np.log2(config2))
+            return self.manhattan_distance(converted_config1, converted_config2)
         else:
             raise ValueError(f"Invalid metric: {self.match_metric}. Must be one of {self.metrics}")
         
@@ -36,7 +42,7 @@ class config_matcher:
         self.synthesis_checkpoint_directory = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Synthesis/'
         self.synthesis_checkpoint_record_history = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Stored_Checkpoint_Record.json'
         self.match_metric = match_metric
-        self.metric_calculator = match_metrics(self.match_metric, self.cpu_info.config_params.params_weights)
+        self.metric_calculator = match_metrics(self.match_metric, self.cpu_info.config_params.params_weights, self.cpu_info.config_params.integer_params_index)
         self.check_point_to_synthesis_name = check_point_to_synthesis_name
     
     def load_json(self):
@@ -122,10 +128,6 @@ class config_matcher:
 def analyse_config_weights_for_synthesis(dataset):
     default_config = dataset.default_params
     print("Default Config", default_config)
-    #Test
-    dataset.tuner.build_new_processor(default_config)
-
-
     _, _, _, default_rc = dataset.fetch_single_data_acc_to_def_from_dataset(default_config)
     print("Default Utilisation Results", default_rc)
     weight = [0 for _ in range(len(default_config))]
@@ -148,9 +150,10 @@ def analyse_config_weights_for_synthesis(dataset):
             modified_param_val = param.self_range[index_of_value]
             config_to_test[param.index] = int(modified_param_val)
             print(f"Testing config: {config_to_test}")
-            dataset.tuner.build_new_processor(config_to_test)
-            dataset.tuner.run_synthesis(config_to_test)
-            parsed_rc_results = dataset.tuner.parse_vivado_resource_utilisation_report()
+            _, _, _, parsed_rc_results = dataset.fetch_single_data_acc_to_def_from_dataset(config_to_test)
+            # dataset.tuner.build_new_processor(config_to_test)
+            # dataset.tuner.run_synthesis(config_to_test)
+            # parsed_rc_results = dataset.tuner.parse_vivado_resource_utilisation_report()
             print(parsed_rc_results)
             rc_weights.append(calculate_weight(default_rc, list(parsed_rc_results.values())))
             print("Utilisation Results")

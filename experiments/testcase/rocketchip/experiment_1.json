@@ -5,10 +5,17 @@
     "configurable_params": [
       {
         "var": "Core_Num",
-        "range": [1, 2],
+        "range": [1, 2, 3, 4],
         "scale": 1,
         "exp": 1,
         "data_type": "Int"
+      },
+      {
+        "var": "fpu_config",
+        "range": ["WithoutFPU", "WithFP16", "WithFPUWithoutDivSqrt", "DefaultFPU"],
+        "scale": -1,
+        "exp": -1,
+        "data_type": "Categorical"
       },
       {
         "var": "icache_nSets",
@@ -37,22 +44,7 @@
         "scale": 4,
         "exp": 2,
         "data_type": "Int"
-      },
-      {
-        "var": "dcache_nTLBSets",
-        "range": [1, 8],
-        "scale": 1,
-        "exp": 2,
-        "data_type": "Int"
-      },
-      {
-        "var": "dcache_nTLBWays",
-        "range": [1, 8],
-        "scale": 1,
-        "exp": 2,
-        "data_type": "Int"
       }
-
     ],
 
     "constant_params" : {

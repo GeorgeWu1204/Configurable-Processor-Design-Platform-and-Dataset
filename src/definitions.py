@@ -7,12 +7,13 @@ from design_methods.utils import get_device, get_tensor_type
 from constraints import Conditional_Constraints
 
 class config_param:
-    def __init__(self, name, default_value, self_range, index, param_type):
+    def __init__(self, name, default_value, self_range, index, param_type, log_scale=False):
         self.name = name
         self.default_value = default_value
         self.self_range = self_range
         self.index = index
         self.param_type = param_type
+        self.log_scale = log_scale  # Left for future implementation
 
     def check_self_validity(self, new_value):
         if new_value in self.self_range:
@@ -23,10 +24,13 @@ class config_param:
 class config_params:
     def __init__(self, params, parsed_conditional_constraints, loaded_params_weight):
         self.params = params     # self.params = list of config_param variables.
+        self.integer_params_index = []
         self.amount = len(self.params)
         self.params_map = {}
         for param in self.params:
             self.params_map[param.name] = param
+            if param.param_type == "Int":
+                self.integer_params_index.append(param.index)
         self.conditional_constraints = Conditional_Constraints(self.params_map, parsed_conditional_constraints)
         self.params_weights = loaded_params_weight
 

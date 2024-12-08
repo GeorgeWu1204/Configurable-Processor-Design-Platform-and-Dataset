@@ -60,7 +60,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
             class_pattern = re.compile(
                     r'class\s+WithCustomisedCore\(\s*n:\s*Int,\s*crossing:\s*RocketCrossingParams\s*=\s*RocketCrossingParams\(\s*\),\s*\)\s*extends\s*Config\(\(site,\s*here,\s*up\)\s*=>\s*{\s*(.*?)\s*}\)',
                     re.DOTALL)
-            core_pattern = re.compile(r"(core = RocketCoreParams\()(useVM = )(true|false)(, useAtomics = )(true|false)(, useCompressed = )(true|false)(, useVector = )(true|false)(\))")
+            core_pattern = re.compile(r"(core = RocketCoreParams\()(useVM = )(true|false)(, useAtomics = )(true|false)(, useCompressed = )(true|false)(\))")
 
             match = class_pattern.search(scala_code)
 
