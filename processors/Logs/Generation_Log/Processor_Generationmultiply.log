@@ -10,7 +10,7 @@ if [ "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/multiply.riscv" 
 	 \
 	</dev/null 2> >(spike-dasm > /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedRocketConfig/multiply.out) | tee /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedRocketConfig/multiply.log)
 [UART] UART0 is here (stdin/stdout).
-mcycle = 42655
+mcycle = 42682
 minstret = 24100
 - /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TestDriver.v:158: Verilog $finish
 make[1]: Leaving directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'

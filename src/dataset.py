@@ -196,7 +196,12 @@ class Processor_Dataset:
         config_to_fetch = self.default_params.copy()
         print("default_params: ", self.default_params)
         for i in range(len(data_input)):
-            config_to_fetch[self.cpu_info.tunable_params_index[i]] = int(data_input[i])
+            if self.cpu_info.config_params.params[self.cpu_info.tunable_params_index[i]].param_type == "int":
+                config_to_fetch[self.cpu_info.tunable_params_index[i]] = int(data_input[i])
+            elif self.cpu_info.config_params.params[self.cpu_info.tunable_params_index[i]].param_type == "categorical": # Here we assume the input is string.
+                assert (data_input[i] in self.cpu_info.config_params.params[self.cpu_info.tunable_params_index[i]].self_range), f"Invalid input: {data_input[i]} for {self.cpu_info.config_params.params[self.cpu_info.tunable_params_index[i]].name}"
+                config_to_fetch[self.cpu_info.tunable_params_index[i]] = data_input[i]
+
         return self.fetch_single_data_acc_to_def_from_dataset(config_to_fetch)
 
 

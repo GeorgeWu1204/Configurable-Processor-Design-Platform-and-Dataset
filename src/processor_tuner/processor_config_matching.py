@@ -7,7 +7,7 @@ import subprocess
 
 class match_metrics:
     #TODO Improve better metric for matching configurations, perhaps including some weights.
-    def __init__(self, match_metric, weights, integer_params_index):
+    def __init__(self, match_metric, weights, integer_params_index, categorical_params_index):
         self.metrics = ['euclidean', 'manhattan_distance']
         self.param_weights = np.array(list(weights.values()))
         if match_metric not in self.metrics:
@@ -15,9 +15,10 @@ class match_metrics:
         else:
             self.match_metric = match_metric
         self.integer_params_index = integer_params_index
+        self.categorical_params_index = categorical_params_index
     
     def convert_for_metric(self, config):
-        return np.log2(config[self.integer_params_index])
+        return np.log2(np.array(config[self.integer_params_index].astype(int)))
     
     def euclidean_distance(self, config1, config2):
         return float(np.sum(np.multiply(np.sqrt((config1 - config2) ** 2 ), self.param_weights)))
@@ -25,16 +26,28 @@ class match_metrics:
     def manhattan_distance(self, config1, config2):
         return float(np.sum(np.multiply(np.abs(config1 - config2), self.param_weights )))
 
+    def categorical_distance(self, config1, config2):
+        distance = 0
+        categorical_config1 = config1[self.categorical_params_index]
+        categorical_config2 = config2[self.categorical_params_index]
+        for cat1, cat2 in zip(categorical_config1, categorical_config2):
+            if cat1 != cat2:
+                distance += 1
+        return distance
+
     def calculate_distance(self, config1, config2):
         converted_config1 = self.convert_for_metric(config1)
         converted_config2 = self.convert_for_metric(config2)
+        integer_distance = 0
         if self.match_metric == 'euclidean':
-            return self.euclidean_distance(converted_config1, converted_config2)
+            integer_distance = self.euclidean_distance(converted_config1, converted_config2)
         elif self.match_metric == 'manhattan_distance':
-            return self.manhattan_distance(converted_config1, converted_config2)
+            integer_distance = self.manhattan_distance(converted_config1, converted_config2)
         else:
             raise ValueError(f"Invalid metric: {self.match_metric}. Must be one of {self.metrics}")
-        
+        categorical_distance = self.categorical_distance(config1, config2)
+        print(f'Integer Distance: {integer_distance} Categorical Distance: {categorical_distance}')
+        return integer_distance + categorical_distance
 
 class config_matcher:
     def __init__(self, cpu_info, check_point_to_synthesis_name, match_metric='euclidean'):
@@ -42,7 +55,7 @@ class config_matcher:
         self.synthesis_checkpoint_directory = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Synthesis/'
         self.synthesis_checkpoint_record_history = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Stored_Checkpoint_Record.json'
         self.match_metric = match_metric
-        self.metric_calculator = match_metrics(self.match_metric, self.cpu_info.config_params.params_weights, self.cpu_info.config_params.integer_params_index)
+        self.metric_calculator = match_metrics(self.match_metric, self.cpu_info.config_params.params_weights, self.cpu_info.config_params.integer_params_index, self.cpu_info.config_params.categorical_params_index)
         self.check_point_to_synthesis_name = check_point_to_synthesis_name
     
     def load_json(self):
@@ -59,7 +72,10 @@ class config_matcher:
 
         format_config = {}
         for i, param in enumerate(self.cpu_info.config_params.params):
-            format_config[param.name] = int(config_under_evaluation[i])
+            if param.param_type == 'int':
+                format_config[param.name] = int(config_under_evaluation[i])
+            elif param.param_type == 'categorical':
+                format_config[param.name] = config_under_evaluation[i]
         
         stored_configs = self.load_json()
         lastest_config_index = -1
@@ -116,7 +132,8 @@ class config_matcher:
         for key in stored_configs.keys():
             stored_config = stored_configs[key]
             stored_config = np.array([stored_config[param.name] for param in self.cpu_info.config_params.params])
-            distance = self.metric_calculator.calculate_distance(stored_config, config_to_evaluate)
+            print("stored config", stored_config)
+            distance = self.metric_calculator.calculate_distance(stored_config, np.array(config_to_evaluate))
             if distance < min_distance:
                 print(f'New best distance: {distance}')
                 min_distance = distance

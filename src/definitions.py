@@ -25,12 +25,15 @@ class config_params:
     def __init__(self, params, parsed_conditional_constraints, loaded_params_weight):
         self.params = params     # self.params = list of config_param variables.
         self.integer_params_index = []
+        self.categorical_params_index = []
         self.amount = len(self.params)
         self.params_map = {}
         for param in self.params:
             self.params_map[param.name] = param
-            if param.param_type == "Int":
+            if param.param_type == "int":
                 self.integer_params_index.append(param.index)
+            elif param.param_type == "categorical":
+                self.categorical_params_index.append(param.index)
         self.conditional_constraints = Conditional_Constraints(self.params_map, parsed_conditional_constraints)
         self.params_weights = loaded_params_weight
 

@@ -28,11 +28,7 @@
         "dcache_nSets": 0.012,
         "dcache_nWays": 0.012,
         "dcache_nTLBSets": 0.00001,
-        "dcache_nTLBWays": 0.00001,
-        "useCompressed": 0.00001,
-        "fpu_config": 0.00001,
-        "mul-div_config": 0.00001,
-        "btb_config": 0.00001
+        "dcache_nTLBWays": 0.00001
     },
 
     "Conditional_Constraints" : [

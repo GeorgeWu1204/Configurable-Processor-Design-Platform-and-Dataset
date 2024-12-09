@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date             : Sat Dec  7 03:05:17 2024
+| Date             : Sun Dec  8 18:45:51 2024
 | Host             : Precision-Tower-5810 running 64-bit Ubuntu 22.04.4 LTS
 | Command          : report_power -file ../../Logs/Syn_Report/RocketChip_power_synth.rpt
 | Design           : DigitalTop
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.373        |
+| Total On-Chip Power (W)  | 1.437        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.266        |
+| Dynamic (W)              | 0.329        |
 | Device Static (W)        | 1.108        |
 | Effective TJA (C/W)      | 0.7          |
-| Max Ambient (C)          | 99.0         |
-| Junction Temperature (C) | 26.0         |
+| Max Ambient (C)          | 98.9         |
+| Junction Temperature (C) | 26.1         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,22 +52,22 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.020 |        3 |       --- |             --- |
-| CLB Logic                |     0.050 |    37935 |       --- |             --- |
-|   LUT as Logic           |     0.032 |    18853 |    522720 |            3.61 |
-|   LUT as Distributed RAM |     0.017 |     1802 |    161280 |            1.12 |
-|   Register               |    <0.001 |    10418 |   1045440 |            1.00 |
-|   CARRY8                 |    <0.001 |      229 |     65340 |            0.35 |
+| Clocks                   |     0.025 |        3 |       --- |             --- |
+| CLB Logic                |     0.082 |    62808 |       --- |             --- |
+|   LUT as Logic           |     0.062 |    35139 |    522720 |            6.72 |
+|   LUT as Distributed RAM |     0.018 |     1806 |    161280 |            1.12 |
+|   Register               |     0.001 |    16044 |   1045440 |            1.53 |
+|   CARRY8                 |    <0.001 |      460 |     65340 |            0.70 |
 |   LUT as Shift Register  |    <0.001 |        1 |    161280 |           <0.01 |
 |   BUFG                   |    <0.001 |        3 |        88 |            3.41 |
-|   Others                 |     0.000 |      588 |       --- |             --- |
-|   F7/F8 Muxes            |     0.000 |      474 |    522720 |            0.09 |
-| Signals                  |     0.037 |    32366 |       --- |             --- |
+|   Others                 |     0.000 |      645 |       --- |             --- |
+|   F7/F8 Muxes            |     0.000 |     1710 |    522720 |            0.33 |
+| Signals                  |     0.060 |    53430 |       --- |             --- |
 | Block RAM                |     0.043 |      139 |       984 |           14.13 |
-| DSPs                     |     0.003 |       10 |      1968 |            0.51 |
-| I/O                      |     0.112 |      370 |       512 |           72.27 |
+| DSPs                     |     0.005 |       21 |      1968 |            1.07 |
+| I/O                      |     0.114 |      370 |       512 |           72.27 |
 | Static Power             |     1.108 |          |           |                 |
-| Total                    |     1.373 |          |           |                 |
+| Total                    |     1.437 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -77,11 +77,11 @@ Table of Contents
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source          | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint          |       0.850 |     0.479 |       0.178 |      0.301 |       NA    | Unspecified | NA         |
-| Vccint_io       |       0.850 |     0.098 |       0.002 |      0.096 |       NA    | Unspecified | NA         |
+| Vccint          |       0.850 |     0.552 |       0.250 |      0.302 |       NA    | Unspecified | NA         |
+| Vccint_io       |       0.850 |     0.099 |       0.002 |      0.096 |       NA    | Unspecified | NA         |
 | Vccbram         |       0.850 |     0.007 |       0.003 |      0.004 |       NA    | Unspecified | NA         |
 | Vccaux          |       1.800 |     0.338 |       0.000 |      0.338 |       NA    | Unspecified | NA         |
-| Vccaux_io       |       1.800 |     0.116 |       0.043 |      0.073 |       NA    | Unspecified | NA         |
+| Vccaux_io       |       1.800 |     0.116 |       0.044 |      0.073 |       NA    | Unspecified | NA         |
 | Vcco33          |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25          |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18          |       1.800 |     0.018 |       0.018 |      0.000 |       NA    | Unspecified | NA         |
@@ -167,24 +167,26 @@ Table of Contents
 +--------------------------------------------+-----------+
 | Name                                       | Power (W) |
 +--------------------------------------------+-----------+
-| DigitalTop                                 |     0.266 |
+| DigitalTop                                 |     0.329 |
 |   bank                                     |     0.012 |
 |     buffer                                 |     0.003 |
 |       nodeIn_d_q                           |     0.001 |
 |       nodeOut_a_q                          |     0.001 |
 |     ram                                    |     0.009 |
 |       mem                                  |     0.008 |
-|   cbus                                     |     0.008 |
+|   cbus                                     |     0.009 |
 |     atomics                                |     0.001 |
 |     buffer                                 |     0.002 |
 |       nodeIn_d_q                           |     0.001 |
 |       nodeOut_a_q                          |     0.001 |
+|     coupler_to_bootrom                     |     0.001 |
+|       fragmenter                           |     0.001 |
 |     coupler_to_debug                       |     0.002 |
 |       fragmenter                           |     0.002 |
 |   coh_wrapper                              |     0.072 |
 |     cork                                   |     0.001 |
-|     l2                                     |     0.069 |
-|       inclusive_cache_bank_sched           |     0.068 |
+|     l2                                     |     0.070 |
+|       inclusive_cache_bank_sched           |     0.070 |
 |   fbus                                     |     0.004 |
 |     buffer                                 |     0.002 |
 |     coupler_from_port_named_serial_tl_0_in |     0.002 |
@@ -193,26 +195,27 @@ Table of Contents
 |     buffer_1                               |     0.002 |
 |       nodeIn_d_q                           |     0.001 |
 |       nodeOut_a_q                          |     0.001 |
-|   pbus                                     |     0.006 |
+|   pbus                                     |     0.005 |
 |     buffer                                 |     0.002 |
 |       nodeIn_d_q                           |     0.001 |
-|       nodeOut_a_q                          |     0.001 |
 |     buffer_1                               |     0.002 |
 |       nodeIn_d_q                           |     0.001 |
-|   sbus                                     |     0.001 |
-|     system_bus_xbar                        |     0.001 |
-|   serial_tl_domain                         |     0.006 |
+|   serial_tl_domain                         |     0.005 |
 |     phy                                    |     0.004 |
 |     serdesser                              |     0.001 |
-|   tile_prci_domain                         |     0.036 |
-|     buffer                                 |     0.002 |
-|     element_reset_domain_rockettile        |     0.033 |
-|       core                                 |     0.016 |
-|       dcache                               |     0.006 |
-|       frontend                             |     0.010 |
+|   tile_prci_domain                         |     0.097 |
+|     buffer                                 |     0.003 |
+|       nodeIn_d_q                           |     0.001 |
+|       nodeOut_c_q                          |     0.001 |
+|     element_reset_domain_rockettile        |     0.093 |
+|       core                                 |     0.020 |
+|       dcache                               |     0.008 |
+|       fpuOpt                               |     0.049 |
+|       frontend                             |     0.013 |
+|       ptw                                  |     0.003 |
 |   tlDM                                     |     0.003 |
 |     dmInner                                |     0.002 |
-|       dmInner                              |     0.001 |
+|       dmInner                              |     0.002 |
 +--------------------------------------------+-----------+
 
 
