@@ -147,10 +147,11 @@ class Processor_Analyser:
     def format_and_add_const_to_data(self, input_data):
         """This function is used to add constant input to the input data and convert to integer type to make it able to find the ppa result"""
         formatted_data = []
-        for index, value in enumerate(input_data):
-            # Convert float to int if the original value is float
-            formatted_data.append(int(value))
-        
+        for data_element in input_data:
+            if isinstance(data_element, float):
+                formatted_data.append(int(data_element))
+            elif isinstance(data_element, str):
+                formatted_data.append(data_element)
         for index in self.input_constants.keys():
             formatted_data.insert(index, int(self.input_constants[index]))
         return tuple(formatted_data)

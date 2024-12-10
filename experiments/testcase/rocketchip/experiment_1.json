@@ -18,6 +18,20 @@
         "data_type": "Categorical"
       },
       {
+        "var": "mul_div_config",
+        "range": ["WithFastMulDiv", "WithCustomFastMulDiv", "WithoutMulDiv", "DefaultMulDiv"],
+        "scale": -1,
+        "exp": -1,
+        "data_type": "Categorical"
+      },
+      {
+        "var": "btb_config",
+        "range": ["WithDefaultBtb", "WithNoBtb"],
+        "scale": -1,
+        "exp": -1,
+        "data_type": "Categorical"
+      },
+      {
         "var": "icache_nSets",
         "range": [4, 32],
         "scale": 4,

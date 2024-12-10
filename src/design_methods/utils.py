@@ -50,7 +50,7 @@ def obtain_categorical_input_data(input_tensor, categorical_info):
             result_array+= input_tensor[start_idx:idx].tolist()
         segment = input_tensor[idx:idx+length]
         max_index = int(torch.argmax(segment, dim=0))
-        result_array.append(int(single_categorical_info[2][max_index]))
+        result_array.append(single_categorical_info[2][max_index])
         start_idx = idx + length
     
     # Add the remaining part of the tensor if any
@@ -225,6 +225,7 @@ def extract_worst_slack(file_path):
     return setup_result, hold_result
 
 def find_the_anticipated_fastest_time_period(file_path, default_max_freq):
+    # TODO Here
     """This function is used to find the anticipated maximum frequency"""
     setup_slack, hold_slack = extract_worst_slack(file_path)
     # Find the minimum slack value

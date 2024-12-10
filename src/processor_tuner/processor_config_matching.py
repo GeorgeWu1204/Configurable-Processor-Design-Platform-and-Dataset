@@ -165,14 +165,17 @@ def analyse_config_weights_for_synthesis(dataset):
             if index_of_value >= len(param.self_range) or index_of_value < 0:
                 continue
             modified_param_val = param.self_range[index_of_value]
-            config_to_test[param.index] = int(modified_param_val)
+            if param.param_type == 'int':
+                config_to_test[param.index] = int(modified_param_val)
+            elif param.param_type == 'categorical':
+                config_to_test[param.index] = modified_param_val
             print(f"Testing config: {config_to_test}")
             _, _, _, parsed_rc_results = dataset.fetch_single_data_acc_to_def_from_dataset(config_to_test)
             # dataset.tuner.build_new_processor(config_to_test)
             # dataset.tuner.run_synthesis(config_to_test)
             # parsed_rc_results = dataset.tuner.parse_vivado_resource_utilisation_report()
             print(parsed_rc_results)
-            rc_weights.append(calculate_weight(default_rc, list(parsed_rc_results.values())))
+            rc_weights.append(calculate_weight(default_rc, parsed_rc_results))
             print("Utilisation Results")
             print(rc_weights)
         weight[param.index] = sum(rc_weights) / len(rc_weights)

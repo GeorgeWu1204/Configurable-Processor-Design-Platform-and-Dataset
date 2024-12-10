@@ -76,6 +76,7 @@ class Param_Space_Info:
         self.self_constraints = self_constraints
         self.conditional_constraints = conditional_constraints
         self.input_categorical = input_categorical
+        print("Input Categorical", self.input_categorical)
 
 class Objective_Info:
     """Class to store all the related output information"""
