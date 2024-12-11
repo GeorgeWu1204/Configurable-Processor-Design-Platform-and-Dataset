@@ -27,7 +27,7 @@ TRAIN_SET_ACCEPTABLE_THRESHOLD = 0.2                # acceptable distance betwee
 NUM_RESTARTS = 4                # number of starting points for BO for optimize_acqf
 NUM_OF_INITIAL_POINT = 2        # number of initial points for BO  Note: has to be power of 2 for sobol sampler
 N_TRIALS = 1                    # number of trials of BO (outer loop)
-N_BATCH = 15                    # number of BO batches (inner loop)
+N_BATCH = 5                     # number of BO batches (inner loop)
 BATCH_SIZE = 1                  # batch size of BO (restricted to be 1 in this case)
 MC_SAMPLES = 128                # number of MC samples for qNEI
 RAW_SAMPLES = 8                 # number of raw samples for qNEI
@@ -56,7 +56,7 @@ class Design_Framework:
 
         # Runtime Settings
         self.verbose = True
-        self.record = False
+        self.record = True
         self.plot_posterior = False
         self.enable_train_set_modification = False
 
@@ -82,7 +82,7 @@ class Design_Framework:
             self.posterior_examiner = utils.test_posterior_result(self.param_space_info.input_names, self.t_type, self.device)
             self.posterior_objective_index = 0
         if self.record:
-            record_file_name = '../test/test_results/'
+            record_file_name = '../experiments/exploration_results/'
             for obj_name in self.objective_space_info.obj_to_optimise.keys():
                 record_file_name = record_file_name + obj_name + '_'
             self.results_record = utils.recorded_training_result(self.param_space_info.input_names, self.objective_space_info.obj_to_optimise, record_file_name, N_TRIALS, N_BATCH)
@@ -106,7 +106,6 @@ class Design_Framework:
                 obj_score_ei,
             ) = self.optimisation_model.generate_initial_data(NUM_OF_INITIAL_POINT)
         
-
             print("<----------------Initial Data--------------->")
             print("train_x_ei: ", train_x_ei)                   #shape = (num_samples, input_dim)
             print("train_obj_ei: ", train_obj_ei)               #shape = (num_samples, objs_to_evaluate_dim)
@@ -190,10 +189,6 @@ class Design_Framework:
             print("best_sample_point_per_interation: ", best_sample_point_per_interation)
             best_obj_scores_per_trial.append(best_obj_score_per_interation)
             best_sample_points_per_trial[trial] = best_sample_point_per_interation
-
-            # if self.record:
-            #     unnormalized_train_x = utils.recover_single_input_data(train_x_ei, param_space_info.input_normalized_factor, param_space_info.input_scales, param_space_info.input_offsets, param_space_info.input_exp)
-            #     results_record.record_input(trial, unnormalized_train_x, obj_score_ei)
 
         if self.record:
             self.results_record.store()

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from botorch.utils.multi_objective.box_decompositions.non_dominated import NondominatedPartitioning
 import re
 import pickle
+import datetime
 
 
 
@@ -256,12 +257,16 @@ def get_tensor_type():
 
 class recorded_training_result:
     """This class is used to record the results of optimisation."""
-    def __init__(self, input_names, objectives, record_file_name, num_trials, num_iterations):
+    def __init__(self, input_names, objectives, record_file_dir, num_trials, num_iterations):
         self.objs  = objectives
         self.history = {}
         self.iterations = num_iterations
         self.trials = num_trials
-        self.record_file_name = record_file_name
+        now = datetime.datetime.now()
+        # Format the date and time in the desired format (year_month_day_hour_minute)
+        filename = now.strftime('%Y_%m_%d_%H_%M')
+        self.record_file_name = record_file_dir + filename
+
         for i in range(num_trials * num_iterations):
             self.history[i] = {}
         self.input_history = {}

@@ -10,8 +10,9 @@ if [ "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/dhrystone.riscv"
 	 \
 	</dev/null 2> >(spike-dasm > /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedRocketConfig/dhrystone.out) | tee /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedRocketConfig/dhrystone.log)
 [UART] UART0 is here (stdin/stdout).
-[10000001000] %Fatal: TestDriver.v:147: Assertion failed in TOP.TestDriver
-%Error: /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TestDriver.v:147: Verilog $stop
-Aborting...
-make[1]: *** [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/common.mk:316: ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/dhrystone.riscv.run] Error 255
+Microseconds for one run through Dhrystone: 730
+Dhrystones per Second:                      1368
+mcycle = 365450
+minstret = 186031
+- /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedRocketConfig/gen-collateral/TestDriver.v:158: Verilog $finish
 make[1]: Leaving directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'
