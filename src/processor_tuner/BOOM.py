@@ -16,7 +16,7 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
         self.processor_config_matcher = config_matcher(cpu_info, self.top_level_design_name)
         
     
-    def modify_custom_cpu(self, n):
+    def modify_cpu_config(self, num_cores):
         with open(self.cpu_level_config_file, 'r') as file:
             lines = file.readlines()
         pattern = re.compile(r'new boom\.v3\.common\.WithNCustomBooms\(\d+\)')
@@ -24,62 +24,99 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             if 'class CustomisedBoomV3Config' in line:
                 for j in range(i+1, len(lines)):
                     if pattern.search(lines[j]):
-                        lines[j] = pattern.sub(f'new boom.v3.common.WithNCustomBooms({n})', lines[j])
-                        break
+                        lines[j] = pattern.sub(f'new boom.v3.common.WithNCustomBooms({num_cores})', lines[j])
                 break
         with open(self.cpu_level_config_file, 'w') as file:
             file.writelines(lines)
 
-    def modify_custom_core_internal_config(self, input_vals):
+    def modify_peripheral_and_core_config(self, input_vals):
         params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
-        
+        print(params_name)
+        issueparams_index = None
+        for param in params_name:
+            if param == 'issueParams_IQT_MEM_issueWidth':
+                issueparams_index = params_name.index(param)
+
         with open(self.core_level_configuration_file, 'r') as file:
             lines = file.readlines()
 
         new_lines = []
         in_custom_boom_class = False  # Flag to check if within the correct class block
-        cache_context = None  # Track whether we're inside a dcache or icache block
+        peripheral_settings = None  # Track whether we're inside a dcache or icache block
+        issue_param_positon = 0
 
-        for line in lines:
+        for index, line in enumerate(lines):
             # Check for start of WithNCustomBooms class
             if line.strip().startswith('class WithNCustomBooms'):
                 in_custom_boom_class = True
+                start_index = index
             elif line.strip().startswith('class') and 'WithNCustomBooms' not in line:
                 in_custom_boom_class = False  # Exit block when a new class definition starts
 
             if in_custom_boom_class:
+
+                # Peripheral Tuning
                 if 'DCacheParams' in line:
-                    cache_context = 'dcache'
+                    peripheral_settings = 'dcache'
+
                 elif 'ICacheParams' in line:
-                    cache_context = 'icache'
-                elif cache_context and ')' in line:  # Check for end of cache block
-                    cache_context = None
+                    peripheral_settings = 'icache'
+
+                elif peripheral_settings and ')' in line:  # Check for end of cache block
+                    peripheral_settings = None
                 
-                modified_line = line
-                if cache_context:
+                else:
+                    peripheral_settings = None
+                
+                if peripheral_settings:
                     for param, value in zip(params_name, input_vals):
-                        if param.startswith(cache_context):
+                        if param.startswith(peripheral_settings):
                             param_name = param.split('_')[1]
                             pattern = re.compile(rf'(\b{param_name}\s*=\s*)(\d+)')
-                            modified_line = pattern.sub(r'\g<1>' + str(value), modified_line)  # Replace with new value
+                            modified_line = pattern.sub(r'\g<1>' + str(value), line)  # Replace with new value
                 else:
-                    for param, value in zip(params_name, input_vals):
-                        if not ('dcache' in param or 'icache' in param):
-                            core_param_pattern = re.compile(rf'(\b{re.escape(param)}\s*=\s*)(\d+)')
-                            modified_line = core_param_pattern.sub(r'\g<1>' + str(value), modified_line)  # Replace with new value
+                    if index == start_index + 1:
+                        # Branch prediction configs, TODO assuming the vairable is at the start of the customised processor config            
+                        print("tuning branch prediction")
+                        modified_line = f"new {input_vals[0]} ++\n"
+                    else:
+                        unit_name = line.split('=')[0].strip()
+                        if unit_name in params_name:
+                            unit_index = params_name.index(unit_name)
+                            modified_line = f"              {unit_name} = {input_vals[unit_index]},\n"
+                        
+                        elif unit_name == 'issueParams':
+                            issue_param_positon = index
+                            modified_line = line
+                        
+                        elif index == issue_param_positon + 1:
+                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index]}, numEntries={input_vals[issueparams_index+1]}, iqType=IQT_MEM.litValue, dispatchWidth={input_vals[issueparams_index+2]})\n"
+                        
+                        elif index == issue_param_positon + 2:
+                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index+3]}, numEntries={input_vals[issueparams_index+4]}, iqType=IQT_INT.litValue, dispatchWidth={input_vals[issueparams_index+5]})\n"
 
+                        elif index == issue_param_positon + 3:
+                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index+6]}, numEntries={input_vals[issueparams_index+7]}, iqType=IQT_FP.litValue, dispatchWidth={input_vals[issueparams_index+8]}))\n"
+                        
+                        else:
+                            modified_line = line
+
+                print(modified_line)
                 new_lines.append(modified_line)
+
             else:
                 new_lines.append(line)  # Keep lines outside WithNCustomBooms class unchanged
 
-        with open(self.core_level_configuration_file, 'w') as file:
-            file.writelines(new_lines)
+        # with open(self.core_level_configuration_file, 'w') as file:
+        #     file.writelines(new_lines)
 
     def modify_config_files(self, input_vals):
+        print(input_vals)
         # CPU's overall configuration, Only modify the number of Cores
-        self.modify_custom_cpu(input_vals[0])
+        self.modify_cpu_config(input_vals[0])
         # Core's internal configuration
-        self.modify_custom_core_internal_config(input_vals[1:])
+        self.modify_peripheral_and_core_config(input_vals[1:])
+        quit()
 
 
     def tune_and_run_performance_simulation(self, new_value):

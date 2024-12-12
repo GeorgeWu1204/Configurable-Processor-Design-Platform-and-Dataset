@@ -29,6 +29,10 @@ analyse_rocket:
 	@echo "Analyzing Rocket"
 	@cd src; bash ../experiments/scripts/rocket_analyse_weights.sh
 
+analyse_BOOM:
+	@echo "Analyzing BOOM"
+	@cd src; bash ../experiments/scripts/boom_analyse_weights.sh
+
 clean:
 	make -C $(SIM_DIR) clean
 

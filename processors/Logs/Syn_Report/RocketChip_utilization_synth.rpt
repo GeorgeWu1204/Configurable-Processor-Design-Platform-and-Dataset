@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date         : Wed Dec 11 23:30:26 2024
+| Date         : Thu Dec 12 02:39:08 2024
 | Host         : Precision-Tower-5810 running 64-bit Ubuntu 22.04.4 LTS
 | Command      : report_utilization -file ../../Logs/Syn_Report/RocketChip_utilization_synth.rpt
 | Design       : DigitalTop
@@ -32,16 +32,16 @@ Table of Contents
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| CLB LUTs*                  | 73859 |     0 |          0 |    522720 | 14.13 |
-|   LUT as Logic             | 63365 |     0 |          0 |    522720 | 12.12 |
-|   LUT as Memory            | 10494 |     0 |          0 |    161280 |  6.51 |
-|     LUT as Distributed RAM | 10492 |     0 |            |           |       |
+| CLB LUTs*                  | 69857 |     0 |          0 |    522720 | 13.36 |
+|   LUT as Logic             | 61923 |     0 |          0 |    522720 | 11.85 |
+|   LUT as Memory            |  7934 |     0 |          0 |    161280 |  4.92 |
+|     LUT as Distributed RAM |  7932 |     0 |            |           |       |
 |     LUT as Shift Register  |     2 |     0 |            |           |       |
-| CLB Registers              | 26766 |     0 |          0 |   1045440 |  2.56 |
-|   Register as Flip Flop    | 26766 |     0 |          0 |   1045440 |  2.56 |
+| CLB Registers              | 26388 |     0 |          0 |   1045440 |  2.52 |
+|   Register as Flip Flop    | 26388 |     0 |          0 |   1045440 |  2.52 |
 |   Register as Latch        |     0 |     0 |          0 |   1045440 |  0.00 |
 | CARRY8                     |   925 |     0 |          0 |     65340 |  1.42 |
-| F7 Muxes                   |  2806 |     0 |          0 |    261360 |  1.07 |
+| F7 Muxes                   |  2774 |     0 |          0 |    261360 |  1.06 |
 | F8 Muxes                   |   347 |     0 |          0 |    130680 |  0.27 |
 | F9 Muxes                   |     0 |     0 |          0 |     65340 |  0.00 |
 +----------------------------+-------+-------+------------+-----------+-------+
@@ -64,7 +64,7 @@ Warning! LUT value is adjusted to account for LUT combining.
 | 6     |          Yes |           - |          Set |
 | 534   |          Yes |           - |        Reset |
 | 311   |          Yes |         Set |            - |
-| 25915 |          Yes |       Reset |            - |
+| 25537 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -165,15 +165,15 @@ Warning! LUT value is adjusted to account for LUT combining.
 +----------+-------+---------------------+
 | Ref Name |  Used | Functional Category |
 +----------+-------+---------------------+
-| LUT6     | 33894 |                 CLB |
-| FDRE     | 25915 |            Register |
-| LUT5     | 15066 |                 CLB |
-| LUT3     | 10484 |                 CLB |
-| LUT4     |  9031 |                 CLB |
-| RAMD64E  |  7832 |                 CLB |
+| LUT6     | 34024 |                 CLB |
+| FDRE     | 25537 |            Register |
+| LUT5     | 14029 |                 CLB |
+| LUT3     | 10548 |                 CLB |
+| LUT4     |  8480 |                 CLB |
+| RAMD64E  |  5272 |                 CLB |
 | RAMD32   |  4586 |                 CLB |
-| LUT2     |  4101 |                 CLB |
-| MUXF7    |  2806 |                 CLB |
+| LUT2     |  4067 |                 CLB |
+| MUXF7    |  2774 |                 CLB |
 | CARRY8   |   925 |                 CLB |
 | RAMS32   |   658 |                 CLB |
 | FDCE     |   534 |            Register |

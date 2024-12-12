@@ -51,7 +51,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         with open(self.cpu_level_config_file, 'w') as file:
             file.writelines(lines)
 
-    def modify_peripheral_config(self, input_vals):
+    def modify_peripheral_and_core_config(self, input_vals):
             params_name = list(self.cpu_info.config_params.params_map.keys())[-len(input_vals):]
             with open(self.core_level_configuration_file, 'r') as file:
                 scala_code = file.read()
@@ -118,7 +118,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         # CPU's overall configuration, Only modify the number of Cores
         self.modify_cpu_config(input_vals[0], input_vals[1:4])
         # Core's internal configuration
-        self.modify_peripheral_config(input_vals[4:])
+        self.modify_peripheral_and_core_config(input_vals[4:])
 
     def extract_mcycle_minstret(self):
         # Initialize variables to store mcycle and minstret
@@ -186,7 +186,6 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
     def build_new_processor(self, new_config):
         try:
             self.modify_config_files(new_config)
-            quit()
             run_configure_command = ["make", "-j12", "CONFIG=CustomisedRocketConfig"]
             subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             return True

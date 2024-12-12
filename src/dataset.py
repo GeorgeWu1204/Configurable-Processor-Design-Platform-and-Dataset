@@ -216,7 +216,6 @@ class Processor_Dataset:
             conn = sqlite3.connect(self.dataset_directory)
             # Create a cursor object and execute the SQL command
             cursor = conn.cursor()
-            print(self.fetch_command)
             cursor.execute(self.fetch_command, data_to_fetch)
             # Fetch all results from the cursor
             rows = cursor.fetchall()
