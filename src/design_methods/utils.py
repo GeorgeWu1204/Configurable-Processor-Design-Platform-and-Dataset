@@ -275,8 +275,15 @@ class recorded_training_result:
     def record(self, iteration, trial, best_objs, best_hypervol, time):
         self.history[(trial -1) * self.iterations + (iteration-1)] = [best_objs, best_hypervol, time]
     
-    # def record_input(self, trial, train_x, hyper_vols):
-    #     self.input_history[trial] = [trial, train_x, hyper_vols]
+    def record_and_write(self, iteration, trial, best_objs, best_hypervol, time):
+        self.history[(trial -1) * self.iterations + (iteration-1)] = [best_objs, best_hypervol, time]
+        with open(self.record_file_name + '_BO.txt', 'a') as f:
+            f.write(f"{(trial -1) * self.iterations + (iteration-1)}, {time:>4.2f}")
+            f.write(f", {best_hypervol}")
+            for obj in self.objs:
+                result = best_objs.get(obj, 0)
+                f.write(f", {result}")
+            f.write("\n")
     
     def store(self):
         total_time = 0

@@ -299,5 +299,27 @@ class Processor_Dataset:
             print(f"An error occurred: {e}")
 
 
+def view_dataset():
+    proc_name = input("Enter the processor name: ")
+    dataset_directory = f'../dataset/PPA/{proc_name}.db'
+    try:
+        conn = sqlite3.connect(dataset_directory)
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * FROM {proc_name}")
+        rows = cursor.fetchall()
+        # Fetch column names
+        column_names = [description[0] for description in cursor.description]
+        
+        # Display column names and rows
+        print(f"\nContents of table: {proc_name}")
+        print(" | ".join(column_names))
+        print("-" * 50)
+        for row in rows:
+            for i in range(len(row)):
+                print(row[i], end="    |   ")
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+
+
 if __name__ == '__main__':
     pass

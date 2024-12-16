@@ -184,7 +184,7 @@ class Design_Framework:
                             tmp_new_obj_ei[obj] = -1 * best_observation_per_interation[obj]
                         else:
                             tmp_new_obj_ei[obj] = best_observation_per_interation[obj]
-                    self.results_record.self.record(iteration, trial, tmp_new_obj_ei, best_obj_score_per_interation.item(), t1-t0)
+                    self.results_record.record_and_write(iteration, trial, tmp_new_obj_ei, best_obj_score_per_interation.item(), t1-t0)
             
             print("best_sample_point_per_interation: ", best_sample_point_per_interation)
             best_obj_scores_per_trial.append(best_obj_score_per_interation)

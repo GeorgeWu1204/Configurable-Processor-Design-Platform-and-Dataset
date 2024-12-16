@@ -107,8 +107,8 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             else:
                 new_lines.append(line)  # Keep lines outside WithNCustomBooms class unchanged
 
-        # with open(self.core_level_configuration_file, 'w') as file:
-        #     file.writelines(new_lines)
+        with open(self.core_level_configuration_file, 'w') as file:
+            file.writelines(new_lines)
 
     def modify_config_files(self, input_vals):
         print(input_vals)
