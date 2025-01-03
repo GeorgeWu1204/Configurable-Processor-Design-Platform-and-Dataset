@@ -4,22 +4,16 @@ CHIPYARD_DIR :=./processors/chipyard
 SIM_DIR :=./processors/chipyard/sims/verilator
 VIVADO_DIR :=./processors/Vivado_Prj
 
+TARGET := $(shell echo $(TARGET) | tr '[:upper:]' '[:lower:]')
+
 initial:
 	@echo "Sourcing env.sh from $(CHIPYARD_DIR)"
 	@source $(CHIPYARD_DIR)/env.sh && echo "env.sh sourced successfully."
 
 
-test_boom:
-	@echo "Running tests for BOOM"
-	@cd src; bash ../experiments/scripts/boom_test.sh
-
 test_boom_BO:
 	@echo "Running tests for processor design framework for BOOM"
 	@cd src; bash ../experiments/scripts/boom_test_BO.sh
-
-test_rocket:
-	@echo "Running tests for Rocket"
-	@cd src; bash ../experiments/scripts/rocket_test.sh
 
 test_rocket_BO:
 	@echo "Running tests for processor design framework for Rocket"
@@ -32,6 +26,14 @@ analyse_rocket:
 analyse_BOOM:
 	@echo "Analyzing BOOM"
 	@cd src; bash ../experiments/scripts/boom_analyse_weights.sh
+
+automated_dse:
+	@echo "Running automated DSE"
+	@cd src; bash ../experiments/scripts/$(TARGET)_automated_dse.sh
+
+view_dataset:
+	@echo "Viewing dataset"
+	python src/dataset.py
 
 clean:
 	make -C $(SIM_DIR) clean

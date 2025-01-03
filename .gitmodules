@@ -9,3 +9,6 @@
 [submodule "processors/chipyard"]
 	path = processors/chipyard
 	url = https://github.com/ucb-bar/chipyard.git
+[submodule "src/OA_Sample"]
+	path = src/OA_Sample
+	url = https://github.com/lovesoo/OrthogonalArrayTest.git

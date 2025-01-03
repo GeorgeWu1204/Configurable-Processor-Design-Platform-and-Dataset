@@ -21,9 +21,14 @@ def main(mode, debug=False, create_table=False):
         cpu_info.debug_print()
 
     if mode == "Sampling":
-        # Sampling Mode: Automatically exploring the design space
+        # Sampling Mode: Continue to automatically exploring the design space
         print("---------------Sampling Mode---------------")
         processor_dataset.design_space_exploration()
+    
+    elif mode == "Preheat":
+        # Preheat Mode: Preheat the dataset for the processor tuner
+        print("---------------Preheat Mode---------------")
+        processor_dataset.preheat_dataset()
 
     elif mode == "Querying":
         # Querying Mode: Iteratively query the dataset, trying to find the PPA acc to the input.
@@ -40,11 +45,6 @@ def main(mode, debug=False, create_table=False):
         # Analyse Weights Mode: Analyse the weights of the configurations for synthesis
         print("---------------Analyse Weights Mode---------------")
         analyse_config_weights_for_synthesis(processor_dataset)
-
-    elif mode == "View_Dataset":
-        # View Dataset Mode: View the dataset
-        print("---------------View Dataset Mode---------------")
-        processor_dataset.debug_visualise_db()
 
     else:
         print("Invalid Mode")

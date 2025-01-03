@@ -1,6 +1,7 @@
 import sqlite3
 from sampler import Sampler
 import processor_tuner
+import os
 
 def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
@@ -142,6 +143,21 @@ class Processor_Dataset:
         except sqlite3.Error as e:
             print(f"An error occurred: {e}")
     
+    def preheat_dataset(self):
+        while True:
+            next_sample = self.sampler.find_next_sample('oat')
+            if len(next_sample) == 0:
+                print("Complete initialisation")
+                break
+            print(f"Next Sample: {next_sample}")
+            self.delete_single_data(next_sample)
+            validity, _, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
+            if validity:
+                self.sampler.mark_sample_complete(next_sample)
+            else:
+                print("Skipping the sample.")
+
+    
     def conduct_experiments(self, config_params):
         """Conduct experiments based on the configuration parameters"""
         # Performance Simulation  
@@ -245,7 +261,7 @@ class Processor_Dataset:
     def design_space_exploration(self):
         """Explore the design space by iteratively querying the dataset."""
         while True:
-            next_sample = self.sampler.find_next_sample()
+            next_sample = self.sampler.find_next_sample('default')
             if len(next_sample) == 0:
                 print("All samples have been evaluated.")
                 break
@@ -301,11 +317,11 @@ class Processor_Dataset:
 
 def view_dataset():
     proc_name = input("Enter the processor name: ")
-    dataset_directory = f'../dataset/PPA/{proc_name}.db'
+    dataset_directory = f'dataset/PPA/{proc_name}_PPA.db'
     try:
         conn = sqlite3.connect(dataset_directory)
         cursor = conn.cursor()
-        cursor.execute(f"SELECT * FROM {proc_name}")
+        cursor.execute(f"SELECT * FROM {proc_name}_PPA")
         rows = cursor.fetchall()
         # Fetch column names
         column_names = [description[0] for description in cursor.description]
@@ -322,4 +338,4 @@ def view_dataset():
 
 
 if __name__ == '__main__':
-    pass
+    view_dataset()
