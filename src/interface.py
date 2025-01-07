@@ -35,7 +35,9 @@ def define_cpu_settings(mode):
                 print(" Enter the range of the parameter: ")
                 choice = input("Do you want to add more configuration parameters? (y/n): ")
                 if choice == 'n':
-                    break                    
+                    break      
+    elif mode == "Evaluation_Experiment":
+        fpga_info = None              
     else:
         # FPGA Info
         while True:

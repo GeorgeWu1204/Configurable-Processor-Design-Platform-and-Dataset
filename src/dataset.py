@@ -1,7 +1,8 @@
 import sqlite3
 from sampler import Sampler
 import processor_tuner
-import os
+import json
+import time
 
 def create_table_from_json(cpu_info, dataset_direct):
     """Create a table in the database based on a JSON file."""
@@ -32,6 +33,9 @@ def create_table_from_json(cpu_info, dataset_direct):
         for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
             sql_command += f"    Benchmark_{tmp_benchmark_metric}_{benchmark_criterion} INTEGER,\n"
     
+    ## Validity Fail, Partial, Success
+    sql_command += "    Evaluation VARCHAR(7),\n"
+    
     ## Define the Primary Key
     sql_command += "    PRIMARY KEY ("
     for param in cpu_info.config_params.params:
@@ -52,7 +56,7 @@ def create_table_from_json(cpu_info, dataset_direct):
 
 
 class Processor_Dataset:
-    def __init__(self, cpu_info, fpga_info):
+    def __init__(self, cpu_info, fpga_info=None):
         self.cpu_info = cpu_info
         self.fpga_considered = (fpga_info != None)
         self.fpga_info = fpga_info
@@ -132,7 +136,7 @@ class Processor_Dataset:
             else:
                 self.delete_command += f"AND {param.name} = ? "
         
-    def insert_single_data(self, data):
+    def insert_to_dataset(self, data):
         """Insert data into the database, only used during the sampling stage"""
         try:
             conn = sqlite3.connect(self.dataset_directory)
@@ -150,7 +154,6 @@ class Processor_Dataset:
                 print("Complete initialisation")
                 break
             print(f"Next Sample: {next_sample}")
-            self.delete_single_data(next_sample)
             validity, _, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
             if validity:
                 self.sampler.mark_sample_complete(next_sample)
@@ -162,14 +165,15 @@ class Processor_Dataset:
         """Conduct experiments based on the configuration parameters"""
         # Performance Simulation  
         print(f"Starting the performance simulation with the Config{config_params}") 
-        simulation_validity, performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
-        if not simulation_validity:
-            return [-1] * self.cpu_info.supported_output_objs.metric_amounts
+        design_validity, performance_results = self.tuner.tune_and_run_performance_simulation(config_params)
+        if design_validity == "Fail":
+            return [-1] * self.cpu_info.supported_output_objs.metric_amounts, design_validity
         # Synthesis
         synthesis_validity = self.tuner.run_synthesis(config_params)
         if not synthesis_validity:
-            return [-1] * self.cpu_info.supported_output_objs.metric_amounts
-        
+            design_validity = "Fail"
+            return [-1] * self.cpu_info.supported_output_objs.metric_amounts, design_validity
+
         utilisation_results = self.tuner.parse_vivado_resource_utilisation_report()
         print("Utilisation Results")
         print(utilisation_results)
@@ -223,7 +227,7 @@ class Processor_Dataset:
 
     def fetch_single_data_acc_to_def_from_dataset(self, data_to_fetch):
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
-        # # Fake output
+        # Fake output
         # return True, True, [-1 for i in range(len(self.target_obj_indexes))], [-1 for i in range(len(self.resource_utilisation_indexes))]
         # Output (Validity of the data, FPGA Deployability, Target Objectives, RC_results)
         
@@ -240,13 +244,16 @@ class Processor_Dataset:
                 results = self.conduct_experiments(data_to_fetch)
                 data_to_insert = data_to_fetch + results
                 print(data_to_insert)
-                self.insert_single_data(data_to_insert)
+                self.insert_to_dataset(data_to_insert)
                 rc_results = [data_to_insert[i] for i in self.resource_utilisation_indexes]
                 target_obj_results = [data_to_insert[i] for i in self.target_obj_indexes]
             else:
-                rc_results = [rows[0][i] for i in self.resource_utilisation_indexes]
-                target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
-            
+                if rows[0][-1] == 'Success' or rows[0][-1] == 'Partial':
+                    rc_results = [rows[0][i] for i in self.resource_utilisation_indexes]
+                    target_obj_results = [rows[0][i] for i in self.target_obj_indexes]
+                else:
+                    print("The data is invalid.")
+                    return False, False, None, None
             if  self.fpga_considered:
                 return True, self.fpga_info.check_fpga_deployability(rc_results), target_obj_results, rc_results
             else:
@@ -266,14 +273,14 @@ class Processor_Dataset:
                 print("All samples have been evaluated.")
                 break
             print(f"Next Sample: {next_sample}")
-            self.delete_single_data(next_sample)
+            # self.delete_data_from_dataset(next_sample)
             validity, _, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
             if validity:
                 self.sampler.mark_sample_complete(next_sample)
             else:
                 print("Skipping the sample.")
     
-    def delete_single_data(self, data_input):
+    def delete_data_from_dataset(self, data_input):
         try:
             conn = sqlite3.connect(self.dataset_directory)
             cursor = conn.cursor()
@@ -313,7 +320,40 @@ class Processor_Dataset:
                     print(row[i], end="    |   ")
         except sqlite3.Error as e:
             print(f"An error occurred: {e}")
+    
+    def modify_dataset(self, column_name, default_value):
+        # Add a new column to the dataset
+        sql_command = f"ALTER TABLE {self.dataset_name} ADD COLUMN new_column_name {column_name} DEFAULT {default_value}"
+        try:
+            conn = sqlite3.connect(self.dataset_directory)
+            cursor = conn.cursor()
+            cursor.execute(sql_command)
+            conn.commit()
+            conn.close()
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
+    
 
+    def run_evaluation_experiment(self):
+        # Run the evaluation experiment
+        testcase_file_dir = f"../experiments/evaluation_speed_results/random_{self.cpu_info.cpu_name.lower()}_designs.json"
+        evaluation_results_dir = f"../experiments/evaluation_speed_results/evaluation_results_{self.cpu_info.cpu_name.lower()}.json"
+        evaluation_results = {}
+        with open(testcase_file_dir, 'r') as file:
+            testcases = json.load(file)
+
+        for config_index in testcases.keys():
+            start_time = time.time()
+            validity, fpga_deployability, target_obj_results, rc_results = self.fetch_single_data_acc_to_def_from_dataset(list(testcases[config_index].values()))
+            end_time = time.time()
+            time_taken = end_time - start_time
+            print(f"Validity: {validity}, FPGA Deployability: {fpga_deployability}, Target Objectives: {target_obj_results}, RC Results: {rc_results}, Time Taken: {time_taken:.6f}")
+            evaluation_results[config_index] = {"Validity": validity, "FPGA Deployability": fpga_deployability, "Target Objectives": target_obj_results, "RC Results": rc_results, "Time Taken": time_taken}
+            print()
+
+        with open(evaluation_results_dir, 'w') as file:
+            json.dump(evaluation_results, file, indent=4)
+        
 
 def view_dataset():
     proc_name = input("Enter the processor name: ")

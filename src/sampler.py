@@ -46,7 +46,7 @@ class Sampler:
         self.params_order = {}
         for i, param in enumerate(cpu_info.config_params.params):
             self.params_order[param.name] = param.index
-        self.sample_file_name = f"../dataset/samples/{cpu_info.cpu_name}_samples.csv"
+        self.sample_default_file_name = f"../dataset/samples/{cpu_info.cpu_name}_samples.csv"
         self.sample_oat_file_name = f"../dataset/samples/{cpu_info.cpu_name}_oat_samples.csv"
         # The number of samples to be generated for the design space exploration for the linear distribution mode.
         self.sample_amount = 1000
@@ -55,7 +55,7 @@ class Sampler:
         self.max_levels_per_variable = round_to_nearest_power_of_two(self.max_levels_per_variable)
         self.max_levels_per_variable = [4, 4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2]
 
-        if not os.path.exists(self.sample_file_name):
+        if not os.path.exists(self.sample_default_file_name):
             self.generate_samples()
         
         if not os.path.exists(self.sample_oat_file_name):
@@ -65,7 +65,7 @@ class Sampler:
         samples = np.insert(samples, 0, self.defualt_config, axis=0)
         df = pd.DataFrame(samples, columns=self.design_space_params.keys())
         df['Evaluation Complete'] = 0
-        df.to_csv(self.sample_file_name, index=False)
+        df.to_csv(self.sample_default_file_name, index=False)
 
     def generate_samples(self):
         # This is the generalised way to generate samples for the design space exploration with the given sample amount.
@@ -138,7 +138,7 @@ class Sampler:
     def find_next_sample(self, sampling_mode = 'default'):
         # This is to continue the evaluation of the samples, if the previous evaluation was terminated before completion due to various problems.
         if sampling_mode == 'default':
-            df = pd.read_csv(self.sample_file_name)
+            df = pd.read_csv(self.sample_default_file_name)
         elif sampling_mode == 'oat':
             df = pd.read_csv(self.sample_oat_file_name)
         filtered_df = df[df['Evaluation Complete'] == 0]
@@ -148,12 +148,18 @@ class Sampler:
         else:
             return [] 
     
-    def mark_sample_complete(self, sample):
-        df = pd.read_csv(self.sample_file_name)
+    def mark_sample_complete(self, sample, sampling_mode = 'default'):
+        if sampling_mode == 'default':
+            dir_name = self.sample_default_file_name
+        elif sampling_mode == 'oat':
+            dir_name = self.sample_oat_file_name
+        else:
+            return False
+        df = pd.read_csv(dir_name)
         for index, row in df.iterrows():
             if np.array_equal(row.values[:-1], sample):
                 df.at[index, 'Evaluation Complete'] = 1
-                df.to_csv(self.sample_file_name, index=False)
+                df.to_csv(dir_name, index=False)
                 return True
         return False
 

@@ -2,29 +2,29 @@
     "CPU_Name": "BOOM",
 
     "Configurable_Params": {
-        "Core_Num": {"self_range": [1, 2, 3, 4], "default": 1, "type": "int", "growth" : "linear"},
+        "Core_Num": {"self_range": [1, 4], "default": 1, "type": "int", "growth" : "linear"},
         "Branch_Predictor" : {"self_range": ["WithTAGELBPD", "WithBoom2BPD", "WithAlpha21264BPD", "WithSWBPD"], "default": "WithTAGELBPD", "type": "categorical", "growth" : "None"},
         "enablePrefetching": {"self_range": ["true", "false"], "default": "true", "type": "categorical", "growth" : "None"},
-        "fetchWidth": {"self_range": [1, 2, 3, 4], "default": 4, "type": "int", "growth" : "linear"},
-        "decodeWidth": {"self_range": [1, 2, 4, 8, 16], "default": 1, "type": "int", "growth" : "linear"},
-        "numRobEntries": {"self_range": [16, 32, 64, 96], "default": 32, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_MEM_issueWidth": {"self_range": [1, 2, 3, 4, 5, 6, 7, 8], "default": 1, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_MEM_numEntries": {"self_range": [8, 16, 32, 64, 128, 256], "default": 16, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_MEM_dispatchWidth": {"self_range": [1, 2, 3, 4, 5, 6, 7, 8], "default": 1, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_INT_issueWidth": {"self_range": [1, 2, 3, 4, 5, 6, 7, 8], "default": 1, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_INT_numEntries": {"self_range": [8, 16, 32, 64, 128, 256], "default": 16, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_INT_dispatchWidth": {"self_range": [1, 2, 3, 4, 5, 6, 7, 8], "default": 1, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_FP_issueWidth": {"self_range": [1, 2, 3, 4, 5, 6, 7, 8], "default": 1, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_FP_numEntries": {"self_range": [8, 16, 32, 64, 128, 256], "default": 16, "type": "int", "growth" : "linear"},
-        "issueParams_IQT_FP_dispatchWidth": {"self_range": [1, 2, 3, 4, 5, 6, 7, 8], "default": 1, "type": "int", "growth" : "linear"},
-        "numIntPhysRegisters" : {"self_range": [32, 64, 96, 128, 256], "default": 96, "type": "int", "growth" : "linear"},
-        "numFpPhysRegisters" : {"self_range": [32, 64, 128, 256], "default": 64, "type": "int", "growth" : "linear"},
-        "numLdqEntries" : {"self_range": [8, 16, 32, 64], "default": 16, "type": "int", "growth" : "exp2"},
-        "numStqEntries" : {"self_range": [8, 16, 32, 64], "default": 16, "type": "int", "growth" : "exp2"},
+        "fetchWidth": {"self_range": [1, 8], "default": 4, "type": "int", "growth" : "linear"},
+        "decodeWidth": {"self_range": [1, 4], "default": 1, "type": "int", "growth" : "linear"},
+        "numRobEntries": {"self_range": [4, 32, 64, 96, 128], "default": 32, "type": "int", "growth" : "discrete"},
+        "issueParams_IQT_MEM_issueWidth": {"self_range": [1, 2], "default": 1, "type": "int", "growth" : "linear"},
+        "issueParams_IQT_MEM_numEntries": {"self_range": [8, 12, 16, 24], "default": 16, "type": "int", "growth" : "discrete"},
+        "issueParams_IQT_MEM_dispatchWidth": {"self_range": [1, 5], "default": 1, "type": "int", "growth" : "linear"},
+        "issueParams_IQT_INT_issueWidth": {"self_range": [1, 5], "default": 1, "type": "int", "growth" : "linear"},
+        "issueParams_IQT_INT_numEntries": {"self_range": [8, 16, 20, 32, 40], "default": 16, "type": "int", "growth" : "discrete"},
+        "issueParams_IQT_INT_dispatchWidth": {"self_range": [1, 5], "default": 1, "type": "int", "growth" : "linear"},
+        "issueParams_IQT_FP_issueWidth": {"self_range": [1, 2], "default": 1, "type": "int", "growth" : "linear"},
+        "issueParams_IQT_FP_numEntries": {"self_range": [4, 8, 16, 24, 32], "default": 16, "type": "int", "growth" : "discrete"},
+        "issueParams_IQT_FP_dispatchWidth": {"self_range": [1, 5], "default": 1, "type": "int", "growth" : "linear"},
+        "numIntPhysRegisters" : {"self_range": [33, 52, 80, 96, 100, 128], "default": 96, "type": "int", "growth" : "discrete"},
+        "numFpPhysRegisters" : {"self_range": [ 48, 64, 96, 128], "default": 64, "type": "int", "growth" : "discrete"},
+        "numLdqEntries" : {"self_range": [8, 16, 24, 32], "default": 16, "type": "int", "growth" : "exp2"},
+        "numStqEntries" : {"self_range": [8, 16, 24, 32], "default": 16, "type": "int", "growth" : "exp2"},
         "maxBrCount" : {"self_range": [8, 16, 32, 64], "default": 16, "type": "int", "growth" : "exp2"},
-        "numFetchBufferEntries" : {"self_range": [8, 16, 32, 64], "default": 16, "type": "int", "growth" : "exp2"},
-        "nPerfCounters" : {"self_range": [0, 1, 2, 3, 4, 5, 6, 7, 8], "default": 0, "type": "int", "growth" : "linear"},
-        "ftq_nEntries" : {"self_range": [4, 8, 16, 32, 64], "default": 16, "type": "int", "growth" : "exp2"},
+        "numFetchBufferEntries" : {"self_range": [8, 16, 24, 32, 35], "default": 16, "type": "int", "growth" : "discrete"},
+        "nPerfCounters" : {"self_range": [0, 2, 6], "default": 0, "type": "int", "growth" : "discrete"},
+        "ftq_nEntries" : {"self_range": [16, 32, 40], "default": 16, "type": "int", "growth" : "exp2"},
         "dcache_nSets": {"self_range": [4, 8, 16, 32, 64, 128, 256], "default": 64, "type": "int", "growth" : "exp2"},
         "dcache_nWays": {"self_range": [2, 4, 8, 16, 32], "default": 4, "type": "int", "growth" : "exp2"},
         "dcache_nTLBWays": {"self_range": [4, 8, 16, 32], "default": 8, "type": "int", "growth" : "exp2"},
@@ -65,9 +65,15 @@
 
     },
 
-    "Conditional_Constraints" : {
+    "Conditional_Constraints" : [
+        {"icache_nSets" : [4, 8, 16, 32], "icache_nWays" : [4, 8, 16, 32]},
+        {"dcache_nSets" : [4, 8, 16, 32], "dcache_nWays" : [4, 8, 16, 32]}
+    ],
 
-    },
+    "Inequality_Constraints" : [
+        ["fetchWidth", "decodeWidth", "GEQ"],
+        ["numFetchBufferEntries", "fetchWidth", "GE"]
+    ],
 
     "Performance":{
         "Power" : {
@@ -89,14 +95,17 @@
         },
         "Benchmark" : {
             "dhrystone": 0,
+            "mm": 0,
             "median": 0,
             "memcpy": 0,
+            "mt-matmul": 0,
+            "mt-memcpy": 0,
             "multiply": 0,
             "qsort": 0,
             "rsort": 0,
             "spmv": 0,
-            "towers": 0
+            "towers": 0,
+            "vadd": 0
         }
     }
-
 }

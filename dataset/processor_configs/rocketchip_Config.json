@@ -56,14 +56,17 @@
         },
         "Benchmark" : {
             "dhrystone": 0,
-            "cmark": 0,
+            "mm": 0,
             "median": 0,
             "memcpy": 0,
+            "mt-matmul": 0,
+            "mt-memcpy": 0,
             "multiply": 0,
             "qsort": 0,
             "rsort": 0,
             "spmv": 0,
-            "towers": 0
+            "towers": 0,
+            "vadd": 0
         }
     }
 

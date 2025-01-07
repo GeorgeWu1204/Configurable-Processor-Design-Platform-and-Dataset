@@ -6,7 +6,7 @@ import shutil
 
 class General_Chip_Tuner:
     """This is the tuner for scr1 Cores, it could automatically customise the processor according to the param settings"""
-    def __init__(self, cpu_info):
+    def __init__(self, cpu_info, mode = None):
 
         self.generation_path = '../processors/chipyard/sims/verilator'
         self.vivado_project_path = f'../processors/Vivado_Prj/{cpu_info.cpu_name}_Prj/'
@@ -23,6 +23,15 @@ class General_Chip_Tuner:
         self.cpu_info = cpu_info
         self.top_level_design_name = None
         self.processor_config_matcher = None
+        synthesis_methods = {
+            "With_Acceleration": self.run_synthesis_with_acceleration,
+            "Without_Acceleration": self.run_synthesis_without_acceleration,
+        }
+        if mode is not "Evaluation_Experiment":
+            self.selected_synthesis_function = synthesis_methods["With_Acceleration"]
+        else:
+            self.selected_synthesis_function = synthesis_methods["Without_Acceleration"]
+
     
     def extract_metrics_from_log(self, train_validity, benchmark_name):
         # Define the regular expressions to capture the required metrics
@@ -73,7 +82,7 @@ class General_Chip_Tuner:
         return metrics
         
     
-    def run_synthesis(self, new_config):
+    def run_synthesis_with_acceleration(self, new_config):
         '''Run synthesis using the new parameters.'''
         checkpoint_index = self.processor_config_matcher.match_config(new_config)
         exist_dcp = self.processor_config_matcher.prepare_checkpoint(checkpoint_index)
@@ -94,6 +103,25 @@ class General_Chip_Tuner:
         except subprocess.CalledProcessError as e:
             print(f"Error executing Vivado: {e}")
             return False
+
+    def run_synthesis_without_acceleration(self, new_config):
+        '''Run synthesis using the new parameters.'''
+        command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
+        try:
+            with open(self.processor_synthesis_log, 'w') as f:
+                result = subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
+            if result.returncode == 0:
+                self.processor_config_matcher.store_checkpoint(new_config)
+            else:
+                print("Error: Vivado synthesis failed.")
+                quit()
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Error executing Vivado: {e}")
+            return False
+    
+    def run_synthesis(self):
+        self.selected_synthesis_function()
     
 
     def parse_vivado_resource_utilisation_report(self):

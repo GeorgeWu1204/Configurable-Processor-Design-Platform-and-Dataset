@@ -45,6 +45,11 @@ def main(mode, debug=False, create_table=False):
         # Analyse Weights Mode: Analyse the weights of the configurations for synthesis
         print("---------------Analyse Weights Mode---------------")
         analyse_config_weights_for_synthesis(processor_dataset)
+    
+    elif mode == "Evaluation_Experiment":
+        # Evaluation Experiment Mode: Run the evaluation experiment
+        print("---------------Evaluation Experiment Mode---------------")
+        processor_dataset.run_evaluation_experiment()
 
     else:
         print("Invalid Mode")

@@ -128,9 +128,9 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
             subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             performance_results = {}
+            simulation_status = "Success"
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
-                
                 try:
                     with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
@@ -141,14 +141,14 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred for the current benchmark {benchmark_to_examine}")
                     performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False, benchmark_to_examine)
-            
+                    simulation_status = "Partial"
             if len(performance_results) == 0:
-                return False, None
-            return True, performance_results
+                return "Fail", None
+            return simulation_status, performance_results
         except subprocess.CalledProcessError as e:
             # Optionally, log the error message from the exception
             print(f"Error occurred: {e}")
-            return False, None
+            return "Fail", None
     def build_new_processor(self, new_config):
         try:
             self.modify_config_files(new_config)

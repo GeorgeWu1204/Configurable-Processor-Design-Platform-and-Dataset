@@ -50,27 +50,6 @@ Clone Project
 
 ```make -f $RV_ROOT/tools/Makefile```
 
-## [CVA6 RISC-V CPU](https://github.com/openhwgroup/cva6)
-
-### Prerequisites
-
-- Verilator 5.008.
-
-### Configure
-
-at line 99 of ```cva6/makefile```
-
-### Problem
-
-The Simulation Results of the benchmarks such as Dhrystone are currently not supported. Hence, it cannot be used as a good candidate for the Bayesian Optimisation.
-
-## [SCR1 RISC-V Core](https://github.com/syntacore/scr1/tree/master)
-
-### Setup
-
-```export RISCV=/home/hw1020/Documents/Installations```
-
-## [Ibex RISC-V Core](https://github.com/lowRISC/ibex)
 
 ## [Rocket Chip](https://github.com/chipsalliance/rocket-chip.git)
 
@@ -100,3 +79,35 @@ Then need to modify according to the issue proposed [GitHub Issue](https://githu
 Benchmark Execution \
 ```cd sims/verilator``` \
 ```make run-binary CONFIG=MediumBoomV3Config BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/dhrystone.riscv```
+
+
+|Benchmark | Minstret |
+|----------|----------|
+|dhrystone | 186031   |
+|median    | 4659     |
+|memcpy    | 5525     |
+|mm        | 24744    |
+|mt-matmul | 30325    |
+|mt-memcpy | 14674    |
+|mt-vvadd  | 20824    |
+|multiply  | 42503    |
+|pmp       | None     |
+|qsort     | 123506   |
+|rsort     | 171154   |
+|spmv      | 34466    |
+|towers    | 4562     |
+|vec-daxpy | Failed   |
+|vec-memcpy| Failed   |
+|vec-sgemm | Not Know |
+|vec-strcmp| Not Know |
+|vvadd     | 2416     |
+
+
+|Test Name | Minstret |
+|----------|----------|
+|pingd     |0         |
+|accum     |0         |
+|big-blkdev|0         |
+|blkdev    |0         |
+|charcount |0         |
+|fft       |0         |

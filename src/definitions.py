@@ -7,22 +7,32 @@ from design_methods.utils import get_device, get_tensor_type
 from constraints import Conditional_Constraints
 
 class config_param:
-    def __init__(self, name, default_value, self_range, index, param_type, log_scale=False):
+    def __init__(self, name, default_value, self_range, index, param_type, growth_scale):
         self.name = name
         self.default_value = default_value
-        self.self_range = self_range
         self.index = index
         self.param_type = param_type
-        self.log_scale = log_scale  # Left for future implementation
+        self.growth_scale  = growth_scale
+        if self.growth_scale == "linear":
+            assert len(self_range) == 2
+            self.self_range = list(range(self_range[0], self_range[1] + 1))
+        else:
+            self.self_range = self_range
 
     def check_self_validity(self, new_value):
-        if new_value in self.self_range:
-            return True
+        if self.grow_scale == "linear" or self.grow_scale == "discrete":
+            if new_value >= self.self_range[0] and new_value <= self.self_range[-1]:
+                return True
+            else:
+                return False
         else:
-            return False
+            if new_value in self.self_range:
+                return True
+            else:
+                return False
 
 class config_params:
-    def __init__(self, params, parsed_conditional_constraints, loaded_params_weight):
+    def __init__(self, params, parsed_conditional_constraints, parsed_inequality_constraint, loaded_params_weight):
         self.params = params     # self.params = list of config_param variables.
         self.integer_params_index = []
         self.categorical_params_index = []
@@ -35,6 +45,7 @@ class config_params:
             elif param.param_type == "categorical":
                 self.categorical_params_index.append(param.index)
         self.conditional_constraints = Conditional_Constraints(self.params_map, parsed_conditional_constraints)
+        self.inequality_constraints = parsed_inequality_constraint
         self.params_weights = loaded_params_weight
 
 
@@ -271,7 +282,7 @@ def read_cpu_info_from_json(json_file):
     tmp_config_params = []
     param_index = 0
     for param, settings in data["Configurable_Params"].items():
-        tmp_param = config_param(param, settings["default"], settings["self_range"], param_index, settings["type"])
+        tmp_param = config_param(param, settings["default"], settings["self_range"], param_index, settings["type"], settings["growth"])
         tmp_config_params.append(tmp_param)
         param_index += 1
     
@@ -280,7 +291,8 @@ def read_cpu_info_from_json(json_file):
 
     ## Identify conditional constraints
     extracted_conditional_constraints = data["Conditional_Constraints"]
-    extracted_config_params = config_params(tmp_config_params, extracted_conditional_constraints, loaded_params_weight)
+    extracted_inequality_constraints = data["Inequality_Constraints"]
+    extracted_config_params = config_params(tmp_config_params, extracted_conditional_constraints, extracted_inequality_constraints, loaded_params_weight)
 
     ## Build output objective library    
     for classification, settings in data["Performance"].items():

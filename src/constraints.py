@@ -30,6 +30,32 @@ class Conditional_Constraints:
                     return False        
         return True
 
+class Inequality_Constraints:
+    def __init__(self, params_map, constraints):
+        self.params_map = params_map
+        self.inequality_constraints = []
+        for constraint in constraints:
+            self.update_inequality_constraints(constraint)
+
+    def update_inequality_constraints(self, extracted_constraint):
+        inequality_constraint = {}
+        for constraint_name in extracted_constraint.keys():
+            index = self.params_map[constraint_name]
+            if index == None:
+                raise ValueError("The name of the variables within the specified constraints does not meet requiremnet")
+            inequality_constraint[index] = extracted_constraint[constraint_name]
+        self.inequality_constraints.append(inequality_constraint)
+
+    def check_inequality_constraints(self, new_design):
+        if len(self.inequality_constraints) == 0:
+            return True
+        for inequality_constraint in self.inequality_constraints:
+            # in every and condition
+            for index in inequality_constraint.keys():
+                if new_design[index] not in inequality_constraint[index]:
+                    return False        
+        return True
+
 
 class target_fpga_info:
     def __init__(self, device_series_number):
