@@ -6,7 +6,7 @@ import shutil
 
 class General_Chip_Tuner:
     """This is the tuner for scr1 Cores, it could automatically customise the processor according to the param settings"""
-    def __init__(self, cpu_info, mode = None):
+    def __init__(self, cpu_info, config_matcher_enabled):
 
         self.generation_path = '../processors/chipyard/sims/verilator'
         self.vivado_project_path = f'../processors/Vivado_Prj/{cpu_info.cpu_name}_Prj/'
@@ -27,13 +27,13 @@ class General_Chip_Tuner:
             "With_Acceleration": self.run_synthesis_with_acceleration,
             "Without_Acceleration": self.run_synthesis_without_acceleration,
         }
-        if mode is not "Evaluation_Experiment":
+        if config_matcher_enabled == True:
             self.selected_synthesis_function = synthesis_methods["With_Acceleration"]
         else:
             self.selected_synthesis_function = synthesis_methods["Without_Acceleration"]
 
     
-    def extract_metrics_from_log(self, train_validity, benchmark_name):
+    def extract_metrics_from_mcycle_report(self, train_validity, benchmark_name):
         # Define the regular expressions to capture the required metrics
         time_pattern = rf"Microseconds for one run through {benchmark_name.capitalize()}: (\d+)"
         throughput_pattern = rf"{benchmark_name.capitalize()}s per Second: +(\d+)"
@@ -80,49 +80,102 @@ class General_Chip_Tuner:
             print(f"An error occurred: {e}")
 
         return metrics
-        
+
+    def extract_metric_from_cycles_and_cpi_report(self, benchmark_name):
+        metrics = {
+            "exe_time": None,
+            "throughput": None,
+            "mcycles": None,
+            "minstret": None
+        }
+        # Define regex pattern to extract cycles and CPI
+        pattern = re.compile(
+            r"(?P<operation>\w+\(.*?\));.*?barrier\(.*?\):\s(?P<cycles>\d+)\s+cycles,.*?(?P<CPI>\d+\.\d+)\s+CPI"
+        )
+
+        try:
+            with open(self.processor_generation_log + benchmark_name + '.log', 'r') as file:
+                for line in file:
+                    match = pattern.search(line)
+                    if match:
+                        metrics["mcycles"] = int(match.group('cycles'))
+                        metrics["minstret"] = int(float(metrics["mcycles"]) / float(match.group('CPI')))
+        except FileNotFoundError:
+            print(f"Error: The file '{self.processor_generation_log + benchmark_name}' was not found.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+        return metrics
+    
+    def extract_instructions_and_cycles(self, benchmark_name):
+        metrics = {
+            "exe_time": None,
+            "throughput": None,
+            "mcycles": None,
+            "minstret": None
+        }
+        # Regex patterns to capture numeric values
+        instructions_pattern = r"C0:\s+(\d+)\s+instructions"
+        cycles_pattern = r"C0:\s+(\d+)\s+cycles"
+        try:
+            with open(self.processor_generation_log + benchmark_name + '.log', 'r') as file:
+                log_data = file.read()
+            # Search for the matches
+            instructions_match = re.search(instructions_pattern, log_data)
+            cycles_match = re.search(cycles_pattern, log_data)
+            instructions = instructions_match.group(1) if instructions_match else None
+            cycles = cycles_match.group(1) if cycles_match else None
+            metrics["mcycles"] = int(cycles)
+            metrics["minstret"] = int(instructions)
+        except FileNotFoundError:
+            print(f"Error: The file '{self.processor_generation_log + benchmark_name}'.log was not found.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+        return metrics
     
     def run_synthesis_with_acceleration(self, new_config):
         '''Run synthesis using the new parameters.'''
+        print("Running synthesis with acceleration")
         checkpoint_index = self.processor_config_matcher.match_config(new_config)
         exist_dcp = self.processor_config_matcher.prepare_checkpoint(checkpoint_index)
         if exist_dcp == False:
             command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
         else:
             command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path, "-tclargs", self.top_level_design_name]
-
         try:
             with open(self.processor_synthesis_log, 'w') as f:
                 result = subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
             if result.returncode == 0:
                 self.processor_config_matcher.store_checkpoint(new_config)
+                return True
             else:
                 print("Error: Vivado synthesis failed.")
-                quit()
-            return True
+                return False
+            
         except subprocess.CalledProcessError as e:
             print(f"Error executing Vivado: {e}")
             return False
 
     def run_synthesis_without_acceleration(self, new_config):
         '''Run synthesis using the new parameters.'''
+        print("Running synthesis without acceleration")
         command = ["vivado", "-nolog", "-nojournal", "-mode", "batch", "-source", self.tcl_path]
         try:
             with open(self.processor_synthesis_log, 'w') as f:
                 result = subprocess.run(command, check=True, cwd=self.vivado_project_path, stdout=f, stderr=f)
             if result.returncode == 0:
                 self.processor_config_matcher.store_checkpoint(new_config)
+                return True
             else:
                 print("Error: Vivado synthesis failed.")
-                quit()
-            return True
+                return False
         except subprocess.CalledProcessError as e:
             print(f"Error executing Vivado: {e}")
             return False
     
-    def run_synthesis(self):
-        self.selected_synthesis_function()
-    
+    def run_synthesis(self, new_config):
+        self.selected_synthesis_function(new_config)
 
     def parse_vivado_resource_utilisation_report(self):
         # Define the dictionary to hold the results

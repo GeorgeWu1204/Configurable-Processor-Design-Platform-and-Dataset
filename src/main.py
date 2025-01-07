@@ -3,7 +3,7 @@ import argparse
 from interface import define_cpu_settings
 from dataset import Processor_Dataset, create_table_from_json
 from design_methods.design_framework import Design_Framework
-from processor_tuner.processor_config_matching import analyse_config_weights_for_synthesis
+from processor_analyser.processor_config_matching import analyse_config_weights_for_synthesis
 
 
 def main(mode, debug=False, create_table=False):

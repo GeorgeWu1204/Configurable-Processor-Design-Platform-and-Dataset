@@ -1,16 +1,16 @@
 make[1]: Entering directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'
 Running with RISCV=/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/.conda-env/riscv-tools
-if [ "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/rsort.riscv" != "none" ] && [ ! -f "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/rsort.riscv" ]; then printf "\n\nBinary ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/rsort.riscv not found\n\n"; exit 1; fi
+if [ "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/mt-memcpy.riscv" != "none" ] && [ ! -f "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/mt-memcpy.riscv" ]; then printf "\n\nBinary ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/mt-memcpy.riscv not found\n\n"; exit 1; fi
 (set -o pipefail &&  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/simulator-chipyard.harness-CustomisedBoomV3Config \
 	+permissive \
 	+dramsim +dramsim_ini_dir=/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/generators/testchipip/src/main/resources/dramsim2_ini +max-cycles=10000000     \
 	+verbose \
 	+permissive-off \
-	../../toolchains/riscv-tools/riscv-tests/build/benchmarks/rsort.riscv \
+	../../toolchains/riscv-tools/riscv-tests/build/benchmarks/mt-memcpy.riscv \
 	 \
-	</dev/null 2> >(spike-dasm > /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedBoomV3Config/rsort.out) | tee /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedBoomV3Config/rsort.log)
+	</dev/null 2> >(spike-dasm > /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedBoomV3Config/mt-memcpy.out) | tee /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/output/chipyard.harness.TestHarness.CustomisedBoomV3Config/mt-memcpy.log)
 [UART] UART0 is here (stdin/stdout).
-mcycle = 174121
-minstret = 171154
+
+memcpy(results_data + block * cid, input_data + block * cid, sizeof(long) * n); barrier(nc): 42729 cycles, 7.1 cycles/iter, 2.9 CPI
 - /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TestDriver.v:158: Verilog $finish
 make[1]: Leaving directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'

@@ -2,14 +2,14 @@ from .BOOM import BOOM_Chip_Tuner
 from .RocketChip import Rocket_Chip_Tuner
 from .EL2_VeeR import EL2_VeeR_Tuner
 
-def get_chip_tuner(cpu_info):
+def get_chip_tuner(cpu_info, config_matcher_enabled = True):
     print(f"CPU Name: {cpu_info.cpu_name}")
     if cpu_info.cpu_name == "BOOM":
-        return BOOM_Chip_Tuner(cpu_info)
+        return BOOM_Chip_Tuner(cpu_info, config_matcher_enabled)
     elif cpu_info.cpu_name == "RocketChip":
-        return Rocket_Chip_Tuner(cpu_info)
+        return Rocket_Chip_Tuner(cpu_info, config_matcher_enabled)
     elif cpu_info.cpu_name == "EL2_VeeR":
-        return EL2_VeeR_Tuner(cpu_info)
+        return EL2_VeeR_Tuner(cpu_info, config_matcher_enabled)
 
     else:
         raise ValueError(f"Unsupported CPU Name: {cpu_info.cpu_name}")

@@ -1,5 +1,5 @@
 src/__pycache__/
-src/processor_tuner/__pycache__/
+src/processor_analyser/__pycache__/
 processors/Vivado_Prj/
 processors/chipyard/
 processors/checkpoints/

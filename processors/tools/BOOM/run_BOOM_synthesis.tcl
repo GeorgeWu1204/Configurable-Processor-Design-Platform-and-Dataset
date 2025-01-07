@@ -1,5 +1,4 @@
 open_project BOOM_Prj.xpr
-
 if { [llength $argv] < 1 } {
     puts "No incremental checkpoint identified, starting synthesis from scratch."
     # Remove any previous incremental checkpoint setting for a fresh start
@@ -7,22 +6,46 @@ if { [llength $argv] < 1 } {
 } else {
     # Retrieve the config name argument
     set config_name [lindex $argv 0]
+
+    set enable_incremental_synthesis 1
+
     # Define the path to the DCP file based on the config name
     set dcp_path "/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/checkpoints/BOOM/Synthesis/${config_name}.dcp"
     
-    # Check if the specified DCP file exists
-    if { ![file exists $dcp_path] } {
-        puts "Error: Checkpoint file $dcp_path not found. Exiting."
+    if { $enable_incremental_synthesis == 0 } {
+        puts "Error: Incremental synthesis is disabled"
         exit 1
+    } else {
+        # Check if the specified DCP file exists
+        if { ![file exists $dcp_path] } {
+            puts "Error: Checkpoint file $dcp_path not found. Exiting."
+            exit 1
+        }
+        
+        # Add the DCP file to the project (ensuring no file duplication or conflict)
+        add_files -fileset utils_1 -norecurse $dcp_path
+        
+        # Set incremental synthesis properties
+        set_property STEPS.SYNTH_DESIGN.ARGS.INCREMENTAL_MODE aggressive [get_runs synth_1]
+        set_property incremental_checkpoint $dcp_path [get_runs synth_1]
     }
-    
-    # Add the DCP file to the project (ensuring no file duplication or conflict)
-    add_files -fileset utils_1 -norecurse $dcp_path
-    
-    # Set incremental synthesis properties
-    set_property STEPS.SYNTH_DESIGN.ARGS.INCREMENTAL_MODE aggressive [get_runs synth_1]
-    set_property incremental_checkpoint $dcp_path [get_runs synth_1]
+
 }
+
+# Clear All the Generated Files
+remove_files [get_files *]
+# Add the Verilog files
+add_files [glob /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/*]
+# Disable the unnecessary files
+set_property is_enabled false [get_files  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/ClockSourceAtFreqMHz.v]
+set_property is_enabled false [get_files  /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SimTSI.v]
+set_property is_enabled false [get_files  {/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SimDRAM.v /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SimJTAG.v /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/SimUART.v /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.CustomisedBoomV3Config/gen-collateral/TestDriver.v}]
+
+# Set Clock Constraints
+add_files -fileset constrs_1 -norecurse /home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/tools/BOOM/BOOM_Time_Constraints.xdc
+# Set the Top Module
+set_property top ChipTop [current_fileset]
+
 
 reset_run synth_1
 launch_runs synth_1 -jobs 12

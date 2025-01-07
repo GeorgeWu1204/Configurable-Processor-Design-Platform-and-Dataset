@@ -1,0 +1,9 @@
+make[1]: Entering directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'
+Running with RISCV=/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/.conda-env/riscv-tools
+if [ "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/vadd.riscv" != "none" ] && [ ! -f "../../toolchains/riscv-tools/riscv-tests/build/benchmarks/vadd.riscv" ]; then printf "\n\nBinary ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/vadd.riscv not found\n\n"; exit 1; fi
+
+
+Binary ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/vadd.riscv not found
+
+make[1]: *** [/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/common.mk:283: ../../toolchains/riscv-tools/riscv-tests/build/benchmarks/vadd.riscv.check-exists] Error 1
+make[1]: Leaving directory '/home/hw1020/Documents/Configurable-Processor-Design-Platform-and-Dataset/processors/chipyard/sims/verilator'

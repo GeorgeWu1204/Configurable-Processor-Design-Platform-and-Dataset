@@ -6,15 +6,14 @@ from .GeneralChip import General_Chip_Tuner
 
 class Rocket_Chip_Tuner(General_Chip_Tuner):
     """This is the tuner for scr1 Cores, it could automatically customise the processor according to the param settings"""
-    def __init__(self, cpu_info):
-        super().__init__(cpu_info)
+    def __init__(self, cpu_info, config_matcher_enabled):
+        super().__init__(cpu_info, config_matcher_enabled)
         # Log file for the generated reports
         self.generation_path = '../processors/chipyard/sims/verilator'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/RocketConfigs.scala'
         self.core_level_configuration_file = '../processors/chipyard/generators/rocket-chip/src/main/scala/rocket/Configs.scala'
         self.top_level_design_name = "DigitalTop"
         self.processor_config_matcher = config_matcher(cpu_info, self.top_level_design_name)
-
 
     def modify_cpu_config(self, num_cores, customised_configs):
         with open(self.cpu_level_config_file, 'r') as file:
@@ -170,7 +169,7 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
                 try:
                     with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True, benchmark_to_examine)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_mcycle_report(True, benchmark_to_examine)
                     print("<---------------------->")
                     print(benchmark_to_examine)
                     print(performance_results[benchmark_to_examine])

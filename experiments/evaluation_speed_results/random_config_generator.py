@@ -21,7 +21,8 @@ def generate_random_designs(json_file, num_configs=3):
 
     # Generate random configurations
     configurations = {}
-    for i in range(1, num_configs + 1):
+
+    for i in range(0, num_configs + 1):
         config = {}
         for param, details in configurable_params.items():
             self_range = details.get("self_range", [])
@@ -29,19 +30,22 @@ def generate_random_designs(json_file, num_configs=3):
 
             if not self_range:
                 continue
-
-            # Randomly pick a value from the range
-            if param_type == "int":
-                if details.get("growth") == "linear":
-                    value = random.randint(min(self_range), max(self_range))
-                elif details.get("growth") == "discrete" or details.get("growth") == "exp2":
+            if i == 0:
+                # Use default value for the first configuration
+                value = details.get("default")
+            else:
+                # Randomly pick a value from the range
+                if param_type == "int":
+                    if details.get("growth") == "linear":
+                        value = random.randint(min(self_range), max(self_range))
+                    elif details.get("growth") == "discrete" or details.get("growth") == "exp2":
+                        value = random.choice(self_range)
+                    else:
+                        value = random.choice(self_range)
+                elif param_type == "categorical":
                     value = random.choice(self_range)
                 else:
                     value = random.choice(self_range)
-            elif param_type == "categorical":
-                value = random.choice(self_range)
-            else:
-                value = random.choice(self_range)
 
             config[param] = value
 

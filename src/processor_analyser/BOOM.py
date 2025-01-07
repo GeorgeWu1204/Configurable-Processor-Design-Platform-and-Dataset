@@ -6,8 +6,8 @@ from .GeneralChip import General_Chip_Tuner
 
 class BOOM_Chip_Tuner(General_Chip_Tuner):
 
-    def __init__(self, cpu_info):
-        super().__init__(cpu_info)
+    def __init__(self, cpu_info, config_matcher_enabled):
+        super().__init__(cpu_info, config_matcher_enabled)
         # Log file for the generated reports
         self.generation_path = '../processors/chipyard/sims/verilator'
         self.cpu_level_config_file = '../processors/chipyard/generators/chipyard/src/main/scala/config/BoomConfigs.scala'
@@ -31,7 +31,6 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
 
     def modify_peripheral_and_core_config(self, input_vals):
         params_name = list(self.cpu_info.config_params.params_map.keys())[1:]
-        print(params_name)
         issueparams_index = None
         for param in params_name:
             if param == 'issueParams_IQT_MEM_issueWidth':
@@ -77,7 +76,6 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
                 else:
                     if index == start_index + 1:
                         # Branch prediction configs, TODO assuming the vairable is at the start of the customised processor config            
-                        print("tuning branch prediction")
                         modified_line = f"new {input_vals[0]} ++\n"
                     else:
                         unit_name = line.split('=')[0].strip()
@@ -90,18 +88,16 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
                             modified_line = line
                         
                         elif index == issue_param_positon + 1:
-                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index]}, numEntries={input_vals[issueparams_index+1]}, iqType=IQT_MEM.litValue, dispatchWidth={input_vals[issueparams_index+2]})\n"
+                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index]}, numEntries={input_vals[issueparams_index+1]}, iqType=IQT_MEM.litValue, dispatchWidth={input_vals[issueparams_index+2]}),\n"
                         
                         elif index == issue_param_positon + 2:
-                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index+3]}, numEntries={input_vals[issueparams_index+4]}, iqType=IQT_INT.litValue, dispatchWidth={input_vals[issueparams_index+5]})\n"
+                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index+3]}, numEntries={input_vals[issueparams_index+4]}, iqType=IQT_INT.litValue, dispatchWidth={input_vals[issueparams_index+5]}),\n"
 
                         elif index == issue_param_positon + 3:
-                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index+6]}, numEntries={input_vals[issueparams_index+7]}, iqType=IQT_FP.litValue, dispatchWidth={input_vals[issueparams_index+8]}))\n"
+                            modified_line = f"                  IssueParams(issueWidth={input_vals[issueparams_index+6]}, numEntries={input_vals[issueparams_index+7]}, iqType=IQT_FP.litValue, dispatchWidth={input_vals[issueparams_index+8]})),\n"
                         
                         else:
                             modified_line = line
-
-                print(modified_line)
                 new_lines.append(modified_line)
 
             else:
@@ -111,36 +107,49 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             file.writelines(new_lines)
 
     def modify_config_files(self, input_vals):
-        print(input_vals)
         # CPU's overall configuration, Only modify the number of Cores
         self.modify_cpu_config(input_vals[0])
         # Core's internal configuration
         self.modify_peripheral_and_core_config(input_vals[1:])
-        quit()
 
 
     def tune_and_run_performance_simulation(self, new_value):
         try:
             # generate the design
             self.modify_config_files(new_value)
-            clean_command = ["make", "clean"]
-            subprocess.run(clean_command, cwd = self.generation_path, check=True)
-            run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
-            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            # clean_command = ["make", "clean"]
+            # subprocess.run(clean_command, cwd = self.generation_path, check=True)
+            # run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
+            # subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             performance_results = {}
             simulation_status = "Success"
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
                 try:
-                    with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
-                        subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(True, benchmark_to_examine)
-                    print("<---------------------->")
-                    print(benchmark_to_examine)
-                    print(performance_results[benchmark_to_examine])
+                    # with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
+                    #     subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
+
+                    # dhrystone, median, memcpy, multiply, qsort, rsort, spmv, tower, memcpy, vvadd
+                    if benchmark_to_examine in ['dhrystone', 'median', 'multiply', 'qsort', 'rsort', 'spmv', 'tower', 'memcpy', 'vvadd']:
+                        performance_results[benchmark_to_examine] = self.extract_metrics_from_mcycle_report(True, benchmark_to_examine)
+                        print("<---------------------->")
+                        print(benchmark_to_examine)
+                        print(performance_results[benchmark_to_examine])
+                    # mm
+                    elif benchmark_to_examine == 'mm':
+                        performance_results[benchmark_to_examine] = self.extract_instructions_and_cycles(benchmark_to_examine)
+                        print("<---------------------->")
+                        print(benchmark_to_examine)
+                        print(performance_results[benchmark_to_examine])
+                    # mt-matmul, mt-memcpy, mt-vvadd
+                    elif benchmark_to_examine in ['mt-matmul', 'mt-memcpy', 'mt-vvadd']:
+                        performance_results[benchmark_to_examine] = self.extract_metric_from_cycles_and_cpi_report(benchmark_to_examine)
+                        print("<---------------------->")
+                        print(benchmark_to_examine)
+                        print(performance_results[benchmark_to_examine])
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred for the current benchmark {benchmark_to_examine}")
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False, benchmark_to_examine)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_mcycle_report(False, benchmark_to_examine)
                     simulation_status = "Partial"
             if len(performance_results) == 0:
                 return "Fail", None

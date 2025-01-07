@@ -1,6 +1,6 @@
 import sqlite3
 from sampler import Sampler
-import processor_tuner
+import processor_analyser
 import json
 import time
 
@@ -66,7 +66,7 @@ class Processor_Dataset:
         self.resource_utilisation_indexes = []
         self.target_obj_indexes = []
         # Create Tuner Object
-        self.tuner = processor_tuner.get_chip_tuner(cpu_info)
+        self.tuner = processor_analyser.get_chip_tuner(cpu_info)
         # Create Sampler
         self.sampler = Sampler(cpu_info)
 
@@ -210,7 +210,7 @@ class Processor_Dataset:
                 else:
                     results.append(performance_results[benchmark][benchmark_criterion])
                 
-        return results
+        return results, design_validity
 
     def query_dataset(self, data_input):
         config_to_fetch = self.default_params.copy()
@@ -241,8 +241,9 @@ class Processor_Dataset:
             rows = cursor.fetchall()
             if len(rows) == 0:
                 print("No data found in the database. Conducting experiments...")
-                results = self.conduct_experiments(data_to_fetch)
-                data_to_insert = data_to_fetch + results
+                print(data_to_fetch)
+                results, experiment_validity = self.conduct_experiments(data_to_fetch)
+                data_to_insert = data_to_fetch + results + [experiment_validity]
                 print(data_to_insert)
                 self.insert_to_dataset(data_to_insert)
                 rc_results = [data_to_insert[i] for i in self.resource_utilisation_indexes]
@@ -338,22 +339,43 @@ class Processor_Dataset:
         # Run the evaluation experiment
         testcase_file_dir = f"../experiments/evaluation_speed_results/random_{self.cpu_info.cpu_name.lower()}_designs.json"
         evaluation_results_dir = f"../experiments/evaluation_speed_results/evaluation_results_{self.cpu_info.cpu_name.lower()}.json"
-        evaluation_results = {}
         with open(testcase_file_dir, 'r') as file:
             testcases = json.load(file)
 
+        # Load existing results if the file exists, otherwise start with an empty dictionary
+        try:
+            with open(evaluation_results_dir, 'r') as file:
+                all_results = json.load(file)
+        except FileNotFoundError:
+            all_results = {}
+        # Process each test case
         for config_index in testcases.keys():
+            # Skip if the result for the current config_index already exists
+            if config_index in all_results:
+                print(f"Skipping config_index {config_index}: already processed.")
+                continue
+
             start_time = time.time()
             validity, fpga_deployability, target_obj_results, rc_results = self.fetch_single_data_acc_to_def_from_dataset(list(testcases[config_index].values()))
             end_time = time.time()
             time_taken = end_time - start_time
-            print(f"Validity: {validity}, FPGA Deployability: {fpga_deployability}, Target Objectives: {target_obj_results}, RC Results: {rc_results}, Time Taken: {time_taken:.6f}")
-            evaluation_results[config_index] = {"Validity": validity, "FPGA Deployability": fpga_deployability, "Target Objectives": target_obj_results, "RC Results": rc_results, "Time Taken": time_taken}
-            print()
 
-        with open(evaluation_results_dir, 'w') as file:
-            json.dump(evaluation_results, file, indent=4)
-        
+            print(f"Validity: {validity}, FPGA Deployability: {fpga_deployability}, Target Objectives: {target_obj_results}, RC Results: {rc_results}, Time Taken: {time_taken:.6f}")
+
+            # Append new results for the current configuration index
+            all_results[config_index] = {
+                "Validity": validity,
+                "FPGA Deployability": fpga_deployability,
+                "Target Objectives": target_obj_results,
+                "RC Results": rc_results,
+                "Time Taken": time_taken
+            }
+
+            # Write updated results back to the file after each experiment
+            with open(evaluation_results_dir, 'w') as file:
+                json.dump(all_results, file, indent=4)
+
+        print("Evaluation results updated successfully.")
 
 def view_dataset():
     proc_name = input("Enter the processor name: ")

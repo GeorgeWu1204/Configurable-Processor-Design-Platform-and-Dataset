@@ -35,6 +35,10 @@ view_dataset:
 	@echo "Viewing dataset"
 	python src/dataset.py
 
+evaluation_framework_experiment:
+	@echo "Running evaluation framework experiment"
+	@cd src; bash ../experiments/scripts/$(TARGET)_evaluation_speed_experiment.sh
+
 clean:
 	make -C $(SIM_DIR) clean
 
