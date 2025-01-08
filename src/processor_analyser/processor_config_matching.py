@@ -7,18 +7,20 @@ import subprocess
 
 class match_metrics:
     #TODO Improve better metric for matching configurations, perhaps including some weights.
-    def __init__(self, match_metric, weights, integer_params_index, categorical_params_index):
+    def __init__(self, match_metric, cpu_info):
+        self.cpu_info = cpu_info
         self.metrics = ['euclidean', 'manhattan_distance']
-        self.param_weights = np.array(list(weights.values()))
+        self.param_weights = np.array(list(self.cpu_info.config_params.params_weights.values()))
         if match_metric not in self.metrics:
             raise ValueError(f"Invalid metric: {match_metric}. Must be one of {self.metrics}")
         else:
             self.match_metric = match_metric
-        self.integer_params_index = integer_params_index
-        self.categorical_params_index = categorical_params_index
+
+        self.integer_params_index = cpu_info.config_params.integer_params_index
+        self.categorical_params_index = cpu_info.config_params.categorical_params_index
     
     def convert_for_metric(self, config):
-        return np.log2(np.array(config[self.integer_params_index].astype(int)))
+        return np.array(config[self.integer_params_index].astype(int))
     
     def euclidean_distance(self, config1, config2):
         return float(np.sum(np.multiply(np.sqrt((config1 - config2) ** 2 ), self.param_weights)))
@@ -55,7 +57,7 @@ class config_matcher:
         self.synthesis_checkpoint_directory = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Synthesis/'
         self.synthesis_checkpoint_record_history = f'../processors/checkpoints/{self.cpu_info.cpu_name}/Stored_Checkpoint_Record.json'
         self.match_metric = match_metric
-        self.metric_calculator = match_metrics(self.match_metric, self.cpu_info.config_params.params_weights, self.cpu_info.config_params.integer_params_index, self.cpu_info.config_params.categorical_params_index)
+        self.metric_calculator = match_metrics(self.match_metric, cpu_info)
         self.check_point_to_synthesis_name = check_point_to_synthesis_name
     
     def load_json(self):

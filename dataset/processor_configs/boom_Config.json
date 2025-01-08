@@ -105,7 +105,7 @@
             "rsort": 0,
             "spmv": 0,
             "towers": 0,
-            "vadd": 0
+            "vvadd": 0
         }
     }
 }

@@ -47,4 +47,5 @@ clean_vivado_log:
 	@find $(VIVADO_DIR) -type f \( -name '*.jou' -o -name '*.log' -o -name '*.str' \) -exec rm -f {} +
 	@echo "Cleanup complete."
 
+
 .PHONY: clean clean_vivado_log test_boom test_rocket test_boom_BO test_rocket_BO analyse_rocket

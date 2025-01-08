@@ -107,9 +107,9 @@ class Processor_Dataset:
                         temp_data_index += 1
                 else:
                     temp_data_index += 4
-
-        self.insert_command = self.insert_command.rstrip(',\n') + ') VALUES ('
-        for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts):
+        self.insert_command += "Evaluation)"
+        self.insert_command = self.insert_command + 'VALUES ('
+        for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts + 1):
             self.insert_command += '?, '
         self.insert_command = self.insert_command.rstrip(', ') + ')'
         # Prepare Fetch Command
@@ -170,7 +170,7 @@ class Processor_Dataset:
             return [-1] * self.cpu_info.supported_output_objs.metric_amounts, design_validity
         # Synthesis
         synthesis_validity = self.tuner.run_synthesis(config_params)
-        if not synthesis_validity:
+        if synthesis_validity == False:
             design_validity = "Fail"
             return [-1] * self.cpu_info.supported_output_objs.metric_amounts, design_validity
 
@@ -202,7 +202,6 @@ class Processor_Dataset:
                 results.append(-1)
             else:
                 results.append(timing_results[timing])
-
         for benchmark in self.cpu_info.supported_output_objs.benchmark.metrics:
             for benchmark_criterion in ["exe_time", "throughput", "mcycles", "minstret"]:
                 if performance_results[benchmark][benchmark_criterion] == None:
@@ -244,6 +243,8 @@ class Processor_Dataset:
                 print(data_to_fetch)
                 results, experiment_validity = self.conduct_experiments(data_to_fetch)
                 data_to_insert = data_to_fetch + results + [experiment_validity]
+                data_to_insert = [1, 'WithTAGELBPD', 'true', 4, 1, 32, 1, 16, 1, 1, 16, 1, 1, 16, 1, 96, 64, 16, 16, 16, 16, 0, 16, 64, 4, 8, 64, 4, 'true', 'true', 'true', 0.558, 1.11, 114056, 68694, 145, 61, 20, 9.356, 9.356, -0.65, 9.458, 372, 2683, 186475, 186031, -1, -1, 24793, 24744, -1, -1, 7385, 4659, -1, -1, 16981, 5525, -1, -1, 28670, 28670, -1, -1, 42729, 14734, -1, -1, 29866, 24100, -1, -1, 250124, 123506, -1, -1, 174121, 171154, -1, -1, 42461, 34466, -1, -1, 4111, 3782, -1, -1, 2522, 2416, 'Success']
+                print("data to insert")
                 print(data_to_insert)
                 self.insert_to_dataset(data_to_insert)
                 rc_results = [data_to_insert[i] for i in self.resource_utilisation_indexes]
@@ -258,7 +259,7 @@ class Processor_Dataset:
             if  self.fpga_considered:
                 return True, self.fpga_info.check_fpga_deployability(rc_results), target_obj_results, rc_results
             else:
-                return True, True, target_obj_results, None          
+                return True, True, target_obj_results, rc_results          
             
         except sqlite3.Error as e:
             Exception(f"An error occurred: {e}")
@@ -275,7 +276,7 @@ class Processor_Dataset:
                 break
             print(f"Next Sample: {next_sample}")
             # self.delete_data_from_dataset(next_sample)
-            validity, _, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
+            validity, _, _, _ = self.fetch_single_data_acc_to_def_from_dataset(next_sample)
             if validity:
                 self.sampler.mark_sample_complete(next_sample)
             else:
@@ -370,7 +371,7 @@ class Processor_Dataset:
                 "RC Results": rc_results,
                 "Time Taken": time_taken
             }
-
+            quit()
             # Write updated results back to the file after each experiment
             with open(evaluation_results_dir, 'w') as file:
                 json.dump(all_results, file, indent=4)

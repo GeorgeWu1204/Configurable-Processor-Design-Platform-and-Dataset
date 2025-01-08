@@ -119,18 +119,18 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             self.modify_config_files(new_value)
             # clean_command = ["make", "clean"]
             # subprocess.run(clean_command, cwd = self.generation_path, check=True)
-            # run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
-            # subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
+            subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
             performance_results = {}
             simulation_status = "Success"
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedBoomV3Config", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
                 try:
-                    # with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
-                    #     subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
+                    with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
+                        subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
 
                     # dhrystone, median, memcpy, multiply, qsort, rsort, spmv, tower, memcpy, vvadd
-                    if benchmark_to_examine in ['dhrystone', 'median', 'multiply', 'qsort', 'rsort', 'spmv', 'tower', 'memcpy', 'vvadd']:
+                    if benchmark_to_examine in ['dhrystone', 'median', 'multiply', 'qsort', 'rsort', 'spmv', 'towers', 'memcpy', 'vvadd']:
                         performance_results[benchmark_to_examine] = self.extract_metrics_from_mcycle_report(True, benchmark_to_examine)
                         print("<---------------------->")
                         print(benchmark_to_examine)
@@ -158,6 +158,7 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             # Optionally, log the error message from the exception
             print(f"Error occurred: {e}")
             return "Fail", None
+        
     def build_new_processor(self, new_config):
         try:
             self.modify_config_files(new_config)
