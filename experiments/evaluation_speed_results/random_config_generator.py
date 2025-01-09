@@ -55,13 +55,13 @@ def generate_random_designs(json_file, num_configs=3):
 
 # Example usage
 if __name__ == "__main__":
-    # input_file = "../../dataset/processor_configs/rocketchip_Config.json"  # Replace with your JSON file path
-    # random_designs = generate_random_designs(input_file, num_configs=10)
-    # stored_file = "random_rocketchip_designs.json"
-    # with open(stored_file, 'w') as file:
-    #     json.dump(random_designs, file, indent=4)
-    input_file = "../../dataset/processor_configs/boom_Config.json"  # Replace with your JSON file path
+    input_file = "../../dataset/processor_configs/rocketchip_Config.json"  # Replace with your JSON file path
     random_designs = generate_random_designs(input_file, num_configs=10)
-    stored_file = "random_boom_designs.json"
+    stored_file = "random_rocketchip_designs.json"
     with open(stored_file, 'w') as file:
         json.dump(random_designs, file, indent=4)
+    # input_file = "../../dataset/processor_configs/boom_Config.json"  # Replace with your JSON file path
+    # random_designs = generate_random_designs(input_file, num_configs=10)
+    # stored_file = "random_boom_designs.json"
+    # with open(stored_file, 'w') as file:
+    #     json.dump(random_designs, file, indent=4)

@@ -125,8 +125,6 @@ class Sampler:
                     modified_sample.append(param)
             results.append(modified_sample)
 
-
-        print("results:", results)
         # print("Default Config:", self.defualt_config)
 
         generated_samples = np.insert(results, 0, self.defualt_config, axis=0)

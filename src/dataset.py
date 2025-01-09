@@ -243,9 +243,7 @@ class Processor_Dataset:
                 print(data_to_fetch)
                 results, experiment_validity = self.conduct_experiments(data_to_fetch)
                 data_to_insert = data_to_fetch + results + [experiment_validity]
-                data_to_insert = [1, 'WithTAGELBPD', 'true', 4, 1, 32, 1, 16, 1, 1, 16, 1, 1, 16, 1, 96, 64, 16, 16, 16, 16, 0, 16, 64, 4, 8, 64, 4, 'true', 'true', 'true', 0.558, 1.11, 114056, 68694, 145, 61, 20, 9.356, 9.356, -0.65, 9.458, 372, 2683, 186475, 186031, -1, -1, 24793, 24744, -1, -1, 7385, 4659, -1, -1, 16981, 5525, -1, -1, 28670, 28670, -1, -1, 42729, 14734, -1, -1, 29866, 24100, -1, -1, 250124, 123506, -1, -1, 174121, 171154, -1, -1, 42461, 34466, -1, -1, 4111, 3782, -1, -1, 2522, 2416, 'Success']
-                print("data to insert")
-                print(data_to_insert)
+                print("Data to insert: \n", data_to_insert)
                 self.insert_to_dataset(data_to_insert)
                 rc_results = [data_to_insert[i] for i in self.resource_utilisation_indexes]
                 target_obj_results = [data_to_insert[i] for i in self.target_obj_indexes]
@@ -371,11 +369,9 @@ class Processor_Dataset:
                 "RC Results": rc_results,
                 "Time Taken": time_taken
             }
-            quit()
             # Write updated results back to the file after each experiment
             with open(evaluation_results_dir, 'w') as file:
                 json.dump(all_results, file, indent=4)
-
         print("Evaluation results updated successfully.")
 
 def view_dataset():

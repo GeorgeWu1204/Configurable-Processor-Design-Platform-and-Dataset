@@ -2,21 +2,21 @@
     "CPU_Name": "RocketChip",
 
     "Configurable_Params": {
-        "Core_Num": {"self_range": [1, 2, 4], "default": 1, "type": "int"},
-        "fpu_config": {"self_range": ["WithoutFPU", "WithFP16", "WithFPUWithoutDivSqrt", "DefaultFPU"], "default": "DefaultFPU", "type": "categorical"},
-        "mul_div_config": {"self_range": ["WithFastMulDiv", "WithCustomFastMulDiv", "WithoutMulDiv", "DefaultMulDiv"], "default": "DefaultMulDiv", "type": "categorical"},
-        "btb_config": {"self_range": ["WithDefaultBtb", "WithNoBtb"], "default": "WithDefaultBtb", "type": "categorical"},
-        "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 64, "type": "int"},
-        "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 1, "type": "int"},
-        "icache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 1, "type": "int"},
-        "icache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"},
-        "dcache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 64, "type": "int"},
-        "dcache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 1, "type": "int"},
-        "dcache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 1, "type": "int"},
-        "dcache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int"},
-        "useVM": {"self_range": ["true", "false"], "default": "true", "type": "categorical"},
-        "useAtomics": {"self_range": ["true", "false"], "default": "true", "type": "categorical"},
-        "useCompressed": {"self_range": ["true", "false"], "default": "true", "type": "categorical"}
+        "Core_Num": {"self_range": [1, 2, 4], "default": 1, "type": "int", "growth" : "exp2"},
+        "fpu_config": {"self_range": ["WithoutFPU", "WithFP16", "WithFPUWithoutDivSqrt", "DefaultFPU"], "default": "DefaultFPU", "type": "categorical", "growth" : "None"},
+        "mul_div_config": {"self_range": ["WithFastMulDiv", "WithCustomFastMulDiv", "WithoutMulDiv", "DefaultMulDiv"], "default": "DefaultMulDiv", "type": "categorical", "growth" : "None"},
+        "btb_config": {"self_range": ["WithDefaultBtb", "WithNoBtb"], "default": "WithDefaultBtb", "type": "categorical", "growth" : "None"},
+        "icache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 64, "type": "int", "growth" : "exp2"},
+        "icache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 1, "type": "int", "growth" : "exp2"},
+        "icache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 1, "type": "int", "growth" : "exp2"},
+        "icache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int", "growth" : "exp2"},
+        "dcache_nSets": {"self_range": [4, 8, 16, 32, 64], "default": 64, "type": "int", "growth" : "exp2"},
+        "dcache_nWays": {"self_range": [4, 8, 16, 32, 64], "default": 1, "type": "int", "growth" : "exp2"},
+        "dcache_nTLBSets": {"self_range": [1, 2, 4, 8], "default": 1, "type": "int", "growth" : "exp2"},
+        "dcache_nTLBWays": {"self_range": [1, 2, 4, 8], "default": 4, "type": "int", "growth" : "exp2"},
+        "useVM": {"self_range": ["true", "false"], "default": "true", "type": "categorical", "growth" : "None"},
+        "useAtomics": {"self_range": ["true", "false"], "default": "true", "type": "categorical", "growth" : "None"},
+        "useCompressed": {"self_range": ["true", "false"], "default": "true", "type": "categorical", "growth" : "None"}
     },
 
     "Configurable_Params_Weight" : {
@@ -34,6 +34,9 @@
     "Conditional_Constraints" : [
         {"icache_nSets" : [4, 8, 16, 32], "icache_nWays" : [4, 8, 16, 32]},
         {"dcache_nSets" : [4, 8, 16, 32], "dcache_nWays" : [4, 8, 16, 32]}
+    ],
+
+    "Inequality_Constraints" : [
     ],
 
     "Performance":{
@@ -66,7 +69,7 @@
             "rsort": 0,
             "spmv": 0,
             "towers": 0,
-            "vadd": 0
+            "vvadd": 0
         }
     }
 

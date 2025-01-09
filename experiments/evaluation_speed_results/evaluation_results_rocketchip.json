@@ -4,24 +4,24 @@
         "FPGA Deployability": true,
         "Target Objectives": [],
         "RC Results": [
-            114056,
-            68694,
-            145,
-            61
+            69857,
+            26388,
+            134,
+            42
         ],
-        "Time Taken": 5022.373299837112
+        "Time Taken": 3271.159937143326
     },
     "Config_1": {
         "Validity": true,
         "FPGA Deployability": true,
         "Target Objectives": [],
         "RC Results": [
-            114056.0,
-            68694.0,
-            145.0,
-            61.0
+            -1,
+            -1,
+            -1,
+            -1
         ],
-        "Time Taken": 4927.481781721115
+        "Time Taken": 52.522401332855225
     },
     "Config_2": {
         "Validity": true,
@@ -33,19 +33,19 @@
             -1,
             -1
         ],
-        "Time Taken": 53.61221671104431
+        "Time Taken": 52.4796667098999
     },
     "Config_3": {
         "Validity": true,
         "FPGA Deployability": true,
         "Target Objectives": [],
         "RC Results": [
-            -1,
-            -1,
-            -1,
-            -1
+            69857,
+            26388,
+            134,
+            42
         ],
-        "Time Taken": 53.85528492927551
+        "Time Taken": 3240.2746744155884
     },
     "Config_4": {
         "Validity": true,
@@ -57,7 +57,7 @@
             -1,
             -1
         ],
-        "Time Taken": 52.27174997329712
+        "Time Taken": 51.14388465881348
     },
     "Config_5": {
         "Validity": true,
@@ -69,7 +69,7 @@
             -1,
             -1
         ],
-        "Time Taken": 52.65502190589905
+        "Time Taken": 52.08293557167053
     },
     "Config_6": {
         "Validity": true,
@@ -81,7 +81,7 @@
             -1,
             -1
         ],
-        "Time Taken": 52.74615979194641
+        "Time Taken": 52.494264364242554
     },
     "Config_7": {
         "Validity": true,
@@ -93,7 +93,7 @@
             -1,
             -1
         ],
-        "Time Taken": 53.429829120635986
+        "Time Taken": 51.529186487197876
     },
     "Config_8": {
         "Validity": true,
@@ -105,19 +105,19 @@
             -1,
             -1
         ],
-        "Time Taken": 53.104820013046265
+        "Time Taken": 52.44723725318909
     },
     "Config_9": {
         "Validity": true,
         "FPGA Deployability": true,
         "Target Objectives": [],
         "RC Results": [
-            -1,
-            -1,
-            -1,
-            -1
+            69857,
+            26388,
+            134,
+            42
         ],
-        "Time Taken": 47.730926513671875
+        "Time Taken": 20786.119939804077
     },
     "Config_10": {
         "Validity": true,
@@ -129,18 +129,6 @@
             -1,
             -1
         ],
-        "Time Taken": 51.788268089294434
-    },
-    "Config_11": {
-        "Validity": true,
-        "FPGA Deployability": true,
-        "Target Objectives": [],
-        "RC Results": [
-            113581,
-            68382,
-            143,
-            61
-        ],
-        "Time Taken": 5141.633909702301
+        "Time Taken": 113.45554494857788
     }
 }

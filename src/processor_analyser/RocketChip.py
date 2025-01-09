@@ -119,39 +119,6 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
         # Core's internal configuration
         self.modify_peripheral_and_core_config(input_vals[4:])
 
-    def extract_mcycle_minstret(self):
-        # Initialize variables to store mcycle and minstret
-        mcycle = None
-        minstret = None
-        
-        # Define the regex patterns to match the desired lines
-        mcycle_pattern = re.compile(r'mcycle\s*=\s*(\d+)')
-        minstret_pattern = re.compile(r'minstret\s*=\s*(\d+)')
-        
-        # Open the file and read its contents
-        with open(self.generated_logfile + 'Processor_Generation.log', 'r') as file:
-            lines = file.readlines()
-        
-        # Iterate over the lines to find the section and extract values
-        for line in lines:
-            if 'Microseconds for one run through Dhrystone:' in line:
-                # Once we find the section, we start looking for mcycle and minstret
-                for subsequent_line in lines[lines.index(line):]:
-                    mcycle_match = mcycle_pattern.search(subsequent_line)
-                    minstret_match = minstret_pattern.search(subsequent_line)
-                    
-                    if mcycle_match:
-                        mcycle = int(mcycle_match.group(1))
-                    
-                    if minstret_match:
-                        minstret = int(minstret_match.group(1))
-                    
-                    # Break the loop once both values are found
-                    if mcycle is not None and minstret is not None:
-                        break
-        
-        return mcycle, minstret
-
     def tune_and_run_performance_simulation(self, new_value):
         try:
             # generate the design
@@ -165,17 +132,31 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
             simulation_status = "Success"
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:
                 run_benchmark_command = ["make", "run-binary", "CONFIG=CustomisedRocketConfig", f"BINARY=../../toolchains/riscv-tools/riscv-tests/build/benchmarks/{benchmark_to_examine}.riscv"]
-                
                 try:
                     with open(self.processor_generation_log + benchmark_to_examine + '.log', 'w') as f:
                         subprocess.run(run_benchmark_command, check=True, stdout=f, stderr=f, cwd=self.generation_path)
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_mcycle_report(True, benchmark_to_examine)
-                    print("<---------------------->")
-                    print(benchmark_to_examine)
-                    print(performance_results[benchmark_to_examine])
+
+                    # dhrystone, median, memcpy, multiply, qsort, rsort, spmv, tower, memcpy, vvadd
+                    if benchmark_to_examine in ['dhrystone', 'median', 'multiply', 'qsort', 'rsort', 'spmv', 'towers', 'memcpy', 'vvadd']:
+                        performance_results[benchmark_to_examine] = self.extract_metrics_from_mcycle_report(True, benchmark_to_examine)
+                        print("<---------------------->")
+                        print(benchmark_to_examine)
+                        print(performance_results[benchmark_to_examine])
+                    # mm
+                    elif benchmark_to_examine == 'mm':
+                        performance_results[benchmark_to_examine] = self.extract_instructions_and_cycles(benchmark_to_examine)
+                        print("<---------------------->")
+                        print(benchmark_to_examine)
+                        print(performance_results[benchmark_to_examine])
+                    # mt-matmul, mt-memcpy, mt-vvadd
+                    elif benchmark_to_examine in ['mt-matmul', 'mt-memcpy', 'mt-vvadd']:
+                        performance_results[benchmark_to_examine] = self.extract_metric_from_cycles_and_cpi_report(benchmark_to_examine)
+                        print("<---------------------->")
+                        print(benchmark_to_examine)
+                        print(performance_results[benchmark_to_examine])
                 except subprocess.CalledProcessError as e:
                     print(f"Error occurred for the current benchmark {benchmark_to_examine}")
-                    performance_results[benchmark_to_examine] = self.extract_metrics_from_log(False, benchmark_to_examine)
+                    performance_results[benchmark_to_examine] = self.extract_metrics_from_mcycle_report(False, benchmark_to_examine)
                     simulation_status = "Partial"
             if len(performance_results) == 0:
                 return "Fail", None
