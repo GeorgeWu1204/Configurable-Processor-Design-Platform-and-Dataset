@@ -68,7 +68,7 @@
     "optimisation_objectives" : [
             {
               "metric": "mcycles",
-              "benchmark": "cmark",
+              "benchmark": "dhrystone",
               "obj_direct": "minimise",
               "range": [400000, 450000]
             }

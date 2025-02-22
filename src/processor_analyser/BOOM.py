@@ -2,7 +2,7 @@ import re
 import subprocess
 from .processor_config_matching import config_matcher
 from .GeneralChip import General_Chip_Tuner
-
+import time
 
 class BOOM_Chip_Tuner(General_Chip_Tuner):
 
@@ -119,8 +119,12 @@ class BOOM_Chip_Tuner(General_Chip_Tuner):
             self.modify_config_files(new_value)
             # clean_command = ["make", "clean"]
             # subprocess.run(clean_command, cwd = self.generation_path, check=True)
-            run_configure_command = ["make", "-j12", "CONFIG=CustomisedBoomV3Config"]
+            t1 = time.monotonic()
+            run_configure_command = ["make", "-j12", "CONFIG=MediumBoomV3Config"]
             subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            t2 = time.monotonic()
+            print(f"Time taken to configure the design: {t2 - t1} seconds")
+            raise
             performance_results = {}
             simulation_status = "Success"
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:

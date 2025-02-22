@@ -25,7 +25,7 @@ TRAIN_SET_ACCEPTABLE_THRESHOLD = 0.2                # acceptable distance betwee
 
 # optimisation_model Settings
 NUM_RESTARTS = 4                # number of starting points for BO for optimize_acqf
-NUM_OF_INITIAL_POINT = 2        # number of initial points for BO  Note: has to be power of 2 for sobol sampler
+NUM_OF_INITIAL_POINT = 8        # number of initial points for BO  Note: has to be power of 2 for sobol sampler
 N_TRIALS = 1                    # number of trials of BO (outer loop)
 N_BATCH = 5                     # number of BO batches (inner loop)
 BATCH_SIZE = 1                  # batch size of BO (restricted to be 1 in this case)
@@ -105,10 +105,11 @@ class Design_Framework:
                 train_obj_ei,
                 obj_score_ei,
             ) = self.optimisation_model.generate_initial_data(NUM_OF_INITIAL_POINT)
-        
+            
+
             print("<----------------Initial Data--------------->")
-            print("train_x_ei: ", train_x_ei)                   #shape = (num_samples, input_dim)
-            print("train_obj_ei: ", train_obj_ei)               #shape = (num_samples, objs_to_evaluate_dim)
+            print("train_x_ei: ", train_x_ei.shape)                   #shape = (num_samples, input_dim)
+            print("train_obj_ei: ", train_obj_ei.shape)               #shape = (num_samples, objs_to_evaluate_dim)
             print("exact_obj_ei: ", exact_obj_ei)               #shape = (num_samples, objs_to_evaluate_dim)
             print("obj_score_ei: ", obj_score_ei)               #shape = (num_samples, 1)
             print("<------------------------------------------->")
@@ -130,7 +131,9 @@ class Design_Framework:
                 acqf = self.optimisation_model.build_acqf(model_ei, train_obj_ei, qmc_sampler)
                 # optimize and get new observation
                 valid_generated_sample, new_x_ei, new_exact_obj_ei, new_train_obj_ei, obj_score = self.optimisation_model.optimize_acqf_and_get_observation(acqf, self.processor_analyser)
-
+                t1 = time.monotonic()
+                print(f"Time taken for iteration {iteration}: {t1 - t0}")
+                quit()
                 # examine the posterior
                 if self.plot_posterior and iteration == 10:
                     self.posterior_examiner.examine_posterior(model_ei.subset_output([self.posterior_objective_index]), iteration)

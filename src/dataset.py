@@ -107,6 +107,8 @@ class Processor_Dataset:
                         temp_data_index += 1
                 else:
                     temp_data_index += 4
+        if len(self.target_obj_indexes) == 0:
+            raise Exception("No target objectives found.")
         self.insert_command += "Evaluation)"
         self.insert_command = self.insert_command + 'VALUES ('
         for i in range(self.cpu_info.config_params.amount + self.cpu_info.supported_output_objs.metric_amounts + 1):
@@ -224,10 +226,12 @@ class Processor_Dataset:
         return self.fetch_single_data_acc_to_def_from_dataset(config_to_fetch)
 
 
+    def query_fake_data(self, data_input):
+        # Note, its just for debugging purposes
+        return True, True, [-1 for i in range(len(self.target_obj_indexes))], [-1 for i in range(len(self.resource_utilisation_indexes))]
+
     def fetch_single_data_acc_to_def_from_dataset(self, data_to_fetch):
         """Fetch data based on certain input values and outputs the FPGA_Deployability True/False, Objectives }"""
-        # Fake output
-        # return True, True, [-1 for i in range(len(self.target_obj_indexes))], [-1 for i in range(len(self.resource_utilisation_indexes))]
         # Output (Validity of the data, FPGA Deployability, Target Objectives, RC_results)
         
         results = []
@@ -396,5 +400,35 @@ def view_dataset():
         print(f"An error occurred: {e}")
 
 
+def view_specified_dataset():
+    # Ask the user for the processor name and the column name
+    proc_name = input("Enter the processor name: ")
+    column_name = input("Enter the column name you want to view: ")
+
+    # Prepare the database path
+    dataset_directory = f'dataset/PPA/{proc_name}_PPA.db'
+
+    try:
+        # Connect to the database
+        conn = sqlite3.connect(dataset_directory)
+        cursor = conn.cursor()
+
+        # Fetch only the specified column from the table
+        query = f"SELECT {column_name} FROM {proc_name}_PPA"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+        # Display the results
+        print(f"\nContents of column '{column_name}' from table '{proc_name}_PPA':\n")
+        for row in rows:
+            print(row[0])  # Each row is a tuple, so row[0] is the column value
+
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+    finally:
+        if 'conn' in locals():
+            conn.close()
+
 if __name__ == '__main__':
-    view_dataset()
+    # view_dataset()
+    view_specified_dataset()

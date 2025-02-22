@@ -2,7 +2,7 @@ import re
 import subprocess
 from .processor_config_matching import config_matcher
 from .GeneralChip import General_Chip_Tuner
-
+import time
 
 class Rocket_Chip_Tuner(General_Chip_Tuner):
     """This is the tuner for scr1 Cores, it could automatically customise the processor according to the param settings"""
@@ -126,8 +126,11 @@ class Rocket_Chip_Tuner(General_Chip_Tuner):
             # TODO : Try to use Zinc to accelerate the process
             # clean_command = ["make", "clean"] 
             # subprocess.run(clean_command, cwd = self.generation_path, check=True)
+            # t1 = time.monotonic()
             run_configure_command = ["make", "-j12", "CONFIG=CustomisedRocketConfig"]
             subprocess.run(run_configure_command, cwd = self.generation_path, check=True)
+            # t2 = time.monotonic()
+            # print(f"Time taken to configure the design: {t2 - t1} seconds")
             performance_results = {}
             simulation_status = "Success"
             for benchmark_to_examine in self.cpu_info.supported_output_objs.benchmark.metrics:

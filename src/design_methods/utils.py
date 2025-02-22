@@ -63,13 +63,35 @@ def recover_categorical_input_data(input_tensor, categorical_info):
     """this function is used to extract the input variables that belongs to the categorical values and assign the maximum value with 1 and the rest with 0"""
     # Process each index and corresponding length
     recovered_categorical_tensor= input_tensor.clone()
-    for single_categorical_info in categorical_info.values():
-        idx, length = single_categorical_info[0], single_categorical_info[1]
-        segment = input_tensor[idx:idx+length]
-        result = torch.zeros_like(segment)
-        max_value = torch.max(segment)
-        result[segment == max_value] = 1
-        recovered_categorical_tensor[idx:idx+length] = result
+    if input_tensor.dim() == 1:
+        for single_categorical_info in categorical_info.values():
+            idx, length = single_categorical_info[0], single_categorical_info[1]
+            segment = input_tensor[idx:idx+length]
+            result = torch.zeros_like(segment)
+            max_value = torch.max(segment)
+            result[segment == max_value] = 1
+            recovered_categorical_tensor[idx:idx+length] = result
+    elif input_tensor.dim() == 2:
+        # W/O Batch
+        for sample_num in range(input_tensor.shape[0]):
+            for single_categorical_info in categorical_info.values():
+                idx, length = single_categorical_info[0], single_categorical_info[1]
+                segment = input_tensor[sample_num][idx:idx+length]
+                result = torch.zeros_like(segment)
+                max_value = torch.max(segment, dim=0)
+                result[segment == max_value] = 1
+                recovered_categorical_tensor[sample_num][idx:idx+length] = result
+    elif input_tensor.dim() == 3:
+        # With Batch
+        for batch_num in range(input_tensor.shape[0]):
+            for sample_num in range(input_tensor.shape[1]):
+                for single_categorical_info in categorical_info.values():
+                    idx, length = single_categorical_info[0], single_categorical_info[1]
+                    segment = input_tensor[batch_num][sample_num][idx:idx+length]
+                    result = torch.zeros_like(segment)
+                    max_value = torch.max(segment, dim=0)
+                    result[segment == max_value] = 1
+                    recovered_categorical_tensor[batch_num][sample_num][idx:idx+length] = result
     return recovered_categorical_tensor
 
 
@@ -78,6 +100,7 @@ def recover_single_input_data(input_tensor, normalised_factor, scales, offsets, 
     # Assuming input_tensor is in the shape of num_restarts x d_dim
     # Initialize an empty tensor for the results with the same shape as input_tensor
     input_var = torch.empty_like(input_tensor)
+    print("recover_single_input_data")
     if categorical_info is not None:
         # Recover the categorical data
         recovered_categorical_input_tensor = recover_categorical_input_data(input_tensor, categorical_info) 

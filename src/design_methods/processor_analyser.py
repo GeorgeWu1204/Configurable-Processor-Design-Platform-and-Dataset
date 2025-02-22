@@ -13,7 +13,10 @@ def build_processor_analyser(param_space_info, objective_space_info, processor_d
     elif processor_dataset.cpu_info.cpu_name == 'EL2':
         return EL2_Analyser(param_space_info, objective_space_info, processor_dataset, t_type, device)
     elif processor_dataset.cpu_info.cpu_name == 'BOOM':
-        return Processor_Analyser(param_space_info, objective_space_info, processor_dataset, t_type, device)
+        return BOOMChip_Analyser(param_space_info, objective_space_info, processor_dataset, t_type, device)
+    else:
+        raise("The processor is not supported")
+        
     
 
 def read_data_from_db(db_name):
@@ -269,7 +272,10 @@ class EL2_Analyser(Processor_Analyser):
             print("objective values ", objective_results)
             print("resource utilisation constraints", rc_utilisation)
             for obj_index in range(self.objs_to_optimise_dim):
+                print(self.objs_to_evaluate)
+                print("obj: ", obj_index)
                 obj = self.objs_to_evaluate[obj_index]
+                
                 results[i][obj_index] = objective_results[obj_index]
                 if self.objs_direct.get(obj, None) == 'minimise':
                     results[i][obj_index] = -1 * results[i][obj_index]
@@ -308,3 +314,7 @@ class RocketChip_Analyser(EL2_Analyser):
     def __init__(self, param_space_info, objective_space_info, optimisation_task_name, tensor_type=torch.float64, tensor_device=torch.device('cpu')):
         super().__init__(param_space_info, objective_space_info, optimisation_task_name, tensor_type, tensor_device)
 
+
+class BOOMChip_Analyser(EL2_Analyser):
+    def __init__(self, param_space_info, objective_space_info, optimisation_task_name, tensor_type=torch.float64, tensor_device=torch.device('cpu')):
+        super().__init__(param_space_info, objective_space_info, optimisation_task_name, tensor_type, tensor_device)

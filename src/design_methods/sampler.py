@@ -30,7 +30,7 @@ class initial_sampler:
         con_objs = torch.empty((num_samples, 1), device=self.device, dtype=self.type)
         normalised_objs = torch.empty((num_samples, self.output_dim), device=self.device, dtype=self.type)
         valid_sample_index = 0
-        # print("possible_initial_tensor: ", possible_initial_tensor)
+        print("Start Initial Sampling")
         while (valid_sample_index) <= int(num_samples/2):
             possible_initial_tensor = self.generate_samples(num_samples)
             for i in range(num_samples):
